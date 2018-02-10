@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title>Pub Info</title>
+
+        <script type="text/javascript">
+            function editDescription() {
+                var textArea = document.getElementById("frmPubInfo:textAreaDescrizione");
+                var modifyButton = document.getElementById("frmPubInfo:modifyButton");
+                if (textArea !== null) {
+                    if(textArea.disabled === false){
+                        textArea.disabled = true;
+                        modifyButton.value = "Modify";
+                    }else{
+                        textArea.disabled = false;
+                        modifyButton.value = "Confirm";
+                    }
+                } else {
+                    alert("textArea nullo");
+                }
+            }
+        </script>
+
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="frmPubInfo">
+                
+                <h:panelGroup>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Locale Name" style="color: cadetblue" />
+                        <h:outputText value="#{selectPubController.selectedPub.nome}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="Description" style="color: cadetblue" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:inputTextarea value="#{selectPubController.selectedPub.descrizione}" id="textAreaDescrizione" disabled="true" style="width: 500px; height: 100px;" a:maxlength="255"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" >
+                        <h:commandButton value="Back" action="selectPub"/> 
+                        <h:commandButton id="modifyButton"  value="Modify" onclick="editDescription();" type="reset"/> 
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </f:view>
+    </h:body>
+
+</html>

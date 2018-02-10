@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title>Menu</title>
+
+        <script type="text/javascript">
+
+        </script>
+
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="frmMenu">
+                <h:panelGroup>
+                    <ui:repeat value="#{menuBean.productList}" var="product" varStatus="status">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Name: " style="color: cadetblue" />
+                            <h:outputText value="#{product.prodName}"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Price: " style="color: cadetblue" />
+                            <h:outputText value="#{product.price}"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Time to Prepare: " style="color: cadetblue" />
+                            <h:outputText value="#{product.tmpExe}"/>
+                            <h:outputLabel value=" mins."/>
+                        </h:panelGrid>
+                        <br/>
+                    </ui:repeat>
+                    <h:panelGrid columns="1" >
+                        <h:commandButton value="Back" action="selectPub"/> 
+                    </h:panelGrid>
+
+                </h:panelGroup>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>

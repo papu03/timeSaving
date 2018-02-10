@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title>Login</title>
+    </h:head>
+
+    <h:body>
+        <f:view>
+            <h:form>
+                <h:panelGroup>
+                    <h:panelGrid>
+                        <h:outputLabel value="Username" style="color: cadetblue" />
+                        <h:inputText value="#{loginController.username}"/>
+                        <h:outputLabel value="Password" style="color: cadetblue" />
+                        <h:inputText value="#{loginController.password}"/>
+                        <h:commandButton action="#{loginController.login}" value="Login" /> 
+                    </h:panelGrid>
+                    No account? <h:link value="Sign in" outcome="register" />
+                </h:panelGroup>
+            </h:form>
+        </f:view>
+    </h:body>
+
+</html>
