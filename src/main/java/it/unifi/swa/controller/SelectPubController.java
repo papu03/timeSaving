@@ -5,7 +5,6 @@
  */
 package it.unifi.swa.controller;
 
-import it.unifi.swa.bean.MenuBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.dao.MenuDAO;
 import it.unifi.swa.dao.PubDAO;
@@ -28,25 +27,28 @@ public class SelectPubController implements Serializable {
     @Inject
     private PubDAO pubDao;
     
+//    @Inject
+//    private MenuDAO menuDao;
+//    
+//    @Inject
+//    private MenuBean menuBean;
     @Inject
-    private MenuDAO menuDao;
-    
-    @Inject
-    private MenuBean menuBean;
+    private SelectPubBean selectPubBean;
 
     private Pub selectedPub;
 
     public String select() {
         
-        try{
-            List<Product> productList = menuDao.getListOfProduct(selectedPub);
-            if(!productList.isEmpty()){
-                menuBean.setProductList(productList);
-            }
-            
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+//        try{
+//            List<Product> productList = menuDao.getListOfProduct(selectedPub);
+//            if(!productList.isEmpty()){
+//                menuBean.setProductList(productList);
+//            }
+//            
+//        }catch(Exception ex){
+//            ex.printStackTrace();
+//        }
+    	selectPubBean.setPub(selectedPub);
         
         return "menu?&faces-redirect=true";
     }

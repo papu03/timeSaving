@@ -10,16 +10,16 @@ import javax.inject.Named;
 @Named
 public class MenuBean implements Serializable {
     
-    private List<Product> productList;
-    
-    
-    
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
+//    private List<Product> productList;
+//    
+//    
+//    
+//    public List<Product> getProductList() {
+//        return productList;
+//    }
+//
+//    public void setProductList(List<Product> productList) {
+//        this.productList = productList;
+//    }
     
 }

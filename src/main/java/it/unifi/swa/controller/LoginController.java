@@ -22,15 +22,15 @@ public class LoginController {
     @Inject
     private UserSessionBean userSession;
     
-    @Inject
-    private SelectPubBean selectPub;
+//    @Inject
+//    private SelectPubBean selectPub;
     
     @Inject
     private ClientDAO clientDao;
     @Inject
     private OperatorDAO operatorDao;
-    @Inject
-    private PubDAO pubDao;
+//    @Inject
+//    private PubDAO pubDao;
 
     private String username;
     private String password;
@@ -61,15 +61,15 @@ public class LoginController {
     	userSession.setUser(loggedUser);
     	System.out.println(loggedUser.getUsername()+" loggato");
         
-        try{
-            List<Pub> pubList = pubDao.getListOfPub();
-            if(!pubList.isEmpty()){
-                selectPub.setPubList(pubList);
-            }
-            
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+//        try{
+//            List<Pub> pubList = pubDao.getListOfPub();
+//            if(!pubList.isEmpty()){
+//                selectPub.setPubList(pubList);
+//            }
+//            
+//        }catch(Exception ex){
+//            ex.printStackTrace();
+//        }
     	
     	return "selectPub?&faces-redirect=true";
     }
