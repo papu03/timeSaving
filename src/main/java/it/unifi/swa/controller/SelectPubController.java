@@ -26,32 +26,20 @@ public class SelectPubController implements Serializable {
 
     @Inject
     private PubDAO pubDao;
-    
-//    @Inject
-//    private MenuDAO menuDao;
-//    
-//    @Inject
-//    private MenuBean menuBean;
+    @Inject
+    private MenuDAO menuDao;
     @Inject
     private SelectPubBean selectPubBean;
-
     private Pub selectedPub;
+    private List<Pub> pubList;
 
     public String select() {
-        
-//        try{
-//            List<Product> productList = menuDao.getListOfProduct(selectedPub);
-//            if(!productList.isEmpty()){
-//                menuBean.setProductList(productList);
-//            }
-//            
-//        }catch(Exception ex){
-//            ex.printStackTrace();
-//        }
-    	selectPubBean.setPub(selectedPub);
-        
+
+        selectPubBean.setPub(selectedPub);
+
         return "menu?&faces-redirect=true";
     }
+
 
     public String showInfo() {
 
@@ -67,4 +55,23 @@ public class SelectPubController implements Serializable {
         this.selectedPub = selectedPub;
     }
 
+    public List<Pub> getPubList() {
+        
+        try {
+            List<Pub> lista = pubDao.getListOfPub();
+            if (!lista.isEmpty()) {
+                this.pubList = lista;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return pubList;
+    }
+
+    public void setPubList(List<Pub> pubList) {
+        this.pubList = pubList;
+    }
+    
 }

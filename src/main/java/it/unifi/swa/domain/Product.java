@@ -18,6 +18,8 @@ public class Product {
 	private double price;
 	private char tpProduct;
 	private int tmpExe;
+	private int quantity;
+	private String image;
 	
 	@Id
 	@GeneratedValue
@@ -60,6 +62,18 @@ public class Product {
 	}
 	public void setMenu(Menu menu) {
 		this.menu = menu;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }
