@@ -10,18 +10,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author Alessandro
- */
 
 @Named
-@SessionScoped
+@ViewScoped
 public class MenuController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private SelectPubBean selectPubBean;
@@ -33,23 +36,44 @@ public class MenuController implements Serializable {
 	private MenuDAO menuDAO;
 
 	private List<Product> productList;
-    private Map<Product, Integer> basket = new HashMap<Product, Integer>();
+	private Map<Product, Integer> basket;
 
-	public MenuController(){
-		basket.put(null, 0);
-	}
-	public List<Product> getProductList() {
+	@PostConstruct
+	public void init() {
+		System.out.println("Init Menu Controller");
+
+		basket = new HashMap<Product, Integer>();
 
 		try {
 
-			List<Product> lista = menuDAO.getListOfProduct(selectPubBean.getPub());
-			if (!lista.isEmpty()) {
-				productList = lista;
+			List<Product> list = menuDAO.getListOfProduct(selectPubBean.getPub());
+			if (!list.isEmpty()) {
+				productList = list;
 			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+
+		try {
+			// List<Product> list =
+			// menuDAO.getListOfProduct(selectPubBean.getPub());
+			//Map<String, Integer> listWithQnt = new HashMap<String, Integer>();
+			Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
+
+			for (Product element : productList) {
+				listWithQnt.put(element, 0);
+			}
+
+			if (!listWithQnt.isEmpty()) {
+				basket = listWithQnt;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public List<Product> getProductList() {
 
 		return productList;
 	}
@@ -58,13 +82,56 @@ public class MenuController implements Serializable {
 		this.productList = productList;
 	}
 
-	public void addItemToBasket(Product p, int qnt){
-		basket.put(p, qnt);
-	    basketBean.setBasket(basket);
-	 }
+//	public void addItemToBasket(Product p, int qnt) {
+//		basket.put(p, qnt);
+//		basketBean.setBasket(basket);
+//	}
+
 	
-	public void toSelectPub() {
+
+	public void addItem(Product p) {
+
+
+		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+
+			if (entry.getKey().equals(p)) {
+				int increment = entry.getValue() + 1;
+				entry.setValue(increment);
+				System.out.println("Quantità " + entry.getValue());
+
+			}
+		}
+		System.out.println("Item " + p.getProdName() + " aggiunto");
+
+	}
+	
+	public String toSelectPub() {
 		selectPubBean.setPub(null);
+		return "selectPub";
+ 	}
+	
+//	public String toSummaryPage() {
+//		Map<Product, Integer> basketNotNull = new HashMap<Product, Integer>();
+//		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+//			if (entry.getValue()>0) {
+//				basketNotNull.put(entry.getKey(), entry.getValue());
+//			}
+//		
+//		}
+//		basketBean.setBasket(basketNotNull);
+//		return "summary";
+// 	}
+	
+	public String toSummaryPage() {
+		basketBean.setBasket(basket);
+		return "summary";
+ 	}
+
+	public Map<Product, Integer> getBasket() {
+		return basket;
 	}
 
+	public void setBasket(Map<Product, Integer> basket) {
+		this.basket = basket;
+	}
 }

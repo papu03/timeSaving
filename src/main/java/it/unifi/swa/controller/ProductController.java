@@ -23,10 +23,7 @@ public class ProductController implements Serializable {
     private Product selectedProduct;
     private String qnt;
     
-    public ProductController(){
-    	this.qnt="1";
-    }
-    
+
     public Product getSelectedProduct() {
         return selectedProduct;
     }

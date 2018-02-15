@@ -6,20 +6,16 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Menu</title>
-
-	<script type="text/javascript">
-		
-	</script>
-
+	<title>Riepilogo acquisti</title>
 </h:head>
+
 <h:body>
 	<f:view>
-		<h:form id="frmMenu">
+		<h:form>
 			<h:panelGroup>
-				<ui:repeat value="#{menuController.productList}" var="product"
+				<ui:repeat value="#{summaryController.productList}" var="product"
 					varStatus="status">
-					<h:panelGrid columns="1">
+					<h:panelGrid columns="2">
 						<h:outputLabel value="Name: " style="color: cadetblue" />
 						<h:outputText value="#{product.prodName}" />
 					</h:panelGrid>
@@ -34,33 +30,16 @@
 					</h:panelGrid>
 					<h:panelGrid columns="4">
 						<h:outputLabel value="Quantity: " style="color: cadetblue" />
-
-						<ui:repeat value="#{menuController.basket}" var="map">
+						<ui:repeat value="#{summaryController.basket}" var="basket">
 							<h:form>
-								<h:outputText id="qnt" value="#{map[product]}" />
-
-								<h:commandButton value="+">
-									<f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>
-								</h:commandButton>
+								<h:outputText id="qnt" value="#{basket[product]}" />
 							</h:form>
 						</ui:repeat>
 					</h:panelGrid>
-					<h:panelGrid>
-						<h:commandButton value="Details"
-							action="product?faces-redirect=true">
-							<f:setPropertyActionListener value="#{product}"
-								target="#{productController.selectedProduct}" />
-						</h:commandButton>
-					</h:panelGrid>
-					<br />
 				</ui:repeat>
 				<h:panelGrid columns="1">
-					<h:commandButton value="Back" action="#{menuController.toSelectPub}" />
+					<h:commandButton value="Edit" action="#{summaryController.toEditPage}" />
 				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<h:commandButton value="Procedi ordine" action="#{menuController.toSummaryPage}" />
-				</h:panelGrid>
-
 			</h:panelGroup>
 		</h:form>
 	</f:view>
