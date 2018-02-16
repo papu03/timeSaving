@@ -67,6 +67,11 @@ public class SummaryController implements Serializable {
 	public String toEditPage(){
 		return "edit";
 	}
+	
+	public String toDetailOrder(){
+		
+		return "detailOrder";
+	}
 
 	public Map<Product, Integer> getBasket() {
 		return basket;

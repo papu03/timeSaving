@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import it.unifi.swa.domain.Product;
 
-@RequestScoped
+@SessionScoped
 @Named
 public class BasketBean implements Serializable {
 

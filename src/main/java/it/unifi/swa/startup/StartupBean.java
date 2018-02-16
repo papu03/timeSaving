@@ -1,14 +1,11 @@
 package it.unifi.swa.startup;
 
-import it.unifi.swa.bean.SelectPubBean;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.unifi.swa.dao.ClientDAO;
 import it.unifi.swa.dao.MenuDAO;
@@ -20,7 +17,6 @@ import it.unifi.swa.domain.Menu;
 import it.unifi.swa.domain.Operator;
 import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
-import javax.enterprise.context.SessionScoped;
 
 @Singleton
 @Startup
@@ -37,10 +33,11 @@ public class StartupBean {
 
     @Inject
     ClientDAO clientDao;
-
     
     @Inject
     PubDAO pubDao;
+    
+   
     
     private List<Pub> pubList;
 
@@ -82,7 +79,6 @@ public class StartupBean {
         pub4.setIdLocale(4);
         pub4.setIndirizzo("Via kal 124");
         pub4.setNome("Pub Rivederci");
-
 
 
 //		Pub undicesimo = new Pub();
@@ -150,6 +146,29 @@ public class StartupBean {
         Client papu = new Client();
         papu.setUsername("papu");
         papu.setPassword("password");
+        
+        Client ale= new Client();
+		ale.setName("Alessandro");
+		ale.setSurname("Baroni");
+		ale.setUsername("Yoloswag96");
+		ale.setPassword("numerello");
+        
+	//order phase
+		
+//		Order o1=new Order();
+//		Order o2=new Order();
+//		
+//		o1.getUsers().add(cuoco);
+//		o1.getUsers().add(barista);
+//		o1.getUsers().add(papu);
+//		o1.setLocal(pub);
+//		o2.getUsers().add(cuoco);
+//		o2.getUsers().add(barista);
+//		o2.getUsers().add(ale);
+//		o2.setLocal(pub);
+//        
+//        orderDao.save(o1);
+//        orderDao.save(o2);
 
         clientDao.save(papu);
 

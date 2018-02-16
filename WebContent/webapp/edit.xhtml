@@ -32,12 +32,18 @@
 						<ui:repeat value="#{editController.basket}" var="map">
 							<h:form>
 								<h:outputText id="qnt" value="#{map[product]}" />
-								
+								<h:commandButton value="+">
+									<f:ajax execute="@form" render="qnt" listener="#{editController.addItem(product)}"/>
+								</h:commandButton>
 							</h:form>
 						</ui:repeat>
 					</h:panelGrid>
 
 				</ui:repeat>
+				
+				<h:panelGrid columns="1">
+					<h:commandButton value="Save" action="#{editController.toSummaryPage}" />
+				</h:panelGrid>
 
 			</h:panelGroup>
 		</h:form>

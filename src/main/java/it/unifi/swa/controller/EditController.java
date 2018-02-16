@@ -27,23 +27,23 @@ public class EditController implements Serializable {
 
 	@Inject
 	private BasketBean basketBean;
-	
+
 	@Inject
 	private SelectPubBean pubBean;
-	
+
 	@Inject
 	private MenuDAO menuDAO;
 
 	private List<Product> productList;
 	private Map<Product, Integer> basket;
-	
+
 	@PostConstruct
 	public void init() {
 		System.out.println("Init Edit Controller");
-		
+
 		productList = new ArrayList<Product>();
 		basket = new HashMap<Product, Integer>();
-		
+
 		basket = basketBean.getBasket();
 		try {
 
@@ -56,7 +56,25 @@ public class EditController implements Serializable {
 			ex.printStackTrace();
 		}
 
-		
+	}
+
+	public void addItem(Product p) {
+
+		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+
+			if (entry.getKey().equals(p)) {
+				int increment = entry.getValue() + 1;
+				entry.setValue(increment);
+				System.out.println("Quantità " + entry.getValue());
+
+			}
+		}
+		System.out.println("Item " + p.getProdName() + " aggiunto");
+
+	}
+	
+	public String toSummaryPage(){
+		return "summary";
 	}
 
 	public List<Product> getProductList() {

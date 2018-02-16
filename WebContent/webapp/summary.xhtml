@@ -38,7 +38,10 @@
 					</h:panelGrid>
 				</ui:repeat>
 				<h:panelGrid columns="1">
-					<h:commandButton value="Edit" action="#{summaryController.toEditPage}" />
+					<h:commandButton value="Modifica Ordine" action="#{summaryController.toEditPage}" />
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<h:commandButton value="Paga" action="#{summaryController.toDetailOrder}" />
 				</h:panelGrid>
 			</h:panelGroup>
 		</h:form>
