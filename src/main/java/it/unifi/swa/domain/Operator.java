@@ -14,7 +14,7 @@ public class Operator extends User{
 	public int getoType() {
 		return oType;
 	}
-	public void setoType(char oType) {
+	public void setoType(int oType) {
 		this.oType = oType;
 	}
 

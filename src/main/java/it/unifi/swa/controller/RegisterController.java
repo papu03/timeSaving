@@ -56,7 +56,7 @@ public class RegisterController implements Serializable {
 
         // System.out.println("il nome è "+client.getName()+" il cognome
         // "+cognome );
-        strategy.save(client);
+        strategy.saveClient(client);
         return "success?&faces-redirect=true";
     }
 

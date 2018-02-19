@@ -31,6 +31,11 @@ public abstract class BaseDao<E> implements Serializable {
 
 		entityManager.persist(entity);
 	}
+	
+	public void update(E entity) {
+
+		entityManager.merge(entity);
+	}
 
 	public void delete(E entity) {
 

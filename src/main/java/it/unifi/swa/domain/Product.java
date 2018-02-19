@@ -1,11 +1,15 @@
 package it.unifi.swa.domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Product {
@@ -16,10 +20,13 @@ public class Product {
 	
 	private String prodName;
 	private double price;
-	private char tpProduct;
+	private char tpProduct; // d drink f food
 	private int tmpExe;
 	private int quantity;
 	private String image;
+	
+	private List<OPAssociation> orders;
+
 	
 	@Id
 	@GeneratedValue
@@ -74,6 +81,16 @@ public class Product {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	@OneToMany(mappedBy="product")
+	public List<OPAssociation> getOrders() {
+		if(this.orders == null)
+		       this.orders = new ArrayList<>();
+		return orders;
+	}
+	public void setOrders(List<OPAssociation> orders) {
+		this.orders = orders;
 	}
 
 }

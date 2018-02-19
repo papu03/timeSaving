@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ordine {
@@ -19,6 +20,8 @@ public class Ordine {
 	private List<User> users = new ArrayList<User>();
 	private Pub local;
 	
+	private List<OPAssociation> products;
+
 
 	@Id
 	@GeneratedValue
@@ -49,7 +52,29 @@ public class Ordine {
 		this.local = local;
 	}
 	
+	@OneToMany(mappedBy="order")
+	public List<OPAssociation> getProducts() {
+		return products;
+	}
+	public void setProducts(List<OPAssociation> products) {
+		this.products = products;
+	}
 	
+	public OPAssociation addProduct(Product product, int quantity) {
+		OPAssociation association = new OPAssociation();
+	    association.setProduct(product);
+	    association.setOrder(this);
+	    association.setIdProduct(product.getIdProduct());
+	    association.setIdOrder(this.getIdOrdine());
+	    association.setQuantity(quantity);
+	    if(this.products == null)
+	       this.products = new ArrayList<>();
+	    
+	    this.products.add(association);
+	    product.getOrders().add(association);
+	    
+	    return association;
+	  }
 	
 	
 	

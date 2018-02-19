@@ -3,22 +3,24 @@ package it.unifi.swa.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
 
-@Embeddable
 public class OrderProduct implements Serializable{
 
 	private int idOrder;
 	private int idProduct;
 	
-	public OrderProduct(){
-		
-	}
+	public int hashCode() {
+	    return (int)(idProduct + idOrder);
+	  }
+
+	  public boolean equals(Object object) {
+	    if (object instanceof OrderProduct) {
+	    	OrderProduct otherId = (OrderProduct) object;
+	      return (otherId.idProduct == this.idProduct) && (otherId.idOrder == this.idOrder);
+	    }
+	    return false;
+	  }
 	
-	public OrderProduct(int idOrder,int idProduct){
-		this.idOrder=idOrder;
-		this.idProduct=idProduct;
-	}
 
 	public int getIdOrder() {
 		return idOrder;

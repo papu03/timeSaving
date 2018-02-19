@@ -86,12 +86,15 @@ public class StartupBean {
 //		undicesimo.setIndirizzo("Via prulli di sopra");
 //		undicesimo.setMenu(menu);
         Operator cuoco = new Operator();
-        cuoco.setIdUser(1);
+        //cuoco.setIdUser(1);
         cuoco.setLocal(pub);
+        cuoco.setoType(2);
 
         Operator barista = new Operator();
-        barista.setIdUser(2);
+        //barista.setIdUser(2);
         barista.setLocal(pub);
+        barista.setoType(1);
+
         
         
         Product moretti = new Product();
@@ -187,6 +190,9 @@ public class StartupBean {
         pubDao.save(pub3);
         pubDao.save(pub4);
         
+        operatorDao.save(barista);
+        operatorDao.save(cuoco);
+
     }
 
 }

@@ -12,7 +12,9 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import it.unifi.swa.dao.ClientDAO;
+import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.domain.Client;
+import it.unifi.swa.domain.Ordine;
 
 @Dependent
 public class BaseStrategy implements Serializable {
@@ -24,6 +26,8 @@ public class BaseStrategy implements Serializable {
 	@Inject
 	private ClientDAO clientDao;
 	
+	@Inject
+	private OrderDAO orderDao;
 	
 	private Client client;
 	
@@ -36,10 +40,16 @@ public class BaseStrategy implements Serializable {
 	}
 	
 	@Transactional
-	public void save(Client client) {
+	public void saveClient(Client client) {
 
 		//System.out.println("Il cognome: "+client.getSurname());
 		clientDao.save(client);
+	}
+	
+	@Transactional
+	public void saveOrder(Ordine order) {
+
+		orderDao.save(order);
 	}
 	
 	public void getClientById(int id){

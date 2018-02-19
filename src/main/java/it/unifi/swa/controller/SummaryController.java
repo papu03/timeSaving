@@ -12,7 +12,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import it.unifi.swa.bean.BasketBean;
+import it.unifi.swa.bean.SelectPubBean;
+import it.unifi.swa.bean.UserSessionBean;
+import it.unifi.swa.controller.strategy.BaseStrategy;
+import it.unifi.swa.dao.OrderDAO;
+import it.unifi.swa.domain.Operator;
+import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
+import it.unifi.swa.domain.Pub;
+import it.unifi.swa.domain.User;
 
 @Named
 @ViewScoped
@@ -20,6 +28,18 @@ public class SummaryController implements Serializable {
 
 	@Inject
 	private BasketBean basketBean;
+	
+	@Inject
+	private SelectPubBean selectPubBean;
+	
+	@Inject
+	private UserSessionBean userSessionBean;
+	
+	@Inject
+	private BaseStrategy baseStrategy;
+	
+	@Inject
+	private OrderDAO orderDao;
 
 	private List<Product> productList;
 	private Map<Product, Integer> basket;
@@ -68,8 +88,30 @@ public class SummaryController implements Serializable {
 		return "edit";
 	}
 	
-	public String toDetailOrder(){
+	public String saveOrder(){
+		User client=userSessionBean.getUser();
+		Pub pub=selectPubBean.getPub();
 		
+		boolean isFood=false;
+		boolean isDrink=false;
+		
+		for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
+			
+			if(entry.getKey().getTpProduct()=='f'){
+				isFood=true;
+			}
+			if(entry.getKey().getTpProduct()=='d'){
+				isDrink=true;
+			}
+		}
+		
+		//orderDao.insertOrder(client,pub,isFood,isDrink);
+		Ordine ord= new Ordine();
+
+		ord.getUsers().add(client);
+		ord.setLocal(pub);
+		baseStrategy.saveOrder(ord);
+		//orderDao.update(ord);
 		return "detailOrder";
 	}
 
