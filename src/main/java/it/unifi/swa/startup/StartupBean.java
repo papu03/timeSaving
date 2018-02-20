@@ -7,6 +7,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
+import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.ClientDAO;
 import it.unifi.swa.dao.MenuDAO;
 import it.unifi.swa.dao.OperatorDAO;
@@ -37,8 +38,6 @@ public class StartupBean {
     @Inject
     PubDAO pubDao;
     
-   
-    
     private List<Pub> pubList;
 
     @PostConstruct
@@ -59,24 +58,24 @@ public class StartupBean {
         menu.setDescr("Menu favoloso!!!");
 
         Pub pub = new Pub();
-        pub.setIdLocale(1);
+        //pub.setIdLocale(1);
         pub.setIndirizzo("Via la polizia 69");
         pub.setNome("Beautiful Pub");
 
         Pub pub2 = new Pub();
-        pub2.setIdLocale(2);
+        //pub2.setIdLocale(2);
         pub2.setIndirizzo("Via di qui 22");
         pub2.setNome("Pub Rivederci");
         pub2.setDescrizione("Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.");
         pub2.setMenu(menu);
         
         Pub pub3 = new Pub();
-        pub3.setIdLocale(3);
+        //pub3.setIdLocale(3);
         pub3.setIndirizzo("Via verdi 59");
         pub3.setNome("Pub Lo Picasso");
 
         Pub pub4 = new Pub();
-        pub4.setIdLocale(4);
+        //pub4.setIdLocale(4);
         pub4.setIndirizzo("Via kal 124");
         pub4.setNome("Pub Rivederci");
 
@@ -86,13 +85,13 @@ public class StartupBean {
 //		undicesimo.setIndirizzo("Via prulli di sopra");
 //		undicesimo.setMenu(menu);
         Operator cuoco = new Operator();
-        //cuoco.setIdUser(1);
-        cuoco.setLocal(pub);
+        //cuoco.setIdUser(300);
+        cuoco.setLocal(pub2);
         cuoco.setoType(2);
 
         Operator barista = new Operator();
-        //barista.setIdUser(2);
-        barista.setLocal(pub);
+        //barista.setIdUser(400);
+        barista.setLocal(pub2);
         barista.setoType(1);
 
         
@@ -149,6 +148,7 @@ public class StartupBean {
         Client papu = new Client();
         papu.setUsername("papu");
         papu.setPassword("password");
+        //papu.setIdUser(152);
         
         Client ale= new Client();
 		ale.setName("Alessandro");
@@ -175,6 +175,7 @@ public class StartupBean {
 
         clientDao.save(papu);
 
+        
         menuDao.save(menu);
         productDao.save(moretti);
         productDao.save(tennets);

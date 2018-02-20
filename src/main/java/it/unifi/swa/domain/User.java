@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -22,11 +23,12 @@ public class User {
 	private int idUser;
 	private String username;
 	private String password;
-	private List<Ordine> orders = new ArrayList<Ordine>();
+	//private List<Ordine> orders = new ArrayList<Ordine>();
+	private List<UserAssociation> orders;
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getIdUser() {
 		return idUser;
 	}
@@ -46,16 +48,27 @@ public class User {
 		this.username = username;
 	}
 	
-	@ManyToMany 
-	@JoinTable(name="JOIN_ORDINE_USER",
-				joinColumns={@JoinColumn(name="idUser")},
-				inverseJoinColumns={@JoinColumn(name="idOrdine")})
-	public List<Ordine> getOrders() {
+//	@ManyToMany 
+//	@JoinTable(name="JOIN_ORDINE_USER",
+//				joinColumns={@JoinColumn(name="idUser")},
+//				inverseJoinColumns={@JoinColumn(name="idOrdine")})
+//	public List<Ordine> getOrders() {
+//		return orders;
+//	}
+//	public void setOrders(List<Ordine> orders) {
+//		this.orders = orders;
+//	}
+	
+//	@OneToMany(targetEntity=UserAssociation.class, mappedBy="user",
+//			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="user")
+	public List<UserAssociation> getOrders() {
+		if(this.orders == null)
+		       this.orders = new ArrayList<>();
 		return orders;
 	}
-	public void setOrders(List<Ordine> orders) {
+	public void setOrders(List<UserAssociation> orders) {
 		this.orders = orders;
 	}
-	
 	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,14 +18,15 @@ import javax.persistence.OneToMany;
 public class Ordine {
 
 	private int idOrdine;
-	private List<User> users = new ArrayList<User>();
+	//private List<User> users = new ArrayList<User>();
 	private Pub local;
 	
 	private List<OPAssociation> products;
+	private List<UserAssociation> users;
 
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getIdOrdine() {
 		return idOrdine;
 	}
@@ -32,17 +34,17 @@ public class Ordine {
 		this.idOrdine = idOrdine;
 	}
 	
-	@ManyToMany 
-	@JoinTable(name="JOIN_ORDINE_USER",
-				joinColumns={@JoinColumn(name="idOrdine")},
-				inverseJoinColumns={@JoinColumn(name="idUser")})
-	public List<User> getUsers() {
-		return users;
-	}
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-	
+//	@ManyToMany 
+//	@JoinTable(name="JOIN_ORDINE_USER",
+//				joinColumns={@JoinColumn(name="idOrdine")},
+//				inverseJoinColumns={@JoinColumn(name="idUser")})
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
+//	
 	@ManyToOne
 	@JoinColumn(name="idLocale_FK")
 	public Pub getLocal() {
@@ -76,6 +78,30 @@ public class Ordine {
 	    return association;
 	  }
 	
+//	@OneToMany(targetEntity=UserAssociation.class, mappedBy="order",
+//			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="order")
+	public List<UserAssociation> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserAssociation> users) {
+		this.users = users;
+	}
+	
+	public UserAssociation addUser(User user) {
+	    UserAssociation association = new UserAssociation();
+	    association.setUser(user);
+	    association.setOrder(this);
+	    association.setIdUser(user.getIdUser());
+	    association.setIdOrdine(this.getIdOrdine());
+	    if(this.users == null)
+	       this.users = new ArrayList<>();
+	    
+	    this.users.add(association);
+	    user.getOrders().add(association);
+	    
+	    return association;
+	  }
 	
 	
 

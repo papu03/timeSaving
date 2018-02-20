@@ -21,40 +21,59 @@ public class OrderDAO extends BaseDao<Ordine>{
 		super(Ordine.class);
 	}
 	
-	public void insertOrder(User client,Pub pub,boolean isFood,boolean isDrink){
-		Ordine ord= new Ordine();
-		List<Operator> cook = null;
+	
+//	public void insertOrder(User client,Pub pub,boolean isFood,boolean isDrink){
+//		Ordine ord= new Ordine();
+//		List<Operator> cook = null;
+//		List<Operator> barman = null;
+//
+//		ord.getUsers().add(client);
+//		ord.setLocal(pub);
+//
+//		if(isFood){
+//			try {
+//				cook = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
+//						.setParameter("oType", 2).getResultList();
+//				ord.getUsers().add(cook.get(0));
+//
+//			} catch (Exception ex) {
+//				ex.printStackTrace();
+//			}
+//		}
+//		
+//		if(isDrink){
+//			try {
+//				barman = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
+//						.setParameter("oType", 1).getResultList();
+//
+//				ord.getUsers().add(barman.get(0));
+//
+//			} catch (Exception ex) {
+//				ex.printStackTrace();
+//			}
+//		}
+//
+//
+//		//this.save(ord);
+//		this.saveOrder(ord);
+//		//System.out.println(barman.get(0));
+//	}
+	
+	public List<Operator> getBarman(){
 		List<Operator> barman = null;
 
-		ord.getUsers().add(client);
-		ord.setLocal(pub);
+		try {
+			barman = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
+					.setParameter("oType", 1).getResultList();
 
-		if(isFood){
-			try {
-				cook = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
-						.setParameter("oType", 2).getResultList();
-				ord.getUsers().add(cook.get(0));
 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		
-		if(isDrink){
-			try {
-				barman = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
-						.setParameter("oType", 1).getResultList();
+		return barman;
 
-				ord.getUsers().add(barman.get(0));
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		this.saveOrder(ord);
-		//System.out.println(barman.get(0));
 	}
+	
 	
 	@Transactional
 	public void saveOrder(Ordine order) {

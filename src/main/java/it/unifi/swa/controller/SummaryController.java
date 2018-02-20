@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import it.unifi.swa.bean.BasketBean;
 import it.unifi.swa.bean.SelectPubBean;
@@ -21,6 +22,7 @@ import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
 import it.unifi.swa.domain.User;
+import it.unifi.swa.domain.UserAssociation;
 
 @Named
 @ViewScoped
@@ -88,6 +90,7 @@ public class SummaryController implements Serializable {
 		return "edit";
 	}
 	
+	@Transactional
 	public String saveOrder(){
 		User client=userSessionBean.getUser();
 		Pub pub=selectPubBean.getPub();
@@ -107,10 +110,28 @@ public class SummaryController implements Serializable {
 		
 		//orderDao.insertOrder(client,pub,isFood,isDrink);
 		Ordine ord= new Ordine();
-
-		ord.getUsers().add(client);
 		ord.setLocal(pub);
+		
+//		ord.getUsers().add(client);
+//		
 		baseStrategy.saveOrder(ord);
+
+		List<Operator> barman=  orderDao.getBarman();
+		Operator op= new Operator();
+		op=barman.get(0);
+
+		//System.out.println("Locale ------------------"+op.getLocal().getNome());
+		//Operator op2=baseStrategy.getOperator(op);
+		//baseStrategy.saveOperator(op);
+		UserAssociation a1=ord.addUser(client);
+		UserAssociation a2=ord.addUser(op);
+
+		//System.out.println("op order ------------------"+op.getOrders().get(0).getIdUser());
+
+		baseStrategy.saveUserAsso(a1);
+		baseStrategy.saveUserAsso(a2);
+
+//		baseStrategy.updateOrder(ord);
 		//orderDao.update(ord);
 		return "detailOrder";
 	}
