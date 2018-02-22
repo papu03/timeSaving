@@ -15,6 +15,11 @@ import it.unifi.swa.domain.Product;
 @Named
 public class BasketBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Map<Product, Integer> basket = new HashMap<Product, Integer>();
 
 	public Map<Product, Integer> getBasket() {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Lista ordini</title>
+</h:head>
+
+
+<h:body>
+	<f:view>
+		<h:form>
+			<h:panelGroup>
+				<ui:repeat value="#{orderListController.orderList}" var="order"
+					varStatus="status">
+					<h:panelGrid columns="1">
+						<h:outputLabel value="Order ID " style="color: cadetblue" />
+						<h:outputText value="#{order.idOrder}" />
+					</h:panelGrid>
+
+
+					<h:panelGrid columns="1">
+					
+						<h:commandButton value="Dettagli ordine" action="#{orderListController.toDetailOrder(order)}" />
+											
+					</h:panelGrid>
+					
+
+				</ui:repeat>
+
+
+			</h:panelGroup>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

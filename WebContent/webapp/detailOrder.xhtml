@@ -3,20 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Dettagli ordine</title>
-	<script type="text/javascript">	</script>
+	<script type="text/javascript">
+		
+	</script>
 </h:head>
 
 <h:body>
 	<f:view>
 		<h:form>
-			<h:panelGroup>
+			<c:forEach items="#{detailOrderController.qntProductMap}" var="entry">
+				<li>Prodotto: #{entry.key.prodName}, Quantità: #{entry.value}</li>
+			</c:forEach>
+			<h:commandButton value="I tuoi ordini" action="#{detailOrderController.toOrderList}" />
+			
 
-
-			</h:panelGroup>
 		</h:form>
 	</f:view>
 </h:body>

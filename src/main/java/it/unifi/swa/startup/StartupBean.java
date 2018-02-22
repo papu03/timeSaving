@@ -87,12 +87,12 @@ public class StartupBean {
         Operator cuoco = new Operator();
         //cuoco.setIdUser(300);
         cuoco.setLocal(pub2);
-        cuoco.setoType(2);
+        cuoco.setoType('c');
 
         Operator barista = new Operator();
         //barista.setIdUser(400);
         barista.setLocal(pub2);
-        barista.setoType(1);
+        barista.setoType('b');
 
         
         

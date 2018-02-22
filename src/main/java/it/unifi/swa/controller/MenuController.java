@@ -21,9 +21,6 @@ import javax.inject.Named;
 @ViewScoped
 public class MenuController implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -107,7 +104,7 @@ public class MenuController implements Serializable {
 	
 	public String toSelectPub() {
 		selectPubBean.setPub(null);
-		return "selectPub";
+		return "selectPub?&faces-redirect=true";
  	}
 	
 //	public String toSummaryPage() {
@@ -124,7 +121,7 @@ public class MenuController implements Serializable {
 	
 	public String toSummaryPage() {
 		basketBean.setBasket(basket);
-		return "summary";
+		return "summary?&faces-redirect=true";
  	}
 
 	public Map<Product, Integer> getBasket() {

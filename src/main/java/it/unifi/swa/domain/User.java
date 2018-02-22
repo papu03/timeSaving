@@ -4,15 +4,14 @@ package it.unifi.swa.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 
@@ -59,9 +58,9 @@ public class User {
 //		this.orders = orders;
 //	}
 	
-//	@OneToMany(targetEntity=UserAssociation.class, mappedBy="user",
-//			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@OneToMany(mappedBy="user")
+	//@OneToMany(mappedBy="user")
+	@OneToMany(targetEntity=UserAssociation.class, mappedBy="utente",
+			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	public List<UserAssociation> getOrders() {
 		if(this.orders == null)
 		       this.orders = new ArrayList<>();

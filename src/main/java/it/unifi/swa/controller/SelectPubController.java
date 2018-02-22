@@ -13,23 +13,25 @@ import it.unifi.swa.domain.Pub;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author Alessandro
- */
+
 @Named
-@SessionScoped
+@ViewScoped
 public class SelectPubController implements Serializable {
 
-    @Inject
+  
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private PubDAO pubDao;
     @Inject
     private MenuDAO menuDao;
     @Inject
     private SelectPubBean selectPubBean;
+    
     private Pub selectedPub;
     private List<Pub> pubList;
 

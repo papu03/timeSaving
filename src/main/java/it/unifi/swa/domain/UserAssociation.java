@@ -14,49 +14,49 @@ public class UserAssociation {
 	
 
 	@Id
-	private int idUser;
+	private int utenteId;
 	
 	@Id
-	private int idOrdine;
+	private int ordineId;
 	
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name="IdUser", referencedColumnName="idUser")
-	private User user;
+	@PrimaryKeyJoinColumn(name="IDUSER", referencedColumnName="idUser")
+	private User utente;
 
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name="IdOrder", referencedColumnName="idOrdine")
-	private Ordine order;
+	@PrimaryKeyJoinColumn(name="IDORDINE", referencedColumnName="idOrder")
+	private Ordine ordine;
 
-	public int getIdUser() {
-		return idUser;
+	public int getUtenteId() {
+		return utenteId;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUtenteId(int utenteId) {
+		this.utenteId = utenteId;
 	}
 
-	public int getIdOrdine() {
-		return idOrdine;
+	public int getOrdineId() {
+		return ordineId;
 	}
 
-	public void setIdOrdine(int idOrdine) {
-		this.idOrdine = idOrdine;
+	public void setOrdineId(int ordineId) {
+		this.ordineId = ordineId;
 	}
 
-	public User getUser() {
-		return user;
+	public User getUtente() {
+		return utente;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUtente(User utente) {
+		this.utente = utente;
 	}
 
-	public Ordine getOrder() {
-		return order;
+	public Ordine getOrdine() {
+		return ordine;
 	}
 
-	public void setOrder(Ordine order) {
-		this.order = order;
+	public void setOrdine(Ordine ordine) {
+		this.ordine = ordine;
 	}
 
 }

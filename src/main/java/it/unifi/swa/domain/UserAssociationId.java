@@ -4,33 +4,37 @@ import java.io.Serializable;
 
 public class UserAssociationId implements Serializable {
 	
-	private int idUser;
-	private int idOrdine;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int utenteId;
+	private int ordineId;
 	
 	public int hashCode() {
-	    return (int)(idUser + idOrdine);
+	    return (int)(utenteId + ordineId);
 	  }
 
 	  public boolean equals(Object object) {
 	    if (object instanceof UserAssociationId) {
 	    	UserAssociationId otherId = (UserAssociationId) object;
-	      return (otherId.idUser == this.idUser) && (otherId.idOrdine == this.idOrdine);
+	      return (otherId.utenteId == this.utenteId) && (otherId.ordineId == this.ordineId);
 	    }
 	    return false;
 	  }
 	
 	
-	public int getIdUser() {
-		return idUser;
+	public int getUtenteId() {
+		return utenteId;
 	}
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUtenteId(int utenteId) {
+		this.utenteId = utenteId;
 	}
-	public int getIdOrdine() {
-		return idOrdine;
+	public int getOrdineId() {
+		return ordineId;
 	}
-	public void setIdOrdine(int idOrdine) {
-		this.idOrdine = idOrdine;
+	public void setOrdineId(int ordineId) {
+		this.ordineId = ordineId;
 	}
 
 

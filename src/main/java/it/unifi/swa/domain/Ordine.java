@@ -4,20 +4,20 @@ package it.unifi.swa.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Ordine {
 
-	private int idOrdine;
+	private int idOrder;
 	//private List<User> users = new ArrayList<User>();
 	private Pub local;
 	
@@ -27,11 +27,11 @@ public class Ordine {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getIdOrdine() {
-		return idOrdine;
+	public int getIdOrder() {
+		return idOrder;
 	}
-	public void setIdOrdine(int idOrdine) {
-		this.idOrdine = idOrdine;
+	public void setIdOrder(int idOrder) {
+		this.idOrder = idOrder;
 	}
 	
 //	@ManyToMany 
@@ -54,7 +54,7 @@ public class Ordine {
 		this.local = local;
 	}
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany( mappedBy="order")
 	public List<OPAssociation> getProducts() {
 		return products;
 	}
@@ -67,7 +67,7 @@ public class Ordine {
 	    association.setProduct(product);
 	    association.setOrder(this);
 	    association.setIdProduct(product.getIdProduct());
-	    association.setIdOrder(this.getIdOrdine());
+	    association.setIdOrder(this.getIdOrder());
 	    association.setQuantity(quantity);
 	    if(this.products == null)
 	       this.products = new ArrayList<>();
@@ -78,9 +78,9 @@ public class Ordine {
 	    return association;
 	  }
 	
-//	@OneToMany(targetEntity=UserAssociation.class, mappedBy="order",
-//			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@OneToMany(mappedBy="order")
+	//@OneToMany(mappedBy="ordine")
+	@OneToMany(targetEntity=UserAssociation.class, mappedBy="ordine",
+			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	public List<UserAssociation> getUsers() {
 		return users;
 	}
@@ -90,10 +90,10 @@ public class Ordine {
 	
 	public UserAssociation addUser(User user) {
 	    UserAssociation association = new UserAssociation();
-	    association.setUser(user);
-	    association.setOrder(this);
-	    association.setIdUser(user.getIdUser());
-	    association.setIdOrdine(this.getIdOrdine());
+	    association.setUtente(user);
+	    association.setOrdine(this);
+	    association.setUtenteId(user.getIdUser());
+	    association.setOrdineId(this.getIdOrder());
 	    if(this.users == null)
 	       this.users = new ArrayList<>();
 	    

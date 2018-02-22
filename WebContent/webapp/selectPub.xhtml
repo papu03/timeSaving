@@ -10,7 +10,7 @@
     <h:body>
         <f:view>
             <h:form>
-                <!--  <h:outputLabel value="Benvenuto #{userSessionBean.user.username}" style="color: cadetblue"/>-->
+                <h:outputLabel value="Benvenuto #{userSessionBean.user.username}" style="color: cadetblue"/>
                 <ui:repeat value="#{selectPubController.pubList}" var="pub" varStatus="status">
                     <h:panelGrid columns="4" cellpadding="2" border="1">
                         <h:panelGroup>

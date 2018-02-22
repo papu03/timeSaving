@@ -8,13 +8,13 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Operator extends User{
 
-	private int oType; //1 barista 2 cuoco
+	private char oType; //b barista c cuoco
 	private Pub local;
 	
-	public int getoType() {
+	public char getoType() {
 		return oType;
 	}
-	public void setoType(int oType) {
+	public void setoType(char oType) {
 		this.oType = oType;
 	}
 
