@@ -34,17 +34,17 @@
                 
                 <h:panelGroup>
                     <h:panelGrid columns="2">
-                        <h:outputLabel value="Locale Name" style="color: cadetblue" />
-                        <h:outputText value="#{selectPubController.selectedPub.nome}"/>
+                        <h:outputLabel value="Info Locale " style="color: cadetblue" />
+                        <h:outputText value="#{pubInfoController.selectedPub.nome}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="1">
                         <h:outputLabel value="Description" style="color: cadetblue" />
                     </h:panelGrid>
                     <h:panelGrid columns="1">
-                        <h:inputTextarea value="#{selectPubController.selectedPub.descrizione}" id="textAreaDescrizione" disabled="true" style="width: 500px; height: 100px;" a:maxlength="255"/>
+                        <h:inputTextarea value="#{pubInfoController.selectedPub.descrizione}" id="textAreaDescrizione" disabled="true" style="width: 500px; height: 100px;" a:maxlength="255"/>
                     </h:panelGrid>
                     <h:panelGrid columns="2" >
-                        <h:commandButton value="Back" action="selectPub"/> 
+                        <h:commandButton value="Back" action="#{pubInfoController.toSelectPub}"/> 
                         <h:commandButton id="modifyButton"  value="Modify" onclick="editDescription();" type="reset"/> 
                     </h:panelGrid>
                 </h:panelGroup>

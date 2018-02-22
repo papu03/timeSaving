@@ -1,20 +1,20 @@
 package it.unifi.swa.controller;
 
-import it.unifi.swa.bean.BasketBean;
-import it.unifi.swa.bean.SelectPubBean;
-import it.unifi.swa.dao.MenuDAO;
-import it.unifi.swa.domain.Product;
-import it.unifi.swa.domain.Pub;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import it.unifi.swa.bean.BasketBean;
+import it.unifi.swa.bean.ProductBean;
+import it.unifi.swa.bean.SelectPubBean;
+import it.unifi.swa.dao.MenuDAO;
+import it.unifi.swa.domain.Product;
 
 
 @Named
@@ -28,16 +28,22 @@ public class MenuController implements Serializable {
 
 	@Inject
 	private BasketBean basketBean;
+	
+	@Inject
+	private ProductBean productBean;
 
 	@Inject
 	private MenuDAO menuDAO;
 
 	private List<Product> productList;
 	private Map<Product, Integer> basket;
+    private Product selectedProduct;
+
 
 	@PostConstruct
 	public void init() {
 		System.out.println("Init Menu Controller");
+		System.out.println("name pub "+selectPubBean.getPub().getNome());
 
 		basket = new HashMap<Product, Integer>();
 
@@ -103,7 +109,6 @@ public class MenuController implements Serializable {
 	}
 	
 	public String toSelectPub() {
-		selectPubBean.setPub(null);
 		return "selectPub?&faces-redirect=true";
  	}
 	
@@ -123,6 +128,13 @@ public class MenuController implements Serializable {
 		basketBean.setBasket(basket);
 		return "summary?&faces-redirect=true";
  	}
+	
+	public String showProductDetails(){
+		
+		productBean.initConversation();
+		productBean.setProduct(selectedProduct);
+		return "product?faces-redirect=true";
+	}
 
 	public Map<Product, Integer> getBasket() {
 		return basket;
@@ -130,5 +142,13 @@ public class MenuController implements Serializable {
 
 	public void setBasket(Map<Product, Integer> basket) {
 		this.basket = basket;
+	}
+
+	public Product getSelectedProduct() {
+		return selectedProduct;
+	}
+
+	public void setSelectedProduct(Product selectedProduct) {
+		this.selectedProduct = selectedProduct;
 	}
 }

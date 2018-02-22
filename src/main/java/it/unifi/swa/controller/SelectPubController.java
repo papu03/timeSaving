@@ -5,6 +5,7 @@
  */
 package it.unifi.swa.controller;
 
+import it.unifi.swa.bean.PubBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.dao.MenuDAO;
 import it.unifi.swa.dao.PubDAO;
@@ -32,6 +33,9 @@ public class SelectPubController implements Serializable {
     @Inject
     private SelectPubBean selectPubBean;
     
+    @Inject
+    private PubBean pubBean;
+    
     private Pub selectedPub;
     private List<Pub> pubList;
 
@@ -45,6 +49,8 @@ public class SelectPubController implements Serializable {
 
     public String showInfo() {
 
+    	pubBean.initConversation();
+    	pubBean.setSelectedPub(selectedPub);
         return "pubInfo?&faces-redirect=true";
 
     }

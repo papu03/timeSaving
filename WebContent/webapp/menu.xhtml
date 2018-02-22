@@ -46,10 +46,10 @@
 						</ui:repeat>
 					</h:panelGrid>
 					<h:panelGrid>
-						<h:commandButton value="Details"
-							action="product?faces-redirect=true">
+						<h:commandButton value="Dettagli prodotto"
+							action="#{menuController.showProductDetails}">
 							<f:setPropertyActionListener value="#{product}"
-								target="#{productController.selectedProduct}" />
+								target="#{menuController.selectedProduct}" />
 						</h:commandButton>
 					</h:panelGrid>
 					<br />

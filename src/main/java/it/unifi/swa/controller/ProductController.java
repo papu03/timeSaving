@@ -6,24 +6,44 @@
 package it.unifi.swa.controller;
 
 import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import it.unifi.swa.bean.ProductBean;
 import it.unifi.swa.domain.Product;
 
-/**
- *
- * @author Alessandro
- */
+
 @Named
-@SessionScoped
+@ViewScoped
 public class ProductController implements Serializable {
 
     
-    private Product selectedProduct;
-    private String qnt;
-    
+	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private ProductBean productBean;
+	
+    private Product selectedProduct;
+    
+    
+	@PostConstruct
+	public void init() {
+		System.out.println("Init Product Controller");
+		selectedProduct=productBean.getProduct();
+		//System.out.println("Immagine: "+selectedProduct.getImage());
+	}
+
+	public String toMenu(){
+
+		productBean.endConversation();
+		return "menu?&faces-redirect=true";
+		
+	}
+	
     public Product getSelectedProduct() {
         return selectedProduct;
     }
@@ -32,21 +52,7 @@ public class ProductController implements Serializable {
         this.selectedProduct = selectedProduct;
     }
     
-    public int addItem(){
-    	return 1;
-    	//selectedProduct.setQuantity(selectedProduct.getQuantity()+1); 
-    	//System.out.println("La quantità di "+selectedProduct.getProdName()+ " è "+ selectedProduct.getQuantity());
-    	//return "menu";
-    	
-    }
-
-	public String getQnt() {
-		return qnt;
-	}
-
-	public void setQnt(String qnt) {
-		this.qnt = qnt;
-	}
+    
     
   
 }
