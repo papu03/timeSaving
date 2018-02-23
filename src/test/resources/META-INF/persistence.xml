@@ -5,19 +5,28 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
  http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-	<persistence-unit name="persistent-1"
+	<persistence-unit name="test-1"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+	
+		<class>it.unifi.swa.domain.Menu</class>
+		<class>it.unifi.swa.domain.Pub</class>
+	    <class>it.unifi.swa.domain.Product</class>
+		<class>it.unifi.swa.domain.Operator</class>
+		<class>it.unifi.swa.domain.Ordine</class>
 		<class>it.unifi.swa.domain.User</class>
 		<class>it.unifi.swa.domain.Client</class>
 		<class>it.unifi.swa.domain.Operator</class>
-		<class>java.lang.String</class>
+		<class>it.unifi.swa.domain.OPAssociation</class>
+		<class>it.unifi.swa.domain.UserAssociation</class>
+		
+		
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/saltaCodaDB" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/timeSavingTestDB" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
 			<property name="hibernate.show_sql" value="false" />

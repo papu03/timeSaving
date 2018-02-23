@@ -57,8 +57,13 @@ public class LoginController {
         return "selectPub?&faces-redirect=true";
     }
     
-    public void caricaPub(){
-        
+    public String logOut() {
+
+        userSession.setUser(null);
+        userSession.setType(4);
+
+        return "login?&faces-redirect=true";
+
     }
 
     public String getUsername() {

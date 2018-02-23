@@ -1,6 +1,7 @@
 package it.unifi.swa.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,17 +38,23 @@ public class Menu {
 	public int getIdProdByName(String prodName){
 		
 		int id= 0;
-		for(Product p: products){
-			if(prodName.equals(p.getProdName())){
-				id=p.getIdProduct();
+		if(!products.isEmpty()){
+			for(Product p: products){
+				if(prodName.equals(p.getProdName())){
+					id=p.getIdProduct();
+				}
 			}
 		}
 		return id;
 	}
 	
+	
 	@OneToMany(targetEntity=Product.class, mappedBy="menu",
 			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	public List<Product> getProducts() {
+		if(this.products == null){
+			products=new ArrayList<>();
+		}
 		return products;
 	}
 	public void setProducts(List<Product> products) {
