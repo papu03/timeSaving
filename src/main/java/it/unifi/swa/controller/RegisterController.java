@@ -4,22 +4,18 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.unifi.swa.controller.strategy.BaseStrategy;
+import it.unifi.swa.dao.ClientDAO;
 import it.unifi.swa.domain.Client;
 
 @Named
 @SessionScoped
 public class RegisterController implements Serializable {
 
-    /*
-	 * i controller che devono modificare e persistere entità sul database
-	 * utilizzano l’annotazione @ViewScoped,che li tiene in vita fintanto che la
-	 * pagina web rimane attiva.
-	 * 
-     */
+    
     private static final long serialVersionUID = 1L;
 
     private Client client;
@@ -31,13 +27,11 @@ public class RegisterController implements Serializable {
     private String password_check;
     private String username;
 
+//    @Inject
+//    private BaseStrategy strategy;
     @Inject
-    private BaseStrategy strategy;
+    private ClientDAO clientDao;
 
-    @PostConstruct
-    public void init() {
-
-    }
 
     public String register() {
         
@@ -56,15 +50,10 @@ public class RegisterController implements Serializable {
 
         // System.out.println("il nome è "+client.getName()+" il cognome
         // "+cognome );
-        strategy.saveClient(client);
+        clientDao.saveClient(client);
         return "success?&faces-redirect=true";
     }
 
-    public String testById(int id) {
-        strategy.getClientById(id);
-        return "success?&faces-redirect=true";
-
-    }
 
     public Client getClient() {
         return client;
@@ -122,13 +111,6 @@ public class RegisterController implements Serializable {
         this.username = username;
     }
 
-    public BaseStrategy getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(BaseStrategy strategy) {
-        this.strategy = strategy;
-    }
    
     public String getPassword_check() {
         return password_check;
