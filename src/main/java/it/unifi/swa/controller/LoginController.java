@@ -37,16 +37,29 @@ public class LoginController {
         userData.setUsername(username);
         userData.setPassword(password);
 
-        User loggedUser = clientDao.findByLoginInfo(userData);
+        User loggedUser = null;
+        
+        try{
+            loggedUser = clientDao.findByLoginInfo(userData);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+                
 
         if (loggedUser == null) {
 
-            loggedUser = operatorDao.findByLoginInfo(userData);
+            try{
+                loggedUser = operatorDao.findByLoginInfo(userData);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+            
             if (loggedUser == null) {
                 throw new RuntimeException("Login Failed");
+            }else{
+                userSession.setType(operatorDao.findByLoginInfo(userData).getoType());
             }
 
-            userSession.setType(operatorDao.findByLoginInfo(userData).getoType());
         } else {
             userSession.setType(0);
         }
@@ -54,7 +67,11 @@ public class LoginController {
         userSession.setUser(loggedUser);
         System.out.println(loggedUser.getUsername() + " loggato");
         
-        return "selectPub?&faces-redirect=true";
+        if(userSession.getType() == 0){
+            return "selectPub?&faces-redirect=true";
+        }else{
+            return "orderList?&faces-redirect=true";
+        }
     }
     
     public String logOut() {

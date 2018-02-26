@@ -1,68 +1,112 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Menu</title>
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <title>Menu</title>
 
-	<script type="text/javascript">
-		
-	</script>
+        <style>
 
-</h:head>
-<h:body>
-	<f:view>
-		<h:form id="frmMenu">
-			<h:panelGroup>
-				<ui:repeat value="#{menuController.productList}" var="product"
-					varStatus="status">
-					<h:panelGrid columns="1">
-						<h:outputLabel value="Name: " style="color: cadetblue" />
-						<h:outputText value="#{product.prodName}" />
-					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<h:outputLabel value="Price: " style="color: cadetblue" />
-						<h:outputText value="#{product.price}" />
-					</h:panelGrid>
-					<h:panelGrid columns="3">
-						<h:outputLabel value="Time to Prepare: " style="color: cadetblue" />
-						<h:outputText value="#{product.tmpExe}" />
-						<h:outputLabel value=" mins." />
-					</h:panelGrid>
-					<h:panelGrid columns="4">
-						<h:outputLabel value="Quantity: " style="color: cadetblue" />
+            .scritta{
 
-						<ui:repeat value="#{menuController.basket}" var="map">
-							<h:form>
-								<h:outputText id="qnt" value="#{map[product]}" />
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+            }
 
-								<h:commandButton value="+">
-									<f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>
-								</h:commandButton>
-							</h:form>
-						</ui:repeat>
-					</h:panelGrid>
-					<h:panelGrid>
-						<h:commandButton value="Dettagli prodotto"
-							action="#{menuController.showProductDetails}">
-							<f:setPropertyActionListener value="#{product}"
-								target="#{menuController.selectedProduct}" />
-						</h:commandButton>
-					</h:panelGrid>
-					<br />
-				</ui:repeat>
-				<h:panelGrid columns="1">
-					<h:commandButton value="Back" action="#{menuController.toSelectPub}" />
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<h:commandButton value="Procedi ordine" action="#{menuController.toSummaryPage}" />
-				</h:panelGrid>
+            .riquadro{
+                width: 280px;
+                height: 160px;             
+                display: inline;
 
-			</h:panelGroup>
-		</h:form>
-	</f:view>
-</h:body>
+            }
+
+            .riquadrino{
+                width: 280px;
+
+            }
+
+            .pulsantiera{
+                position: relative;
+                top: 3%;
+                margin-bottom: 1%;
+                padding-left: 3%;
+                display: inline;
+            }
+
+            .quantita{
+
+                width: 600px;
+                display: inline;
+
+            }
+
+            #menu{
+                margin-left: 10px;
+            }
+
+        </style>
+
+        <script type="text/javascript">
+
+        </script>
+
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="frmMenu">
+                <div id="menu">
+                    <ui:repeat value="#{menuController.productList}" var="product"
+                               varStatus="status">
+                        <div class="riquadro">
+                            <div class="riquadrino">
+                                <h:outputLabel class="scritta" value="Name: " style="color: cadetblue" />
+                                <h:outputText value="#{product.prodName}" />
+                            </div>
+                            <div  class="riquadrino">
+                                <h:outputLabel class="scritta" value="Price: " style="color: cadetblue" />
+                                <h:outputText value="#{product.price}" />
+                            </div>
+                            <div  class="riquadrino">
+                                <h:outputLabel class="scritta" value="Time to Prepare: " style="color: cadetblue" />
+                                <h:outputText value="#{product.tmpExe}" />
+                                <h:outputLabel value=" mins." />
+                            </div>
+                            <div  class="riquadrino">
+                                <div class="quantita">
+                                    <h:outputLabel class="scritta" value="Quantity: " style="color: cadetblue" />
+                                    <h:form>
+                                        <h:outputText class='scritta' id="qnt" value="#{menuController.basket[product]}" />
+
+                                        <div class="pulsantiera">
+                                            <h:commandButton class="w3-button w3-teal w3-circle" value="+">
+                                                <f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>
+                                            </h:commandButton>
+                                            <h:commandButton class="w3-button w3-teal w3-round-medium" value="Details"
+                                                             action="product?faces-redirect=true">
+                                                <f:setPropertyActionListener value="#{product}"
+                                                                             target="#{productController.selectedProduct}" />
+                                            </h:commandButton>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                    <div>
+                        <h:commandButton value="Back" action="#{menuController.toSelectPub}" />
+                    </div>
+                    <div>
+                        <h:commandButton value="Procedi ordine" action="#{menuController.toSummaryPage}" />
+                    </div>
+
+                </div>
+
+            </h:form>
+        </f:view>
+    </h:body>
 </html>

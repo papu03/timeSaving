@@ -4,22 +4,88 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
         <title>Login</title>
+        <style>
+
+            .scritta{
+
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+            }
+            
+            #logo{
+                position: absolute;
+                left: 35%;
+            }
+            
+            #div1{
+                position: absolute;
+                top: 41%;
+                left: 40%;
+                right: 10%;
+                bottom: 10px;
+                    
+            }
+            
+            #divInput1{
+                position: absolute;
+                top: 7%;
+            }
+            
+            #div3{
+                position: absolute;
+                top: 16%;
+            }
+            
+            #divInput2{
+                position: absolute;
+                top: 23%;
+            }
+            
+            #div4{
+                position: absolute;
+                top: 35%;
+                left: 19%;
+            }
+            
+            #div5{
+                position: absolute;
+                bottom: 4%;
+                right: 4%;
+            }
+            
+
+        </style>
     </h:head>
 
     <h:body>
         <f:view>
             <h:form>
-                <h:panelGroup>
-                    <h:panelGrid>
-                        <h:outputLabel value="Username" style="color: cadetblue" />
+                <div id="logo">
+                    <h:graphicImage value="images/jumpQueueLogo.png" width="350"/>
+                </div>
+                <div id="div1">
+                    <div id="div2">
+                        <h:outputLabel class="scritta" value="Username" />
+                    </div>
+                    <div id="divInput1">
                         <h:inputText value="#{loginController.username}"/>
-                        <h:outputLabel value="Password" style="color: cadetblue" />
-                        <h:inputText value="#{loginController.password}"/>
-                        <h:commandButton action="#{loginController.login}" value="Login" /> 
-                    </h:panelGrid>
-                    No account? <h:link value="Sign in" outcome="register" />
-                </h:panelGroup>
+                    </div>
+                    <div id="div3">
+                        <h:outputLabel class="scritta" value="Password"/>
+                    </div>
+                    <div id="divInput2">
+                        <h:inputSecret value="#{loginController.password}"/>
+                    </div>
+                    <div id="div4">
+                        <h:commandButton class="w3-button w3-blue w3-round-xxlarge" action="#{loginController.login}" value="Login" /> 
+                    </div>
+                    <div id="div5">
+                        No account? <h:link value="Sign in" outcome="register" />
+                    </div>
+                </div>
             </h:form>
         </f:view>
     </h:body>

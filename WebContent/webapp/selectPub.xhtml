@@ -5,26 +5,85 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
         <title>Select Pub</title>
+        <style>
+
+            .scritta{
+
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: X-large;
+                color: cadetblue;
+            }
+            
+            .scrittaPub{
+
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: x-large;
+                color: gray;
+                padding-left: 23%;
+            }
+            
+            .riquadro{
+                
+                width: 280px;
+                height: 130px;
+                border-style: solid;
+                border-color: cadetblue;
+                display: block;
+                margin-bottom: 10%;
+                
+            }
+
+            #benvenuto{
+                position: absolute;
+                top: 4%;
+                left: 2%;
+            }   
+
+            #tabella{
+                position: absolute;
+                top: 10%;
+                left: 2%;
+                width: 400px;
+            }
+            
+            .pulsanteInfo{
+                position: relative;
+                top: 33%;
+                padding-left: 5%;
+                margin-left: 9%;
+                display: inline;
+            }
+
+        </style>
     </h:head>
     <h:body>
         <f:view>
             <h:form>
-                <h:outputLabel value="Benvenuto #{userSessionBean.user.username}" style="color: cadetblue"/>
-                <ui:repeat value="#{selectPubController.pubList}" var="pub" varStatus="status">
-                    <h:panelGrid columns="4" cellpadding="2" border="1">
-                        <h:panelGroup>
-                            <h:commandLink value="#{pub.nome}" action="#{selectPubController.select()}">
+                <div id="benvenuto">
+                    <h:outputLabel class="scritta" value="Wellcome #{userSessionBean.user.username}, Select Your Favourite Pub"/>
+                </div>
+                <div id="tabella">
+                    <ui:repeat value="#{selectPubController.pubList}" var="pub" varStatus="status">
+                        <div class="riquadro">
+                            <!--<h:commandLink class="scrittaPub" value="#{pub.nome}" action="#{selectPubController.select()}">
                                 <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
-                            </h:commandLink>
-                        </h:panelGroup>
-                        <h:panelGroup>
-                            <h:commandButton value="info" action="#{selectPubController.showInfo()}">
-                                <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
-                            </h:commandButton>
-                        </h:panelGroup>
-                    </h:panelGrid>
-                </ui:repeat>   
+                            </h:commandLink>-->
+                            <h:outputLabel class="scrittaPub" value="#{pub.nome}"/>
+                            <div class="pulsanteInfo">
+                                <h:commandButton class="w3-button w3-blue w3-round-xxlarge" value="Select" action="#{selectPubController.select()}">
+                                    <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
+                                </h:commandButton>
+                            </div>
+                            <div class="pulsanteInfo">
+                                <h:commandButton class="w3-button w3-blue w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo()}">
+                                    <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>   
+                </div>
             </h:form>
         </f:view>
     </h:body>

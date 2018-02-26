@@ -7,10 +7,11 @@ import javax.inject.Named;
 
 import it.unifi.swa.bean.PubBean;
 import it.unifi.swa.domain.Pub;
+import java.io.Serializable;
 
 @Named
 @ViewScoped
-public class PubInfoController {
+public class PubInfoController implements Serializable {
 
     @Inject
     private PubBean pubBean;
