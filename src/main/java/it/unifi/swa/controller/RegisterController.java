@@ -27,8 +27,6 @@ public class RegisterController implements Serializable {
     private String password_check;
     private String username;
 
-//    @Inject
-//    private BaseStrategy strategy;
     @Inject
     private ClientDAO clientDao;
 

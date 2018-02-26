@@ -18,68 +18,59 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
 @Named
 @ViewScoped
 public class SelectPubController implements Serializable {
 
-  
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
-    private PubDAO pubDao;
-    @Inject
-    private MenuDAO menuDao;
-    @Inject
-    private SelectPubBean selectPubBean;
-    
-    @Inject
-    private PubBean pubBean;
-    
-    private Pub selectedPub;
-    private List<Pub> pubList;
+	private PubDAO pubDao;
 
-    public String select() {
+	@Inject
+	private SelectPubBean selectPubBean;
 
-        selectPubBean.setPub(selectedPub);
+	@Inject
+	private PubBean pubBean;
 
-        return "menu?&faces-redirect=true";
-    }
+	private Pub selectedPub;
+	private List<Pub> pubList;
 
+	public String select() {
 
-    public String showInfo() {
+		selectPubBean.setPub(selectedPub);
 
-    	pubBean.initConversation();
-    	pubBean.setSelectedPub(selectedPub);
-        return "pubInfo?&faces-redirect=true";
+		return "menu?&faces-redirect=true";
+	}
 
-    }
+	public String showInfo() {
 
-    public Pub getSelectedPub() {
-        return selectedPub;
-    }
+		pubBean.initConversation();
+		pubBean.setSelectedPub(selectedPub);
+		return "pubInfo?&faces-redirect=true";
 
-    public void setSelectedPub(Pub selectedPub) {
-        this.selectedPub = selectedPub;
-    }
+	}
 
-    public List<Pub> getPubList() {
-        
-        try {
-            List<Pub> lista = pubDao.getListOfPub();
-            if (!lista.isEmpty()) {
-                this.pubList = lista;
-            }
+	public Pub getSelectedPub() {
+		return selectedPub;
+	}
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-        return pubList;
-    }
+	public void setSelectedPub(Pub selectedPub) {
+		this.selectedPub = selectedPub;
+	}
 
-    public void setPubList(List<Pub> pubList) {
-        this.pubList = pubList;
-    }
-    
+	public List<Pub> getPubList() {
+
+		List<Pub> lista = pubDao.getListOfPub();
+		if (!lista.isEmpty()) {
+			this.pubList = lista;
+		}
+
+		return pubList;
+	}
+
+	public void setPubList(List<Pub> pubList) {
+		this.pubList = pubList;
+	}
+
 }
