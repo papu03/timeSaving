@@ -85,6 +85,7 @@ public class SelectPubControllerTest {
 		Pub p2 = new Pub();
 		pubList.add(p1);
 		pubList.add(p2);
+
 		when(pubDao.getListOfPub()).thenReturn(pubList);
 
 		assertEquals(pubList, selectPubController.getPubList());

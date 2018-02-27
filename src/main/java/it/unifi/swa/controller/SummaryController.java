@@ -52,6 +52,11 @@ public class SummaryController implements Serializable {
 	private Map<Product, Integer> basket;
 	private Map<Product, Integer> basketNotNull;
 
+	private User client;
+	private Pub pub;
+	private boolean isFood;
+	private boolean isDrink;
+	private Ordine ord;
 
 	@PostConstruct
 	public void init() {
@@ -82,13 +87,15 @@ public class SummaryController implements Serializable {
 
 	@Transactional
 	public String saveOrder() {
-		User client = userSessionBean.getUser();
-		Pub pub = selectPubBean.getPub();
+		client = userSessionBean.getUser();
+		pub = selectPubBean.getPub();
 
-		boolean isFood = false;
-		boolean isDrink = false;
+		isFood = false;
+		isDrink = false;
 
 		for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
+
+	         //System.out.println(entry.getKey().getTpProduct() );
 
 			if (entry.getKey().getTpProduct() == 'f') {
 				isFood = true;
@@ -97,8 +104,8 @@ public class SummaryController implements Serializable {
 				isDrink = true;
 			}
 		}
-
-		 Ordine ord=orderDao.insertOrder(pub);
+         //System.out.println(isFood+" "+isDrink);
+		 ord=orderDao.insertOrder(pub);
 		 userAssoDao.insertUserAssociation(ord,client,isFood,isDrink);
 		 orderProductDao.insertProdAssociation(ord, basketNotNull);
 
@@ -119,6 +126,54 @@ public class SummaryController implements Serializable {
 
 	public void setProductList(List<Product> productList) {
 		this.productList = productList;
+	}
+
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
+	}
+
+	public Pub getPub() {
+		return pub;
+	}
+
+	public void setPub(Pub pub) {
+		this.pub = pub;
+	}
+
+	public boolean isFood() {
+		return isFood;
+	}
+
+	public void setFood(boolean isFood) {
+		this.isFood = isFood;
+	}
+
+	public boolean isDrink() {
+		return isDrink;
+	}
+
+	public void setDrink(boolean isDrink) {
+		this.isDrink = isDrink;
+	}
+
+	public Ordine getOrd() {
+		return ord;
+	}
+
+	public void setOrd(Ordine ord) {
+		this.ord = ord;
+	}
+
+	public Map<Product, Integer> getBasketNotNull() {
+		return basketNotNull;
+	}
+
+	public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
+		this.basketNotNull = basketNotNull;
 	}
 
 }

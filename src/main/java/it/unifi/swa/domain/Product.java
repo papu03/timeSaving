@@ -23,7 +23,6 @@ public class Product {
 	private double price;
 	private char tpProduct; // d drink f food
 	private int tmpExe;
-	private int quantity;
 	private String image;
 	
 	private List<OPAssociation> orders;
@@ -71,12 +70,7 @@ public class Product {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+	
 	public String getImage() {
 		return image;
 	}

@@ -1,11 +1,13 @@
 package it.unifi.swa.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +17,6 @@ import it.unifi.swa.bean.ProductBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.dao.MenuDAO;
 import it.unifi.swa.domain.Product;
-
 
 @Named
 @ViewScoped
@@ -28,40 +29,35 @@ public class MenuController implements Serializable {
 
 	@Inject
 	private BasketBean basketBean;
-	
+
 	@Inject
 	private ProductBean productBean;
 
 	@Inject
-	private MenuDAO menuDAO;
+	private MenuDAO menuDao;
 
 	private List<Product> productList;
 	private Map<Product, Integer> basket;
-    private Product selectedProduct;
+	private Product selectedProduct;
 
 
 	@PostConstruct
-	public void init() {
+	public void init(){
 		System.out.println("Init Menu Controller");
-		System.out.println("name pub "+selectPubBean.getPub().getNome());
+		System.out.println("name pub " + selectPubBean.getPub().getNome());
 
 		basket = new HashMap<Product, Integer>();
-
+		List<Product> list = new ArrayList<Product>();
 		try {
-
-			List<Product> list = menuDAO.getListOfProduct(selectPubBean.getPub());
-			if (!list.isEmpty()) {
-				productList = list;
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			list = menuDao.getListOfProduct(selectPubBean.getPub());
+		    productList = list;
+			
+		} catch (NullPointerException ex) {
+			productList=null;
+			System.out.println("There is no Products in this pub menu");
 		}
 
-		try {
-			// List<Product> list =
-			// menuDAO.getListOfProduct(selectPubBean.getPub());
-			//Map<String, Integer> listWithQnt = new HashMap<String, Integer>();
+
 			Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
 
 			for (Product element : productList) {
@@ -71,9 +67,7 @@ public class MenuController implements Serializable {
 			if (!listWithQnt.isEmpty()) {
 				basket = listWithQnt;
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+	
 	}
 
 	public List<Product> getProductList() {
@@ -85,15 +79,9 @@ public class MenuController implements Serializable {
 		this.productList = productList;
 	}
 
-//	public void addItemToBasket(Product p, int qnt) {
-//		basket.put(p, qnt);
-//		basketBean.setBasket(basket);
-//	}
 
-	
 
 	public void addItem(Product p) {
-
 
 		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
 
@@ -107,30 +95,30 @@ public class MenuController implements Serializable {
 		System.out.println("Item " + p.getProdName() + " aggiunto");
 
 	}
-	
+
 	public String toSelectPub() {
 		return "selectPub?&faces-redirect=true";
- 	}
-	
-//	public String toSummaryPage() {
-//		Map<Product, Integer> basketNotNull = new HashMap<Product, Integer>();
-//		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
-//			if (entry.getValue()>0) {
-//				basketNotNull.put(entry.getKey(), entry.getValue());
-//			}
-//		
-//		}
-//		basketBean.setBasket(basketNotNull);
-//		return "summary";
-// 	}
-	
+	}
+
+	// public String toSummaryPage() {
+	// Map<Product, Integer> basketNotNull = new HashMap<Product, Integer>();
+	// for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+	// if (entry.getValue()>0) {
+	// basketNotNull.put(entry.getKey(), entry.getValue());
+	// }
+	//
+	// }
+	// basketBean.setBasket(basketNotNull);
+	// return "summary";
+	// }
+
 	public String toSummaryPage() {
 		basketBean.setBasket(basket);
 		return "summary?&faces-redirect=true";
- 	}
-	
-	public String showProductDetails(){
-		
+	}
+
+	public String showProductDetails() {
+
 		productBean.initConversation();
 		productBean.setProduct(selectedProduct);
 		return "product?faces-redirect=true";
