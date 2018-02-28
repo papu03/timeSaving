@@ -109,6 +109,7 @@ public class LoginControllerTest {
     	loginController.login();
     	
     	loginController.logOut();
+        
         assertFalse(userSession.isLogged());
         assertNull(userSession.getUser());
     }

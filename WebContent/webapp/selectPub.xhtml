@@ -12,27 +12,39 @@
             .scritta{
 
                 font-family:  Arial, Helvetica, sans-serif;
-                font-size: X-large;
+                font-size: x-large;
                 color: cadetblue;
             }
-            
+
             .scrittaPub{
 
                 font-family:  Arial, Helvetica, sans-serif;
                 font-size: x-large;
                 color: gray;
-                padding-left: 23%;
+                padding-left: 10%;
             }
-            
+
             .riquadro{
-                
+
                 width: 280px;
                 height: 130px;
-                border-style: solid;
-                border-color: cadetblue;
                 display: block;
+                margin-left: 15%;
                 margin-bottom: 10%;
-                
+                border: 5px solid cadetblue;
+                padding: 15px;
+                border-radius: 40px;
+                box-shadow: 3px 3px #bbb;
+                background-color: white;
+
+            }
+
+            .pulsanteInfo{
+                position: relative;
+                top: 18%;
+                padding-left: 5%;
+                margin-left: 5%;
+                display: inline;
             }
 
             #benvenuto{
@@ -43,17 +55,41 @@
 
             #tabella{
                 position: absolute;
-                top: 10%;
+                top: 11%;
                 left: 2%;
                 width: 400px;
+                height: 77%;
+                overflow: auto;
+            }
+
+            .pulsantiera{
+                position: relative;
+                display: inline-flex;
+                top: 10px;
+                left: 20px;
+            }
+
+            .divScritta{
+                position: relative;
+            }
+
+            .dot {
+                height: 20px;
+                width: 20px;
+                background-color: cadetblue;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .sfondo{
+                z-index: -1;
             }
             
-            .pulsanteInfo{
-                position: relative;
-                top: 33%;
-                padding-left: 5%;
-                margin-left: 9%;
-                display: inline;
+            #logo{
+                position: absolute;
+                top: 80px;
+                left: 10%;
+                width: 100%;
             }
 
         </style>
@@ -61,26 +97,32 @@
     <h:body>
         <f:view>
             <h:form>
+                <div id="logo">
+                    <h:graphicImage class="sfondo" value="images/jumpQueueLogo.png" width="80%"/>
+                </div>
                 <div id="benvenuto">
+
                     <h:outputLabel class="scritta" value="Wellcome #{userSessionBean.user.username}, Select Your Favourite Pub"/>
                 </div>
                 <div id="tabella">
                     <ui:repeat value="#{selectPubController.pubList}" var="pub" varStatus="status">
                         <div class="riquadro">
-                            <!--<h:commandLink class="scrittaPub" value="#{pub.nome}" action="#{selectPubController.select()}">
-                                <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
-                            </h:commandLink>-->
-                            <h:outputLabel class="scrittaPub" value="#{pub.nome}"/>
-                            <div class="pulsanteInfo">
-                                <h:commandButton class="w3-button w3-blue w3-round-xxlarge" value="Select" action="#{selectPubController.select()}">
-                                    <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
-                                </h:commandButton>
+                            <div class="divScritta">
+                                <span class="dot"/>
+                                <h:outputLabel class="scrittaPub" value="#{pub.nome}"/>
                             </div>
-                            <div class="pulsanteInfo">
-                                <h:commandButton class="w3-button w3-blue w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo()}">
-                                    <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
-                                </h:commandButton>
-                            </div>
+                            <div class="pulsantiera">
+                                <div class="pulsanteInfo">
+                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Select" action="#{selectPubController.select()}">
+                                        <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="pulsanteInfo">
+                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo()}">
+                                        <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
+                                    </h:commandButton>
+                                </div>
+                            </div>    
                         </div>
                     </ui:repeat>   
                 </div>

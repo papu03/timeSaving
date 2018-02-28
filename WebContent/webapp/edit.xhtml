@@ -1,52 +1,144 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Modifica ordine</title>
-</h:head>
-<h:body>
-	<f:view>
-		<h:form>
-			<h:panelGroup>
-				<ui:repeat value="#{editController.productList}" var="product"
-					varStatus="status">
-					<h:panelGrid columns="1">
-						<h:outputLabel value="Name: " style="color: cadetblue" />
-						<h:outputText value="#{product.prodName}" />
-					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<h:outputLabel value="Price: " style="color: cadetblue" />
-						<h:outputText value="#{product.price}" />
-					</h:panelGrid>
-					<h:panelGrid columns="3">
-						<h:outputLabel value="Time to Prepare: " style="color: cadetblue" />
-						<h:outputText value="#{product.tmpExe}" />
-						<h:outputLabel value=" mins." />
-					</h:panelGrid>
-					<h:panelGrid columns="4">
-						<h:outputLabel value="Quantity: " style="color: cadetblue" />
-						<ui:repeat value="#{editController.basket}" var="map">
-							<h:form>
-								<h:outputText id="qnt" value="#{map[product]}" />
-								<h:commandButton value="+">
-									<f:ajax execute="@form" render="qnt" listener="#{editController.addItem(product)}"/>
-								</h:commandButton>
-							</h:form>
-						</ui:repeat>
-					</h:panelGrid>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 
-				</ui:repeat>
-				
-				<h:panelGrid columns="1">
-					<h:commandButton value="Save" action="#{editController.toSummaryPage}" />
-				</h:panelGrid>
+        <title>Modifica Ordine</title>
 
-			</h:panelGroup>
-		</h:form>
-	</f:view>
-</h:body>
+        <style>
+
+            .scritta{
+
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+                line-height: 37px;
+            }
+
+            .scrittona{
+
+                color: cadetblue;
+            }
+
+            #titolo{
+                position: relative;
+            }
+
+            .riquadro{
+                position: relative;
+                margin-bottom: 25px;
+                width: 99%;
+                border: 5px solid cadetblue;
+                padding: 15px;
+                border-radius: 40px;
+                box-shadow: 3px 3px #bbb;
+            }
+
+            .riquadrino{
+                width: 280px;
+                margin-left: 10px;
+                height: 40px;
+            }
+
+            .quantita{
+
+                width: 90%;
+                display: inline-flex;
+
+            }
+
+            .menu{
+                position: absolute;
+                top: 100px;
+                bottom: 100px;
+                left: 2%;
+                right: 70%;
+                overflow: auto;
+            }
+
+            .bottone{
+                margin-left: 15px;
+            }
+
+            #pulsantiera{
+                position: absolute;
+                bottom: 15px;
+                left: 2%;
+                display: inline-flex;
+            }
+
+            #pulsanteProcedi{
+                margin-left: 20px;
+            }
+
+            .pulsanteDettaglio{
+                margin-left: 15px;
+            }
+
+        </style>
+
+        <script type="text/javascript">
+
+        </script>
+
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="frmMenu">
+                <h1 class="display-3 text-center font-italic scrittona">
+                    Modifica Ordine
+                </h1>
+                <div class="container container-fluid">
+                    <div class="row">
+                        <ui:repeat value="#{editController.productList}" var="product"
+                                   varStatus="status">
+                            <div class="col-sm-12 col-xl-4">
+                                <div class="riquadro">
+                                    <div class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Name: " />
+                                        <h:outputText value="#{product.prodName}" />
+                                    </div>
+                                    <div  class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Price: " />
+                                        <h:outputText value="#{product.price}" />
+                                    </div>
+                                    <div  class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Time to Prepare: " />
+                                        <h:outputText value="#{product.tmpExe}" />
+                                        <h:outputLabel value=" mins." />
+                                    </div>
+                                    <div  class="riquadrino quantita">
+                                        <h:outputLabel class="scritta" value="Quantity: " />
+
+                                        <h:panelGrid columns="4">
+                                            <!--<h:outputLabel value="Quantity: " style="color: cadetblue" />-->
+                                            <h:form>
+                                                <h:outputText id="qnt" value="#{editController.basket[product]}" />
+                                                <h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">
+                                                    <f:ajax execute="@form" render="qnt" listener="#{editController.addItem(product)}"/>
+                                                </h:commandButton>
+                                            </h:form>
+
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
+                <div id="pulsantiera">
+                    <div id="pulsanteProcedi">
+                        <h:commandButton class="w3-button w3-teal w3-round-medium" value="Save" action="#{editController.toSummaryPage}" />
+                    </div>
+                </div>
+            </h:form>
+        </f:view>
+    </h:body>
 </html>

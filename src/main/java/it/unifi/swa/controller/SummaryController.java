@@ -83,6 +83,7 @@ public class SummaryController implements Serializable {
 
 	public String toEditPage() {
 		return "edit?&faces-redirect=true";
+                
 	}
 
 	@Transactional
