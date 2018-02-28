@@ -24,7 +24,6 @@ public class ClientDaoTest extends DaoTest {
 		client.setPhoneNumber(33311029);
 		client.setUsername("user");
 		client.setPassword("password");
-		entityManager.persist(client);
 
 		clientDao = new ClientDAO();
 		try {
@@ -34,19 +33,22 @@ public class ClientDaoTest extends DaoTest {
 		}
 	}
 
-	// @Test
-	// public void testSave() {
-	//
-	// Client clientT=new Client();
-	//
-	// }
+
 	@Test
 	public void testFindByLoginInfo() {
 		
+		entityManager.persist(client);
 		Client client2= clientDao.findByLoginInfo(client);
-
-		//Se faccio il clear dell'entity manager il test fallisce
         assertEquals(client,client2);
+	}
+	
+	@Test
+	public void saveClientTest(){
+		
+		clientDao.saveClient(client);
+		
+		assertEquals(client, clientDao.findByLoginInfo(client));
+		
 	}
 
 }

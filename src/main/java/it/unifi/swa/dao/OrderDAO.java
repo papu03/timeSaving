@@ -25,35 +25,14 @@ public class OrderDAO extends BaseDao<Ordine>{
 	public Ordine insertOrder(Pub pub){
 		
 		Ordine ord= new Ordine();
-		
 		ord.setLocal(pub);
-		
+		ord.setStateOrder('a');
+
 		this.save(ord);
 		
 		return ord;
 
 	}
-	
-//	public List<Operator> getBarman(){
-//		List<Operator> barman = null;
-//
-//		try {
-//			barman = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
-//					.setParameter("oType", 1).getResultList();
-//
-//
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		return barman;
-//
-//	}
-//	
-//	
-//	@Transactional
-//	public void saveOrder(Ordine order) {
-//
-//		this.save(order);
-//	}
+
 
 }

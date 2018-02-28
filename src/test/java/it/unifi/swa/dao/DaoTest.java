@@ -25,8 +25,6 @@ public abstract class DaoTest {
 	public void setUp() throws InitializationError {
 		entityManager = entityManagerFactory.createEntityManager();
 
-		// trucateAllTables();
-
 		entityManager.getTransaction().begin();
 		init();
 		entityManager.getTransaction().commit();

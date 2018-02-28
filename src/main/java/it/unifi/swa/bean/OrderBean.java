@@ -39,4 +39,12 @@ public class OrderBean implements Serializable {
 		this.order = order;
 	}
 
+	public Conversation getConversation() {
+		return conversation;
+	}
+
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
+	}
+
 }

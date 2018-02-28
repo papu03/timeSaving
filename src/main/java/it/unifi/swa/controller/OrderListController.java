@@ -53,7 +53,6 @@ public class OrderListController implements Serializable {
 		orderBean.initConversation();
 		orderBean.setOrder(order);
 		
-		
 		return "detailOrder?&faces-redirect=true";
 	}
 	

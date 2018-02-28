@@ -53,7 +53,7 @@ public class DetailOrderController implements Serializable {
 		
 		orderBean.endConversation();
 		
-		 return "orderList?&faces-redirect=true";
+		return "orderList?&faces-redirect=true";
 
 	}
 

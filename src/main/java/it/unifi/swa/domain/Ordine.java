@@ -20,6 +20,7 @@ public class Ordine {
 	private int idOrder;
 	//private List<User> users = new ArrayList<User>();
 	private Pub local;
+	private char stateOrder; //"a" arrivato "b" in esecuzione "c" concluso 
 	
 	private List<OPAssociation> products;
 	private List<UserAssociation> users;
@@ -102,6 +103,12 @@ public class Ordine {
 	    
 	    return association;
 	  }
+	public char getStateOrder() {
+		return stateOrder;
+	}
+	public void setStateOrder(char stateOrder) {
+		this.stateOrder = stateOrder;
+	}
 	
 	
 

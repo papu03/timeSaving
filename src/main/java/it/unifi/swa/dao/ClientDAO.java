@@ -27,14 +27,6 @@ public class ClientDAO extends BaseDao<Client> {
 		return result;
 	}
 	
-	public Client findByUsername(String username) {
-
-		Client result = entityManager
-				.createQuery("from Client c where c.username = :username", Client.class)
-				.setParameter("username", username).getSingleResult();
-
-		return result;
-	}
 	
 	@Transactional
 	public void saveClient(Client client){
