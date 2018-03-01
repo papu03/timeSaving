@@ -11,61 +11,90 @@ import javax.inject.Named;
 
 import it.unifi.swa.bean.OrderBean;
 import it.unifi.swa.bean.UserSessionBean;
+import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.dao.UserAssoDAO;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.User;
 import it.unifi.swa.domain.UserAssociation;
+import javax.transaction.Transactional;
 
 @Named
 @ViewScoped
 public class OrderListController implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private UserSessionBean userSessionBean;
-	
-	@Inject
-	private OrderBean orderBean;
-	
-	@Inject
-	private UserAssoDAO userAssoDao;
-	
-	private List<Ordine> orderList;
+    private static final long serialVersionUID = 1L;
 
-	
-	@PostConstruct
-	public void init() {
-		System.out.println("Init Order List Controller");
-		
-		orderList= new ArrayList<Ordine>();
-		User userSession=userSessionBean.getUser();
-		
-		for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
-			Ordine ord=userAssoc.getOrdine();
-			orderList.add(ord);
-		}
-	}
+    @Inject
+    private UserSessionBean userSessionBean;
 
+    @Inject
+    private OrderBean orderBean;
 
-	public String toDetailOrder(Ordine order){
-		
-		orderBean.initConversation();
-		orderBean.setOrder(order);
-		
-		return "detailOrder?&faces-redirect=true";
-	}
-	
-	
-	public List<Ordine> getOrderList() {
-		return orderList;
-	}
+    @Inject
+    private UserAssoDAO userAssoDao;
 
+    @Inject
+    private OrderDAO orderDao;
+    
+    private List<Ordine> orderList;
 
-	public void setOrderList(List<Ordine> orderList) {
-		this.orderList = orderList;
-	}
+    private boolean isOperatore;
 
+    @PostConstruct
+    public void init() {
+        System.out.println("Init Order List Controller");
 
+        orderList = new ArrayList<Ordine>();
+        User userSession = userSessionBean.getUser();
+
+        for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
+            Ordine ord = userAssoc.getOrdine();
+            orderList.add(ord);
+        }
+        
+        if(userSessionBean.getType() != 0){
+            setIsOperatore(true);
+        }
+    }
+
+    public String toDetailOrder(Ordine order) {
+
+        orderBean.initConversation();
+        orderBean.setOrder(order);
+
+        return "detailOrder?&faces-redirect=true";
+    }
+    
+    @Transactional
+    public void changeOrderState(Ordine order){
+        
+        if(order.getStateOrder() == 'a'){
+            order.setStateOrder('b'); 
+        }else if(order.getStateOrder() == 'b'){
+            order.setStateOrder('c');
+        }
+        
+        try{
+            orderDao.update(order);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public List<Ordine> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Ordine> orderList) {
+        this.orderList = orderList;
+    }
+
+    public boolean isIsOperatore() {
+        return isOperatore;
+    }
+
+    public void setIsOperatore(boolean isOperatore) {
+        this.isOperatore = isOperatore;
+    }
 
 }

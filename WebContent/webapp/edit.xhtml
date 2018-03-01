@@ -4,7 +4,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
@@ -117,14 +118,13 @@
                                     <div  class="riquadrino quantita">
                                         <h:outputLabel class="scritta" value="Quantity: " />
 
-                                        <h:panelGrid columns="4">
-                                            <!--<h:outputLabel value="Quantity: " style="color: cadetblue" />-->
-                                            <h:form>
-                                                <h:outputText id="qnt" value="#{editController.basket[product]}" />
-                                                <h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">
-                                                    <f:ajax execute="@form" render="qnt" listener="#{editController.addItem(product)}"/>
-                                                </h:commandButton>
-                                            </h:form>
+                                        <h:panelGrid columns="5">
+
+                                            <h:outputText id="qnt" value="#{editController.basket[product] == -1 ? 0 : editController.basket[product]}" />
+
+                                            <p:commandButton value="+" actionListener="#{editController.addItem(product)}" update="qnt" />
+                                            <p:commandButton value="-" actionListener="#{editController.removeItem(product)}" update="qnt" />
+                                            
 
                                         </h:panelGrid>
                                     </div>

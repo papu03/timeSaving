@@ -61,7 +61,7 @@ public class MenuController implements Serializable {
 			Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
 
 			for (Product element : productList) {
-				listWithQnt.put(element, 0);
+				listWithQnt.put(element, -1);
 			}
 
 			if (!listWithQnt.isEmpty()) {
@@ -86,13 +86,31 @@ public class MenuController implements Serializable {
 		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
 
 			if (entry.getKey().equals(p)) {
-				int increment = entry.getValue() + 1;
-				entry.setValue(increment);
+				int increment = entry.getValue() ;
+				entry.setValue(++increment);
 				System.out.println("Quantità " + entry.getValue());
 
 			}
 		}
 		System.out.println("Item " + p.getProdName() + " aggiunto");
+
+	}
+        
+        public void removeItem(Product p) {
+
+		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+
+			if (entry.getKey().equals(p)) {
+				int increment = entry.getValue() ;
+                                if(increment == 0){
+                                    return;
+                                }
+				entry.setValue(--increment);
+				System.out.println("Quantità " + entry.getValue());
+
+			}
+		}
+		System.out.println("Item " + p.getProdName() + " rimosso");
 
 	}
 

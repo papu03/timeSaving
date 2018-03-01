@@ -1,28 +1,121 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Dettagli ordine</title>
-	<script type="text/javascript">
-		
-	</script>
-</h:head>
+<html   lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+        <title>Dettagli ordine</title>
 
-<h:body>
-	<f:view>
-		<h:form>
-			<c:forEach items="#{detailOrderController.qntProductMap}" var="entry">
-				<li>Prodotto: #{entry.key.prodName}, Quantità: #{entry.value}</li>
-			</c:forEach>
-			<h:commandButton value="I tuoi ordini" action="#{detailOrderController.toOrderList}" />
-			
+        <style>
 
-		</h:form>
-	</f:view>
-</h:body>
+
+            .colore{
+                border: 2px solid red;
+            }
+            .colore2{
+                border: 2px solid green;
+            }
+            .colore3{
+                border: 2px solid blue;
+            }
+            .colore4{
+                border: 2px solid violet;
+            }
+
+            .scrittona{
+
+                color: cadetblue;
+            }
+
+            .scritta{
+
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+                line-height: 21px;
+            }
+
+            .riquadro{
+                position: relative;
+                margin-bottom: 25px;
+                width: 99%;
+                border: 5px solid cadetblue;
+                padding: 20px;
+                border-radius: 40px;
+                box-shadow: 3px 3px #bbb;
+                background-color: white;
+                margin-top: 20px;
+            }
+
+            #pulsante{
+                position: absolute;
+                left: 40px;
+                padding: 15px;
+                bottom: 15px;
+            }
+
+            #dettaglio{
+                margin-left: 40px;
+                width: 60%;
+            }
+            
+            #order{
+                position: absolute;
+                padding: 15px;
+            }
+            
+            
+            .sfondo{
+                z-index: -1;
+            }
+            
+            #logo{
+                position: absolute;
+                left: 10%;
+                width: 100%;
+            }
+
+        </style>
+
+        <script type="text/javascript">
+
+        </script>
+    </h:head>
+
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1 class="display-3 text-center font-italic scrittona">
+                    Order Detail
+                </h1>
+                <div id="logo">
+                    <h:graphicImage class="sfondo" value="images/jumpQueueLogo.png" width="80%"/>
+                </div>
+                <div id="order">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="dettaglio" >
+                                <c:forEach items="#{detailOrderController.qntProductMap}" var="entry">
+                                    <div class="col-sm-12 col-xl-6">
+                                        <div class="riquadro">
+                                            <li class="scritta">Prodotto: #{entry.key.prodName}, Quantitï¿½: #{entry.value}</li>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <div id="pulsante">
+                                <h:commandButton class="w3-button w3-teal w3-round-medium" value="I tuoi ordini" action="#{detailOrderController.toOrderList}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </f:view>
+    </h:body>
 </html>

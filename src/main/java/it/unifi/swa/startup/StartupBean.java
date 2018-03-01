@@ -51,10 +51,11 @@ public class StartupBean {
         Client ale= new Client();
 		ale.setName("Alessandro");
 		ale.setSurname("Baroni");
-		ale.setUsername("Yoloswag96");
-		ale.setPassword("numerello");
+		ale.setUsername("b4r0");
+		ale.setPassword("saltacoda");
         
         clientDao.save(papu);
+        clientDao.save(ale);
         
         
         Menu menu = new Menu();

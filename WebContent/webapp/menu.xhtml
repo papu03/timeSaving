@@ -4,7 +4,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
@@ -21,7 +22,7 @@
                 color: cadetblue;
                 line-height: 21px;
             }
-            
+
             .scrittaqta{
 
                 font-family:  Arial, Helvetica, sans-serif;
@@ -53,7 +54,7 @@
             .riquadrino{
                 width: 280px;
                 margin-left: 10px;
-                height: 22px;
+                height: 25px;
             }
 
             .quantita{
@@ -62,7 +63,7 @@
                 display: inline-flex;
                 height: 50px;
                 margin-left: 3%;
-                margin-top: 10%;
+                margin-top: 3%;
 
             }
 
@@ -92,13 +93,13 @@
             }
 
             .pulsanteDettaglio{
-                margin-left: 15px;
+                margin-left: 10px;
             }
-            
+
             .sfondo{
                 z-index: -1;
             }
-            
+
             #logo{
                 position: absolute;
                 left: 10%;
@@ -121,7 +122,7 @@
                 <div id="logo">
                     <h:graphicImage class="sfondo" value="images/jumpQueueLogo.png" width="80%"/>
                 </div>
-                
+
                 <div class="container container-fluid">
                     <div class="row">
                         <ui:repeat value="#{menuController.productList}" var="product"
@@ -144,26 +145,27 @@
                                     <div  class="quantita">
                                         <h:outputLabel class="scrittaqta" value="Quantity: " />
 
-                                        <h:panelGrid columns="4">
+                                        <h:panelGrid columns="5">
                                             <!--<h:outputLabel value="Quantity: " style="color: cadetblue" />-->
 
 
-                                            <h:form>
-                                                <h:outputText id="qnt" value="#{menuController.basket[product]}" />
+                                            <h:outputText id="qnt" value="#{menuController.basket[product] == -1 ? 0 : menuController.basket[product]}" />
 
-                                                <h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">
-                                                    <f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>
-                                                </h:commandButton>
-                                            </h:form>
+                                            <!--<h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">-->
+                                            <p:commandButton value="+" actionListener="#{menuController.addItem(product)}" update="qnt" />
+                                            <p:commandButton value="-" actionListener="#{menuController.removeItem(product)}" update="qnt" />
+                                            <!--<f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>-->
+                                            <!--</h:commandButton>-->
+
 
                                         </h:panelGrid>
-                                        <div class="pulsanteDettaglio">
-                                            <h:commandButton class="w3-button w3-teal w3-round-medium" value="Dettagli prodotto"
-                                                             action="#{menuController.showProductDetails}">
-                                                <f:setPropertyActionListener value="#{product}"
-                                                                             target="#{menuController.selectedProduct}" />
-                                            </h:commandButton>
-                                        </div>
+                                    </div>
+                                    <div class="pulsanteDettaglio">
+                                        <h:commandButton class="w3-button w3-teal w3-round-medium" value="Dettagli prodotto"
+                                                         action="#{menuController.showProductDetails}">
+                                            <f:setPropertyActionListener value="#{product}"
+                                                                         target="#{menuController.selectedProduct}" />
+                                        </h:commandButton>
                                     </div>
                                 </div>
                             </div>

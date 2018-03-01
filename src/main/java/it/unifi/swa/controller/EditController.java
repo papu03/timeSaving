@@ -63,13 +63,31 @@ public class EditController implements Serializable {
 		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
 
 			if (entry.getKey().equals(p)) {
-				int increment = entry.getValue() + 1;
-				entry.setValue(increment);
+				int increment = entry.getValue();
+				entry.setValue(++increment);
 				System.out.println("Quantità " + entry.getValue());
 
 			}
 		}
 		System.out.println("Item " + p.getProdName() + " aggiunto");
+
+	}
+        
+        public void removeItem(Product p) {
+
+		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+
+			if (entry.getKey().equals(p)) {
+				int increment = entry.getValue() ;
+                                if(increment == 0){
+                                    return;
+                                }
+				entry.setValue(--increment);
+				System.out.println("Quantità " + entry.getValue());
+
+			}
+		}
+		System.out.println("Item " + p.getProdName() + " rimosso");
 
 	}
 	
