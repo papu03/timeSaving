@@ -92,12 +92,13 @@ public class Ordine {
         this.users = users;
     }
 
-    public UserAssociation addUser(User user) {
+    public UserAssociation addUser(User user, char type) {
         UserAssociation association = new UserAssociation();
         association.setUtente(user);
         association.setOrdine(this);
         association.setUtenteId(user.getIdUser());
         association.setOrdineId(this.getIdOrder());
+        association.setTypeUser(type);
         if (this.users == null) {
             this.users = new ArrayList<>();
         }

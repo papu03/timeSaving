@@ -1,144 +1,145 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-            xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		crossorigin="anonymous" />
 
-        <title>Modifica Ordine</title>
+	<title>Modifica Ordine</title>
 
-        <style>
+	<style>
+.scritta {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
+	color: cadetblue;
+	line-height: 37px;
+}
 
-            .scritta{
+.scrittona {
+	color: cadetblue;
+}
 
-                font-family:  Arial, Helvetica, sans-serif;
-                font-size: large;
-                color: cadetblue;
-                line-height: 37px;
-            }
+#titolo {
+	position: relative;
+}
 
-            .scrittona{
+.riquadro {
+	position: relative;
+	margin-bottom: 25px;
+	width: 99%;
+	border: 5px solid cadetblue;
+	padding: 15px;
+	border-radius: 40px;
+	box-shadow: 3px 3px #bbb;
+}
 
-                color: cadetblue;
-            }
+.riquadrino {
+	width: 280px;
+	margin-left: 10px;
+	height: 40px;
+}
 
-            #titolo{
-                position: relative;
-            }
+.quantita {
+	width: 90%;
+	display: inline-flex;
+}
 
-            .riquadro{
-                position: relative;
-                margin-bottom: 25px;
-                width: 99%;
-                border: 5px solid cadetblue;
-                padding: 15px;
-                border-radius: 40px;
-                box-shadow: 3px 3px #bbb;
-            }
+.menu {
+	position: absolute;
+	top: 100px;
+	bottom: 100px;
+	left: 2%;
+	right: 70%;
+	overflow: auto;
+}
 
-            .riquadrino{
-                width: 280px;
-                margin-left: 10px;
-                height: 40px;
-            }
+.bottone {
+	margin-left: 15px;
+}
 
-            .quantita{
+#pulsantiera {
+	position: absolute;
+	bottom: 15px;
+	left: 2%;
+	display: inline-flex;
+}
 
-                width: 90%;
-                display: inline-flex;
+#pulsanteProcedi {
+	margin-left: 20px;
+}
 
-            }
+.pulsanteDettaglio {
+	margin-left: 15px;
+}
+</style>
 
-            .menu{
-                position: absolute;
-                top: 100px;
-                bottom: 100px;
-                left: 2%;
-                right: 70%;
-                overflow: auto;
-            }
+	<script type="text/javascript">
+		
+	</script>
 
-            .bottone{
-                margin-left: 15px;
-            }
+</h:head>
+<h:body>
+	<f:view>
+		<h:form id="frmMenu">
+			<h1 class="display-3 text-center font-italic scrittona">
+				Modifica Ordine</h1>
+			<div class="container container-fluid">
+				<div class="row">
+					<ui:repeat value="#{editController.productList}" var="product"
+						varStatus="status">
+						<div class="col-sm-12 col-xl-4">
+							<div class="riquadro">
+								<div class="riquadrino">
+									<h:outputLabel class="scritta" value="Name: " />
+									<h:outputText value="#{product.prodName}" />
+								</div>
+								<div class="riquadrino">
+									<h:outputLabel class="scritta" value="Price: " />
+									<h:outputText value="#{product.price}" />
+								</div>
+								<div class="riquadrino">
+									<h:outputLabel class="scritta" value="Time to Prepare: " />
+									<h:outputText value="#{product.tmpExe}" />
+									<h:outputLabel value=" mins." />
+								</div>
+								<div class="riquadrino quantita">
+									<h:outputLabel class="scritta" value="Quantity: " />
 
-            #pulsantiera{
-                position: absolute;
-                bottom: 15px;
-                left: 2%;
-                display: inline-flex;
-            }
+									<h:panelGrid columns="5">
 
-            #pulsanteProcedi{
-                margin-left: 20px;
-            }
+										<h:outputText id="qnt"
+											value="#{editController.basket[product] == -1 ? 0 : editController.basket[product]}" />
 
-            .pulsanteDettaglio{
-                margin-left: 15px;
-            }
+										<p:commandButton value="+"
+											actionListener="#{editController.addItem(product)}"
+											update="qnt" />
+										<p:commandButton value="-"
+											actionListener="#{editController.removeItem(product)}"
+											update="qnt" />
 
-        </style>
 
-        <script type="text/javascript">
-
-        </script>
-
-    </h:head>
-    <h:body>
-        <f:view>
-            <h:form id="frmMenu">
-                <h1 class="display-3 text-center font-italic scrittona">
-                    Modifica Ordine
-                </h1>
-                <div class="container container-fluid">
-                    <div class="row">
-                        <ui:repeat value="#{editController.productList}" var="product"
-                                   varStatus="status">
-                            <div class="col-sm-12 col-xl-4">
-                                <div class="riquadro">
-                                    <div class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Name: " />
-                                        <h:outputText value="#{product.prodName}" />
-                                    </div>
-                                    <div  class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Price: " />
-                                        <h:outputText value="#{product.price}" />
-                                    </div>
-                                    <div  class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Time to Prepare: " />
-                                        <h:outputText value="#{product.tmpExe}" />
-                                        <h:outputLabel value=" mins." />
-                                    </div>
-                                    <div  class="riquadrino quantita">
-                                        <h:outputLabel class="scritta" value="Quantity: " />
-
-                                        <h:panelGrid columns="5">
-
-                                            <h:outputText id="qnt" value="#{editController.basket[product] == -1 ? 0 : editController.basket[product]}" />
-
-                                            <p:commandButton value="+" actionListener="#{editController.addItem(product)}" update="qnt" />
-                                            <p:commandButton value="-" actionListener="#{editController.removeItem(product)}" update="qnt" />
-                                            
-
-                                        </h:panelGrid>
-                                    </div>
-                                </div>
-                            </div>
-                        </ui:repeat>
-                    </div>
-                </div>
-                <div id="pulsantiera">
-                    <div id="pulsanteProcedi">
-                        <h:commandButton class="w3-button w3-teal w3-round-medium" value="Save" action="#{editController.toSummaryPage}" />
-                    </div>
-                </div>
-            </h:form>
-        </f:view>
-    </h:body>
+									</h:panelGrid>
+								</div>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+			</div>
+			<div id="pulsantiera">
+				<div id="pulsanteProcedi">
+					<h:commandButton class="w3-button w3-teal w3-round-medium"
+						value="Save" action="#{editController.toSummaryPage}" />
+				</div>
+			</div>
+		</h:form>
+	</f:view>
+</h:body>
 </html>

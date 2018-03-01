@@ -67,11 +67,11 @@ public class LoginController {
         userSession.setUser(loggedUser);
         System.out.println(loggedUser.getUsername() + " loggato");
         
-        if(userSession.getType() == 0){
+       // if(userSession.getType() == 0){
             return "selectPub?&faces-redirect=true";
-        }else{
-            return "orderList?&faces-redirect=true";
-        }
+//        }else{
+//            return "orderList?&faces-redirect=true";
+//        }
     }
     
     public String logOut() {

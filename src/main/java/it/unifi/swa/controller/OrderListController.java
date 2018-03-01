@@ -39,6 +39,7 @@ public class OrderListController implements Serializable {
     private List<Ordine> orderList;
 
     private boolean isOperatore;
+    private boolean isClient;
 
     @PostConstruct
     public void init() {
@@ -46,6 +47,8 @@ public class OrderListController implements Serializable {
 
         orderList = new ArrayList<Ordine>();
         User userSession = userSessionBean.getUser();
+        isOperatore=false;
+        isClient=false;
 
         for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
             Ordine ord = userAssoc.getOrdine();
@@ -53,7 +56,9 @@ public class OrderListController implements Serializable {
         }
         
         if(userSessionBean.getType() != 0){
-            setIsOperatore(true);
+        	isOperatore=true;
+        }else{
+        	isClient=true;
         }
     }
 
@@ -96,5 +101,13 @@ public class OrderListController implements Serializable {
     public void setIsOperatore(boolean isOperatore) {
         this.isOperatore = isOperatore;
     }
+
+	public boolean isIsClient() {
+		return isClient;
+	}
+
+	public void setClient(boolean isClient) {
+		this.isClient = isClient;
+	}
 
 }

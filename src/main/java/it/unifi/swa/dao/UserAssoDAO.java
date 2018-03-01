@@ -26,27 +26,31 @@ public class UserAssoDAO extends BaseDao<UserAssociation> {
 		List<UserAssociation> userAssociations=new ArrayList<UserAssociation>();
 
 		try {
-			UserAssociation aClient = ord.addUser(client);
+			UserAssociation aClient = ord.addUser(client,'u');
 
 			this.save(aClient);
 			userAssociations.add(aClient);
 
 			if (isFood) {
 
-				cook = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
-						.setParameter("oType", 'c').getResultList();
+				cook =  entityManager.createQuery("from Operator o where o.oType = :oType AND o.local= :local", Operator.class)
+						.setParameter("oType", 'c').
+						setParameter("local", ord.getLocal()).
+						getResultList();
 				
-				UserAssociation aCook = ord.addUser(cook.get(0)); //prendiamo il primo per semplicità
+				UserAssociation aCook = ord.addUser(cook.get(0),'c'); //prendiamo il primo per semplicità
 				this.save(aCook);
 				userAssociations.add(aCook);
 			}
 
 			if (isDrink) {
 
-				barman = entityManager.createQuery("from Operator o where o.oType = :oType", Operator.class)
-						.setParameter("oType", 'b').getResultList();
+				barman = entityManager.createQuery("from Operator o where o.oType = :oType AND o.local= :local", Operator.class)
+						.setParameter("oType", 'b').
+						setParameter("local", ord.getLocal()).
+						getResultList();
 
-				UserAssociation aBarman = ord.addUser(barman.get(0));//prendiamo il primo per semplicità
+				UserAssociation aBarman = ord.addUser(barman.get(0),'b');//prendiamo il primo per semplicità
 				this.save(aBarman);
 				userAssociations.add(aBarman);
 

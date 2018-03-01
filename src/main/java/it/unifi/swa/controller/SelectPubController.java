@@ -5,18 +5,20 @@
  */
 package it.unifi.swa.controller;
 
-import it.unifi.swa.bean.PubBean;
-import it.unifi.swa.bean.SelectPubBean;
-import it.unifi.swa.dao.MenuDAO;
-import it.unifi.swa.dao.PubDAO;
-import it.unifi.swa.domain.Product;
-import it.unifi.swa.domain.Pub;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import it.unifi.swa.bean.PubBean;
+import it.unifi.swa.bean.SelectPubBean;
+import it.unifi.swa.bean.UserSessionBean;
+import it.unifi.swa.dao.OperatorDAO;
+import it.unifi.swa.dao.PubDAO;
+import it.unifi.swa.domain.Pub;
 
 @Named
 @ViewScoped
@@ -26,21 +28,53 @@ public class SelectPubController implements Serializable {
 
 	@Inject
 	private PubDAO pubDao;
+	
+	@Inject
+	private OperatorDAO operatorDao;
 
 	@Inject
 	private SelectPubBean selectPubBean;
 
 	@Inject
 	private PubBean pubBean;
+	
+	@Inject
+	private UserSessionBean userSessionBean;
 
 	private Pub selectedPub;
 	private List<Pub> pubList;
+	
+	private Pub operatorPub;
+
+	private boolean isOperatore;
+    private boolean isClient;
+	
+	 @PostConstruct
+	 public void init() {
+	        System.out.println("Select Pub Controller Init");
+
+	        isOperatore=false;
+	        isClient=false;
+
+	        if(userSessionBean.getType() != 0){
+	        	isOperatore=true;
+	        	operatorPub=operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
+	        }else{
+	        	isClient=true;
+	        }
+	    }
 
 	public String select() {
 
 		selectPubBean.setPub(selectedPub);
 
 		return "menu?&faces-redirect=true";
+	}
+	
+	public String goToOrders(){
+		
+		return "orderList?&faces-redirect=true";
+
 	}
 
 	public String showInfo() {
@@ -71,6 +105,31 @@ public class SelectPubController implements Serializable {
 
 	public void setPubList(List<Pub> pubList) {
 		this.pubList = pubList;
+	}
+
+	public boolean isIsOperatore() {
+		return isOperatore;
+	}
+
+	public void setOperatore(boolean isOperatore) {
+		this.isOperatore = isOperatore;
+	}
+
+	public boolean isIsClient() {
+		return isClient;
+	}
+
+	public void setClient(boolean isClient) {
+		this.isClient = isClient;
+	}
+
+	public Pub getOperatorPub() {
+	
+		return operatorPub;
+	}
+
+	public void setOperatorPub(Pub operatorPub) {
+		this.operatorPub = operatorPub;
 	}
 
 }

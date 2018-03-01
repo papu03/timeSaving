@@ -19,6 +19,8 @@ public class UserAssociation {
 	@Id
 	private int ordineId;
 	
+	private char typeUser; //u utilizzatore c cuoco b barista
+	
 	@ManyToOne
 	@PrimaryKeyJoinColumn(name="IDUSER", referencedColumnName="idUser")
 	private User utente;
@@ -57,6 +59,14 @@ public class UserAssociation {
 
 	public void setOrdine(Ordine ordine) {
 		this.ordine = ordine;
+	}
+
+	public char getTypeUser() {
+		return typeUser;
+	}
+
+	public void setTypeUser(char typeUser) {
+		this.typeUser = typeUser;
 	}
 
 }

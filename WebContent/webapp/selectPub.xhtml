@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
@@ -102,9 +104,11 @@
                 </div>
                 <div id="benvenuto">
 
-                    <h:outputLabel class="scritta" value="Wellcome #{userSessionBean.user.username}, Select Your Favourite Pub"/>
+                    <h:outputLabel class="scritta" value="Welcome #{userSessionBean.user.username}, Select the Pub"/>
                 </div>
                 <div id="tabella">
+                    <c:if test="#{selectPubController.isClient}">
+                
                     <ui:repeat value="#{selectPubController.pubList}" var="pub" varStatus="status">
                         <div class="riquadro">
                             <div class="divScritta">
@@ -124,7 +128,31 @@
                                 </div>
                             </div>    
                         </div>
-                    </ui:repeat>   
+                    </ui:repeat>
+                    </c:if> 
+                    
+                    <c:if test="#{selectPubController.isOperatore}">
+                
+                        <div class="riquadro">
+                            <div class="divScritta">
+                                <span class="dot"/>
+                                <h:outputLabel class="scrittaPub" value="#{selectPubController.operatorPub.nome}"/>
+                            </div>
+                            <div class="pulsantiera">
+                                <div class="pulsanteInfo">
+                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Modifica Menù" action="#{selectPubController.select()}">
+                                        <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
+                                    </h:commandButton>
+                                </div>
+                                <div class="pulsanteInfo">
+                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Vai agli ordini" action="#{selectPubController.goToOrders}">
+                                        <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
+                                    </h:commandButton>
+                                </div>
+                            </div>  
+                           
+                        </div>
+                    </c:if>     
                 </div>
             </h:form>
         </f:view>
