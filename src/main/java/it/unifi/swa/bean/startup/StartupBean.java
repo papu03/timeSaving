@@ -1,4 +1,4 @@
-package it.unifi.swa.startup;
+package it.unifi.swa.bean.startup;
 
 import java.util.List;
 
@@ -37,12 +37,8 @@ public class StartupBean {
     @Inject
     PubDAO pubDao;
     
-   
-    
-    private List<Pub> pubList;
-
     @PostConstruct
-    private void init() {
+    public void init() {
         
         Client papu = new Client();
         papu.setUsername("papu");

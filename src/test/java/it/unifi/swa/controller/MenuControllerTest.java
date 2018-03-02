@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import it.unifi.swa.bean.BasketBean;
 import it.unifi.swa.bean.ProductBean;
 import it.unifi.swa.bean.SelectPubBean;
+import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.MenuDAO;
 import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
@@ -35,6 +36,8 @@ public class MenuControllerTest {
 	private SelectPubBean selectPubBean;
 	private BasketBean basketBean;
 	private ProductBean productBean;
+	private UserSessionBean userSessionBean;
+
 
 	@Inject
 	private MenuDAO menuDao;
@@ -58,6 +61,7 @@ public class MenuControllerTest {
 		selectPubBean=new SelectPubBean();
 		basketBean=new BasketBean();
 		productBean=new ProductBean();
+		userSessionBean= new UserSessionBean();
 		
 		selectPubBean.setPub(new Pub());
 		menuDao=mock(MenuDAO.class);
@@ -73,7 +77,7 @@ public class MenuControllerTest {
 		list.add(p3);
 		
 		for (Product element : list) {
-			basket.put(element, 0);
+			basket.put(element, -1);
 		}
 		
 		selectedProduct=p1;
@@ -86,6 +90,7 @@ public class MenuControllerTest {
 			FieldUtils.writeField(menuController, "selectPubBean", selectPubBean, true);
 			FieldUtils.writeField(menuController, "menuDao", menuDao, true);
 			FieldUtils.writeField(menuController, "productBean", productBean, true);
+			FieldUtils.writeField(menuController, "userSessionBean", userSessionBean, true);
 			FieldUtils.writeField(menuController, "selectedProduct", selectedProduct, true);
 			FieldUtils.writeField(menuController, "basketBean", basketBean, true);
 			FieldUtils.writeField(productBean, "conversation", conversation, true);
@@ -130,10 +135,23 @@ public class MenuControllerTest {
 	public void addItemTest() {
 		
 		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
+		userSessionBean.setType(0);
+
 		menuController.init();
 		
 		for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
-			assertTrue(entry.getValue().equals(0));
+			assertTrue(entry.getValue().equals(-1));
+		}
+		
+		menuController.addItem(p1);
+		
+		for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
+			
+			if (entry.getKey().equals(p1)) {
+				assertTrue(entry.getValue().equals(0));
+			}else{
+				assertTrue(entry.getValue().equals(-1));
+			}
 		}
 		
 		menuController.addItem(p1);
@@ -143,18 +161,7 @@ public class MenuControllerTest {
 			if (entry.getKey().equals(p1)) {
 				assertTrue(entry.getValue().equals(1));
 			}else{
-				assertTrue(entry.getValue().equals(0));
-			}
-		}
-		
-		menuController.addItem(p1);
-		
-		for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
-			
-			if (entry.getKey().equals(p1)) {
-				assertTrue(entry.getValue().equals(2));
-			}else{
-				assertTrue(entry.getValue().equals(0));
+				assertTrue(entry.getValue().equals(-1));
 			}
 		}
 		
@@ -170,6 +177,8 @@ public class MenuControllerTest {
 	@Test
 	public void toSummaryPageTest(){
 		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
+		userSessionBean.setType(0);
+		
 		menuController.init();
 		
 		assertTrue(basketBean.getBasket().isEmpty());
