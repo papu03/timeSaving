@@ -22,85 +22,94 @@ import javax.transaction.Transactional;
 @ViewScoped
 public class OrderListController implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Inject
-    private UserSessionBean userSessionBean;
+	@Inject
+	private UserSessionBean userSessionBean;
 
-    @Inject
-    private OrderBean orderBean;
+	@Inject
+	private OrderBean orderBean;
 
-    @Inject
-    private UserAssoDAO userAssoDao;
+	@Inject
+	private UserAssoDAO userAssoDao;
 
-    @Inject
-    private OrderDAO orderDao;
-    
-    private List<Ordine> orderList;
+	@Inject
+	private OrderDAO orderDao;
 
-    private boolean isOperatore;
-    private boolean isClient;
+	private List<Ordine> orderList;
 
-    @PostConstruct
-    public void init() {
-        System.out.println("Init Order List Controller");
+	private boolean isOperatore;
+	private boolean isClient;
+	private int changeStateCount;
 
-        orderList = new ArrayList<Ordine>();
-        User userSession = userSessionBean.getUser();
-        isOperatore=false;
-        isClient=false;
+	@PostConstruct
+	public void init() {
+		System.out.println("Init Order List Controller");
 
-        for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
-            Ordine ord = userAssoc.getOrdine();
-            orderList.add(ord);
-        }
-        
-        if(userSessionBean.getType() != 0){
-        	isOperatore=true;
-        }else{
-        	isClient=true;
-        }
-    }
+		orderList = new ArrayList<Ordine>();
+		User userSession = userSessionBean.getUser();
+		isOperatore = false;
+		isClient = false;
+		changeStateCount = 0;
 
-    public String toDetailOrder(Ordine order) {
+		for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
+			Ordine ord = userAssoc.getOrdine();
+			orderList.add(ord);
+		}
 
-        orderBean.initConversation();
-        orderBean.setOrder(order);
+		if (userSessionBean.getType() != 'u') {
+			isOperatore = true;
+		} else {
+			isClient = true;
+		}
+	}
 
-        return "detailOrder?&faces-redirect=true";
-    }
-    
-    @Transactional
-    public void changeOrderState(Ordine order){
-        
-        if(order.getStateOrder() == 'a'){
-            order.setStateOrder('b'); 
-        }else if(order.getStateOrder() == 'b'){
-            order.setStateOrder('c');
-        }
-        
-        try{
-            orderDao.update(order);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
+	public String toDetailOrder(Ordine order) {
 
-    public List<Ordine> getOrderList() {
-        return orderList;
-    }
+		orderBean.initConversation();
+		orderBean.setOrder(order);
 
-    public void setOrderList(List<Ordine> orderList) {
-        this.orderList = orderList;
-    }
+		return "detailOrder?&faces-redirect=true";
+	}
 
-    public boolean isIsOperatore() {
-        return isOperatore;
-    }
+	@Transactional
+	public void changeOrderState(Ordine order) {
 
-    public void setIsOperatore(boolean isOperatore) {
-        this.isOperatore = isOperatore;
-    }
+		if (changeStateCount != 1) {
+			
+			if (order.getStateOrder() == 'a') {
+				order.setStateOrder('b');
+			} else if (order.getStateOrder() == 'b') {
+				order.setStateOrder('c');
+			}
+			if (order.getStateOrder() == 'c') {
+				order.setStateOrder('d');
+			}
+
+			try {
+				orderDao.update(order);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			changeStateCount++;
+		}
+	}
+
+	public List<Ordine> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(List<Ordine> orderList) {
+		this.orderList = orderList;
+	}
+
+	public boolean isIsOperatore() {
+		return isOperatore;
+	}
+
+	public void setIsOperatore(boolean isOperatore) {
+		this.isOperatore = isOperatore;
+	}
 
 	public boolean isIsClient() {
 		return isClient;
@@ -108,6 +117,14 @@ public class OrderListController implements Serializable {
 
 	public void setClient(boolean isClient) {
 		this.isClient = isClient;
+	}
+
+	public int getChangeStateCount() {
+		return changeStateCount;
+	}
+
+	public void setChangeStateCount(int changeStateCount) {
+		this.changeStateCount = changeStateCount;
 	}
 
 }

@@ -15,7 +15,7 @@ public class UserSessionBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private User user;
-    private int type; //0 cliente 1 barista 2 cuoco
+    private char type; //u utilizzatore b barista c cuoco
 
     public User getUser() {
         return user;
@@ -27,12 +27,13 @@ public class UserSessionBean implements Serializable {
     public boolean isLogged() {
         return user != null;
     }
-    
-	public int getType() {
+	public char getType() {
 		return type;
 	}
-	public void setType(int type) {
+	public void setType(char type) {
 		this.type = type;
 	}
+    
+	
 
 }

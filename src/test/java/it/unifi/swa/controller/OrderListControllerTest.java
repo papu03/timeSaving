@@ -66,9 +66,9 @@ public class OrderListControllerTest {
 		
 		//userAssociations.add(o1.addUser(cuoco));
 		//userAssociations.add(o1.addUser(barista));
-		userAssociations.add(o1.addUser(papu,'u'));
+		userAssociations.add(o1.addUser(papu));
 		//userAssociations.add(o2.addUser(cuoco));
-		userAssociations.add(o2.addUser(papu,'u'));
+		userAssociations.add(o2.addUser(papu));
 		
 		orderList=new ArrayList<Ordine>();
 		orderList.add(o1);

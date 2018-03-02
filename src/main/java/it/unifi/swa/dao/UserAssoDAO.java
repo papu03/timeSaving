@@ -26,7 +26,7 @@ public class UserAssoDAO extends BaseDao<UserAssociation> {
 		List<UserAssociation> userAssociations=new ArrayList<UserAssociation>();
 
 		try {
-			UserAssociation aClient = ord.addUser(client,'u');
+			UserAssociation aClient = ord.addUser(client);
 
 			this.save(aClient);
 			userAssociations.add(aClient);
@@ -38,7 +38,7 @@ public class UserAssoDAO extends BaseDao<UserAssociation> {
 						setParameter("local", ord.getLocal()).
 						getResultList();
 				
-				UserAssociation aCook = ord.addUser(cook.get(0),'c'); //prendiamo il primo per semplicità
+				UserAssociation aCook = ord.addUser(cook.get(0)); //prendiamo il primo per semplicità
 				this.save(aCook);
 				userAssociations.add(aCook);
 			}
@@ -50,7 +50,7 @@ public class UserAssoDAO extends BaseDao<UserAssociation> {
 						setParameter("local", ord.getLocal()).
 						getResultList();
 
-				UserAssociation aBarman = ord.addUser(barman.get(0),'b');//prendiamo il primo per semplicità
+				UserAssociation aBarman = ord.addUser(barman.get(0));//prendiamo il primo per semplicità
 				this.save(aBarman);
 				userAssociations.add(aBarman);
 

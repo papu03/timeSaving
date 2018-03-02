@@ -92,8 +92,8 @@ public class UserAssoDaoTest extends DaoTest {
 		
 		List<UserAssociation> myUserAssociations= userAssoDao.insertUserAssociation(o1, client, isFood, isDrink);
 		
-		UserAssociation uassociation1=o1.addUser(client,'u');
-		UserAssociation uassociation2=o1.addUser(barista,'b');
+		UserAssociation uassociation1=o1.addUser(client);
+		UserAssociation uassociation2=o1.addUser(barista);
 
 		userAssociations.add(uassociation1);
 		userAssociations.add(uassociation2);
@@ -121,8 +121,8 @@ public class UserAssoDaoTest extends DaoTest {
 		
 		List<UserAssociation> myUserAssociations= userAssoDao.insertUserAssociation(o1, client, isFood, isDrink);
 		
-		UserAssociation uassociation1=o1.addUser(client,'u');
-		UserAssociation uassociation2=o1.addUser(cuoco,'c');
+		UserAssociation uassociation1=o1.addUser(client);
+		UserAssociation uassociation2=o1.addUser(cuoco);
 
 		userAssociations.add(uassociation1);
 		userAssociations.add(uassociation2);
@@ -143,9 +143,9 @@ public class UserAssoDaoTest extends DaoTest {
 		
 		List<UserAssociation> myUserAssociations= userAssoDao.insertUserAssociation(o1, client, isFood, isDrink);
 		
-		UserAssociation uassociation1=o1.addUser(client,'u');
-		UserAssociation uassociation2=o1.addUser(cuoco,'c');
-		UserAssociation uassociation3=o1.addUser(barista,'b');
+		UserAssociation uassociation1=o1.addUser(client);
+		UserAssociation uassociation2=o1.addUser(cuoco);
+		UserAssociation uassociation3=o1.addUser(barista);
 
 		userAssociations.add(uassociation1);
 		userAssociations.add(uassociation2);
@@ -165,8 +165,8 @@ public class UserAssoDaoTest extends DaoTest {
 	@Test
 	public void  getUserAssocByClientTest(){
 		
-		UserAssociation uassociation1=o1.addUser(client,'u');
-		UserAssociation uassociation2=o2.addUser(client,'u');
+		UserAssociation uassociation1=o1.addUser(client);
+		UserAssociation uassociation2=o2.addUser(client);
 		
 		userAssociations.add(uassociation1);
 		userAssociations.add(uassociation2);
@@ -181,8 +181,8 @@ public class UserAssoDaoTest extends DaoTest {
 	@Test
 	public void  getUserAssocByOperatorTest(){
 		
-		UserAssociation uassociation1=o1.addUser(cuoco,'c');
-		UserAssociation uassociation2=o2.addUser(barista,'b');
+		UserAssociation uassociation1=o1.addUser(cuoco);
+		UserAssociation uassociation2=o2.addUser(barista);
 		
 		userAssociations.add(uassociation1);
 		
@@ -195,9 +195,9 @@ public class UserAssoDaoTest extends DaoTest {
 	
 	@Test
 	public void getUserAssocByOrderTest(){
-		UserAssociation uassociation1=o1.addUser(client,'u');
-		UserAssociation uassociation2=o1.addUser(cuoco,'c');
-		UserAssociation uassociation3=o1.addUser(barista,'b');
+		UserAssociation uassociation1=o1.addUser(client);
+		UserAssociation uassociation2=o1.addUser(cuoco);
+		UserAssociation uassociation3=o1.addUser(barista);
 		
 		userAssociations.add(uassociation1);
 		userAssociations.add(uassociation2);

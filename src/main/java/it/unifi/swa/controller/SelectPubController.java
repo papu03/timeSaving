@@ -56,7 +56,7 @@ public class SelectPubController implements Serializable {
 	        isOperatore=false;
 	        isClient=false;
 
-	        if(userSessionBean.getType() != 0){
+	        if(userSessionBean.getType() != 'u'){
 	        	isOperatore=true;
 	        	operatorPub=operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
 	        }else{

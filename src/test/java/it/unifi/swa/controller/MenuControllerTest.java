@@ -135,7 +135,7 @@ public class MenuControllerTest {
 	public void addItemTest() {
 		
 		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
-		userSessionBean.setType(0);
+		userSessionBean.setType('u');
 
 		menuController.init();
 		
@@ -177,7 +177,7 @@ public class MenuControllerTest {
 	@Test
 	public void toSummaryPageTest(){
 		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
-		userSessionBean.setType(0);
+		userSessionBean.setType('u');
 		
 		menuController.init();
 		

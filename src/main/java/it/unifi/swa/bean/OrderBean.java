@@ -47,4 +47,6 @@ public class OrderBean implements Serializable {
 		this.conversation = conversation;
 	}
 
+	
+
 }

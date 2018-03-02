@@ -106,7 +106,7 @@ public class SummaryController implements Serializable {
 			}
 		}
          //System.out.println(isFood+" "+isDrink);
-		 ord=orderDao.insertOrder(pub);
+		 ord=orderDao.insertOrder(pub,isFood,isDrink);
 		 userAssoDao.insertUserAssociation(ord,client,isFood,isDrink);
 		 orderProductDao.insertProdAssociation(ord, basketNotNull);
 

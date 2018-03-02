@@ -1,9 +1,7 @@
 package it.unifi.swa.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -18,7 +16,9 @@ import org.junit.Test;
 import org.junit.runners.model.InitializationError;
 
 import it.unifi.swa.bean.OrderBean;
+import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderProductDAO;
+import it.unifi.swa.domain.Client;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
 
@@ -26,6 +26,7 @@ public class DetailOrderControllerTest {
 	
 	private DetailOrderController detailOrderController;
 	private OrderBean orderBean;
+	private UserSessionBean userSessionBean;
 	private OrderProductDAO orderProductDao;
 	private Map<Product, Integer> qntProductMap;
 	
@@ -41,7 +42,12 @@ public class DetailOrderControllerTest {
 	
 		detailOrderController=new DetailOrderController();
 		orderBean= new OrderBean();
+		
+		userSessionBean= new UserSessionBean();
+		userSessionBean.setType('u');
+		
 		orderProductDao=mock(OrderProductDAO.class);
+		
 		
 		p1=new Product();
 		p2=new Product();
@@ -58,12 +64,14 @@ public class DetailOrderControllerTest {
 		
 		conversation=mock(Conversation.class);
 		
-		when(orderProductDao.getProdQntByOrder(orderBean.getOrder())).thenReturn(qntProductMap);
+		when(orderProductDao.getProdQntByOrder(orderBean.getOrder(),userSessionBean.getType())).thenReturn(qntProductMap);
 
 		
 		try {
 			FieldUtils.writeField(detailOrderController, "orderBean", orderBean, true);
 			FieldUtils.writeField(detailOrderController, "orderProductDao", orderProductDao, true);
+			FieldUtils.writeField(detailOrderController, "userSessionBean", userSessionBean, true);
+
 			FieldUtils.writeField(orderBean, "conversation", conversation, true);
 
 		} catch (IllegalAccessException e) {

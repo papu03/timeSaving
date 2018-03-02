@@ -1,9 +1,7 @@
 package it.unifi.swa.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import it.unifi.swa.bean.OrderBean;
+import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderProductDAO;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
@@ -20,8 +19,8 @@ import it.unifi.swa.domain.Product;
 @ViewScoped
 public class DetailOrderController implements Serializable {
 	
-//	@Inject
-//	private UserSessionBean userSessionBean;
+	@Inject
+	private UserSessionBean userSessionBean;
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -45,7 +44,7 @@ public class DetailOrderController implements Serializable {
 		Ordine ord=orderBean.getOrder();
 		System.out.println("L'id dell'ordine è "+ord.getIdOrder());
 		
-		qntProductMap=orderProductDao.getProdQntByOrder(ord);
+		qntProductMap=orderProductDao.getProdQntByOrder(ord,userSessionBean.getType());
 			
 	}
 	

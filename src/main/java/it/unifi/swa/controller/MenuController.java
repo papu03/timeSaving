@@ -79,7 +79,7 @@ public class MenuController implements Serializable {
 			basket = listWithQnt;
 		}
 
-		if (userSessionBean.getType() != 0) {
+		if (userSessionBean.getType() != 'u') {
 			isOperatore = true;
 		} else {
 			isClient = true;

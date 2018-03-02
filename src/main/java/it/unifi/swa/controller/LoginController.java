@@ -32,7 +32,7 @@ public class LoginController {
 
         userData = new User();
         userSession.setUser(null);
-        userSession.setType(4);
+        userSession.setType('n');
 
         userData.setUsername(username);
         userData.setPassword(password);
@@ -56,12 +56,12 @@ public class LoginController {
             
             if (loggedUser == null) {
                 throw new RuntimeException("Login Failed");
-            }else{
-                userSession.setType(operatorDao.findByLoginInfo(userData).getoType());
             }
+            
+            userSession.setType(operatorDao.findByLoginInfo(userData).getoType());
 
         } else {
-            userSession.setType(0);
+            userSession.setType('u');
         }
 
         userSession.setUser(loggedUser);
@@ -77,7 +77,7 @@ public class LoginController {
     public String logOut() {
 
         userSession.setUser(null);
-        userSession.setType(4);
+        userSession.setType('n');
 
         return "login?&faces-redirect=true";
 

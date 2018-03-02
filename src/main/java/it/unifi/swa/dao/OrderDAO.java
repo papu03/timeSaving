@@ -22,11 +22,17 @@ public class OrderDAO extends BaseDao<Ordine>{
 	}
 	
 	@Transactional
-	public Ordine insertOrder(Pub pub){
+	public Ordine insertOrder(Pub pub,boolean isFood,boolean isDrink){
 		
 		Ordine ord= new Ordine();
 		ord.setLocal(pub);
 		ord.setStateOrder('a');
+		
+		if(isFood && isDrink){
+			ord.setSizeOrder('b');
+		}else{
+			ord.setSizeOrder('a');
+		}
 
 		this.save(ord);
 		

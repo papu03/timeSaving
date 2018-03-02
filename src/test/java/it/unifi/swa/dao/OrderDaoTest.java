@@ -34,7 +34,7 @@ public class OrderDaoTest extends DaoTest {
 	@Test
 	public void insertOrderTest(){
 		
-		Ordine order=orderDao.insertOrder(pub);
+		Ordine order=orderDao.insertOrder(pub,true,false);
 		assertEquals(order,orderDao.findById(order.getIdOrder()));
 		
 	}
