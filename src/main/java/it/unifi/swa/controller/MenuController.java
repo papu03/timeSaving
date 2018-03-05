@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.unifi.swa.bean.BasketBean;
 import it.unifi.swa.bean.ProductBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
@@ -26,265 +27,326 @@ import it.unifi.swa.domain.Product;
 import java.util.Vector;
 
 @Named
-@ViewScoped
+@ConversationScoped
 public class MenuController implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Inject
-    private SelectPubBean selectPubBean;
+	@Inject
+	private Conversation conversation;
+	
+	@Inject
+	private SelectPubBean selectPubBean;
 
-    @Inject
-    private BasketBean basketBean;
 
-    @Inject
-    private ProductBean productBean;
+	@Inject
+	private ProductBean productBean;
 
-    @Inject
-    private UserSessionBean userSessionBean;
+	@Inject
+	private UserSessionBean userSessionBean;
 
-    @Inject
-    private MenuDAO menuDao;
+	@Inject
+	private MenuDAO menuDao;
 
-    @Inject
-    private ProductDAO productDao;
+	@Inject
+	private ProductDAO productDao;
 
-    @Inject
-    private OrderDAO orderDao;
+	@Inject
+	private OrderDAO orderDao;
 
-    private List<Product> productList;
-    private Map<Product, Integer> basket;
-    private Product selectedProduct;
-    private Menu myMenu;
-    private Ordine order;
-    private OPAssociation opa;
-    private Vector<OPAssociation> vopa;
+	private List<Product> productList;
+	private Map<Product, Integer> basket;
+	private Product selectedProduct;
+	private Menu myMenu;
+	private Ordine order;
+	private OPAssociation opa;
+	private List<OPAssociation> opaList;
 
-    private boolean isOperatore;
-    private boolean isClient;
+	private boolean isOperatore;
+	private boolean isClient;
 
-    @PostConstruct
-    public void init() {
-        System.out.println("Init Menu Controller");
-        System.out.println("name pub " + selectPubBean.getPub().getNome());
+	@PostConstruct
+	public void init() {
+		
+		System.out.println("Init Menu Controller");
+		System.out.println("name pub " + selectPubBean.getPub().getNome());
+		//this.initConversation();
+		basket = new HashMap<Product, Integer>();
+		List<Product> list = new ArrayList<Product>();
+		try {
+			list = menuDao.getListOfProduct(selectPubBean.getPub());
+			productList = list;
+			myMenu = productList.get(0).getMenu();
+		} catch (NullPointerException ex) {
+			productList = null;
+			System.out.println("There is no Products in this pub menu");
+		}
 
-        basket = new HashMap<Product, Integer>();
-        List<Product> list = new ArrayList<Product>();
-        try {
-            list = menuDao.getListOfProduct(selectPubBean.getPub());
-            productList = list;
-            myMenu = productList.get(0).getMenu();
-        } catch (NullPointerException ex) {
-            productList = null;
-            System.out.println("There is no Products in this pub menu");
-        }
+		 Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
+		
+		 for (Product element : productList) {
+		 listWithQnt.put(element, 0);
+		 }
+		
+		 if (!listWithQnt.isEmpty()) {
+		 basket = listWithQnt;
+		 }
 
-        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
+		if (userSessionBean.getType() != 'u') {
+			isOperatore = true;
+		} else {
+			isClient = true;
+		}
 
-        for (Product element : productList) {
-            listWithQnt.put(element, -1);
-        }
+		Ordine ord = new Ordine();
+		ord.setLocal(selectPubBean.getPub());
+		ord.setStateOrder('a');
+		this.order = ord;
+		// setOrder(ord);
 
-        if (!listWithQnt.isEmpty()) {
-            basket = listWithQnt;
-        }
+		// vopa = new Vector<OPAssociation>();
+		// setVopa(vopa);
+		opaList = new ArrayList<OPAssociation>();
+		
+	}
 
-        if (userSessionBean.getType() != 'u') {
-            isOperatore = true;
-        } else {
-            isClient = true;
-        }
+	public List<Product> getProductList() {
 
-        Ordine ord = new Ordine();
-        ord.setLocal(selectPubBean.getPub());
-        ord.setStateOrder('a');
-        setOrder(ord);
-        
-        vopa = new Vector<OPAssociation>();
-        setVopa(vopa);
+		return productList;
+	}
 
-    }
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
 
-    public List<Product> getProductList() {
+	// public void addToOrder(Product p) {
+	//
+	// boolean presente = false;
+	// for(OPAssociation op : vopa){
+	// if(p == op.getProduct()){
+	// int qty = op.getQuantity();
+	// op.setQuantity(++qty);
+	// presente = true;
+	// }
+	// }
+	//
+	// if(!presente){
+	// OPAssociation opa = getOrder().addProduct(p, 1);
+	// vopa.add(opa);
+	// }
+	//
+	// System.out.println("Aggiungo " + p.getProdName() + " all\'ordine");
+	//
+	//
+	// }
 
-        return productList;
-    }
+	public void addToOrder(Product p) {
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
+		boolean presente = false;
 
-    public void addToOrder(Product p) {
+		for (OPAssociation op : opaList) {
+			if (p == op.getProduct()) {
+				int qty = op.getQuantity();
+				op.setQuantity(++qty);
+				basket.put(p, op.getQuantity());
+				System.out.println("Modificato opa " + op.getProduct().getProdName() + " qnt " + op.getQuantity());
+				presente = true;
+			}
+		}
 
-        boolean presente = false;
-        for(OPAssociation op : vopa){
-            if(p == op.getProduct()){
-                int qty = op.getQuantity();
-                op.setQuantity(++qty);
-                presente = true;
-            }
-        }
-        
-        if(!presente){
-            OPAssociation opa = getOrder().addProduct(p, 1);
-            vopa.add(opa);
-        }
-        
-        System.out.println("Aggiungo " + p.getProdName() + " all\'ordine");
-        
+		if (!presente) {
+			OPAssociation opa = order.addProduct(p, 1);
+			opaList.add(opa);
+			basket.put(p, opa.getQuantity());
+			System.out.println("Creato opa " + opa.getProduct().getProdName() + " qnt " + opa.getQuantity());
+		}
 
-    }
+		System.out.println("Aggiungo " + p.getProdName() + " all\'ordine");
 
-    public void addItem(Product p) {
+	}
+	
+//	public int getProductQnt(Product p){
+//		
+//		for (OPAssociation op : opaList) {
+//			if (p == op.getProduct()) {
+//				
+//				return op.getQuantity();
+//			}
+//		}
+//		return 0;
+//	}
 
-        for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+	// public void addItem(Product p) {
+	//
+	// for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+	//
+	// if (entry.getKey().equals(p)) {
+	// int increment = entry.getValue();
+	// entry.setValue(++increment);
+	// System.out.println("Quantità " + entry.getValue());
+	//
+	// }
+	// }
+	// System.out.println("Item " + p.getProdName() + " aggiunto");
+	//
+	// }
 
-            if (entry.getKey().equals(p)) {
-                int increment = entry.getValue();
-                entry.setValue(++increment);
-                System.out.println("Quantità " + entry.getValue());
+	public void removeItem(Product p) {
 
-            }
-        }
-        System.out.println("Item " + p.getProdName() + " aggiunto");
+		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
 
-    }
+			if (entry.getKey().equals(p)) {
+				int increment = entry.getValue();
+				if (increment == 0) {
+					return;
+				}
+				entry.setValue(--increment);
+				System.out.println("Quantità " + entry.getValue());
 
-    public void removeItem(Product p) {
+			}
+		}
+		System.out.println("Item " + p.getProdName() + " rimosso");
 
-        for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+	}
 
-            if (entry.getKey().equals(p)) {
-                int increment = entry.getValue();
-                if (increment == 0) {
-                    return;
-                }
-                entry.setValue(--increment);
-                System.out.println("Quantità " + entry.getValue());
+	public String toSelectPub() {
+		
+		this.endConversation();
+		return "selectPub?&faces-redirect=true";
+	}
 
-            }
-        }
-        System.out.println("Item " + p.getProdName() + " rimosso");
+	public String toSummaryPage() {
+		// basketBean.setBasket(basket);
+		// setVopa(vopa);
+		return "summary?&faces-redirect=true";
+	}
 
-    }
+	public String showProductDetails() {
 
-    public String toSelectPub() {
-        return "selectPub?&faces-redirect=true";
-    }
+		productBean.initConversation();
+		productBean.setProduct(selectedProduct);
+		return "product?faces-redirect=true";
+	}
 
-    public String toSummaryPage() {
-        //basketBean.setBasket(basket);
-        setVopa(vopa);
-        return "summary?&faces-redirect=true";
-    }
+	public String editProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
+		selectedProduct.setProdName(name.getValue().toString());
+		selectedProduct.setImage(image.getValue().toString());
 
-    public String showProductDetails() {
+		selectedProduct.setPrice(Double.parseDouble(price.getValue().toString()));
+		selectedProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
-        productBean.initConversation();
-        productBean.setProduct(selectedProduct);
-        return "product?faces-redirect=true";
-    }
+		productDao.updateProduct(selectedProduct);
 
-    public String editProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
-        selectedProduct.setProdName(name.getValue().toString());
-        selectedProduct.setImage(image.getValue().toString());
+		return "menu?faces-redirect=true";
+	}
 
-        selectedProduct.setPrice(Double.parseDouble(price.getValue().toString()));
-        selectedProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
+	public String removeProduct() {
 
-        productDao.updateProduct(selectedProduct);
+		if (productList.size() > 1) {
+			productDao.removeProduct(selectedProduct);
+		} else {
+			System.out.println("Impossibile rimuovere tutti gli oggetti");
+		}
+		return "menu?faces-redirect=true";
+	}
 
-        return "menu?faces-redirect=true";
-    }
+	public String addProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
+		Product newProduct = new Product();
 
-    public String removeProduct() {
+		try {
+			// if (!price.getValue().toString().equals("") &&
+			// !tmpExe.getValue().toString().equals("")) {
+			newProduct.setMenu(myMenu);
+			newProduct.setProdName(name.getValue().toString());
+			newProduct.setImage(image.getValue().toString());
 
-        if (productList.size() > 1) {
-            productDao.removeProduct(selectedProduct);
-        } else {
-            System.out.println("Impossibile rimuovere tutti gli oggetti");
-        }
-        return "menu?faces-redirect=true";
-    }
+			newProduct.setPrice(Double.parseDouble(price.getValue().toString()));
+			newProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
-    public String addProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
-        Product newProduct = new Product();
+			productDao.addProduct(newProduct);
+			// } else {
+			// System.out.println("Inserisci prezzo e tempo");
+			// }
+		} catch (Exception e) {
+			System.out.println("Inserisci prezzo e tempo");
+		}
 
-        try {
-            // if (!price.getValue().toString().equals("") &&
-            // !tmpExe.getValue().toString().equals("")) {
-            newProduct.setMenu(myMenu);
-            newProduct.setProdName(name.getValue().toString());
-            newProduct.setImage(image.getValue().toString());
+		return "menu?faces-redirect=true";
 
-            newProduct.setPrice(Double.parseDouble(price.getValue().toString()));
-            newProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
+	}
 
-            productDao.addProduct(newProduct);
-            // } else {
-            // System.out.println("Inserisci prezzo e tempo");
-            // }
-        } catch (Exception e) {
-            System.out.println("Inserisci prezzo e tempo");
-        }
+	public Map<Product, Integer> getBasket() {
+		return basket;
+	}
 
-        return "menu?faces-redirect=true";
+	public void setBasket(Map<Product, Integer> basket) {
+		this.basket = basket;
+	}
 
-    }
+	public Product getSelectedProduct() {
+		return selectedProduct;
+	}
 
-    public Map<Product, Integer> getBasket() {
-        return basket;
-    }
+	public void setSelectedProduct(Product selectedProduct) {
+		this.selectedProduct = selectedProduct;
+	}
 
-    public void setBasket(Map<Product, Integer> basket) {
-        this.basket = basket;
-    }
+	public boolean isIsOperatore() {
+		return isOperatore;
+	}
 
-    public Product getSelectedProduct() {
-        return selectedProduct;
-    }
+	public void setOperatore(boolean isOperatore) {
+		this.isOperatore = isOperatore;
+	}
 
-    public void setSelectedProduct(Product selectedProduct) {
-        this.selectedProduct = selectedProduct;
-    }
+	public boolean isIsClient() {
+		return isClient;
+	}
 
-    public boolean isIsOperatore() {
-        return isOperatore;
-    }
+	public void setClient(boolean isClient) {
+		this.isClient = isClient;
+	}
 
-    public void setOperatore(boolean isOperatore) {
-        this.isOperatore = isOperatore;
-    }
+	public Ordine getOrder() {
+		return order;
+	}
 
-    public boolean isIsClient() {
-        return isClient;
-    }
+	public void setOrder(Ordine order) {
+		this.order = order;
+	}
 
-    public void setClient(boolean isClient) {
-        this.isClient = isClient;
-    }
+	public OPAssociation getOpa() {
+		return opa;
+	}
 
-    public Ordine getOrder() {
-        return order;
-    }
+	public void setOpa(OPAssociation opa) {
+		this.opa = opa;
+	}
 
-    public void setOrder(Ordine order) {
-        this.order = order;
-    }
+	public List<OPAssociation> getOpaList() {
+		return opaList;
+	}
 
-    public OPAssociation getOpa() {
-        return opa;
-    }
+	public void setOpaList(List<OPAssociation> opaList) {
+		this.opaList = opaList;
+	}
+	
+	public void initConversation() {
+		if (conversation.isTransient())
+			conversation.begin();
+	}
 
-    public void setOpa(OPAssociation opa) {
-        this.opa = opa;
-    }
-    
-    public Vector<OPAssociation> getVopa() {
-        return vopa;
-    }
+	public String endConversation() {
+		if (!conversation.isTransient())
+			conversation.end();
+		return "back";
+	}
 
-    public void setVopa(Vector<OPAssociation> vopa) {
-        this.vopa = vopa;
-    }
+	// public Vector<OPAssociation> getVopa() {
+	// return vopa;
+	// }
+	//
+	// public void setVopa(Vector<OPAssociation> vopa) {
+	// this.vopa = vopa;
+	// }
 }

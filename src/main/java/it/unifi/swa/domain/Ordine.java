@@ -59,13 +59,13 @@ public class Ordine {
 		association.setProduct(product);
 		association.setOrder(this);
 		association.setIdProduct(product.getIdProduct());
-		association.setIdOrder(this.getIdOrder());
+		//association.setIdOrder(this.getIdOrder());
 		association.setQuantity(quantity);
 		if (this.products == null) {
 			this.products = new ArrayList<>();
 		}
 
-		this.products.add(association);
+		//this.products.add(association);
 		product.getOrders().add(association);
 
 		return association;

@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
-import it.unifi.swa.bean.BasketBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderDAO;
@@ -29,8 +28,8 @@ import java.util.Vector;
 @ViewScoped
 public class SummaryController implements Serializable {
 
-    @Inject
-    private BasketBean basketBean;
+//    @Inject
+//    private BasketBean basketBean;
 
     @Inject
     private SelectPubBean selectPubBean;
@@ -38,8 +37,6 @@ public class SummaryController implements Serializable {
     @Inject
     private UserSessionBean userSessionBean;
 
-//	@Inject
-//	private BaseStrategy baseStrategy;
     @Inject
     private OrderDAO orderDao;
 
@@ -61,8 +58,9 @@ public class SummaryController implements Serializable {
     private boolean isFood;
     private boolean isDrink;
     private Ordine ord;
-    private Vector<OPAssociation> vopa;
-            
+    //private Vector<OPAssociation> vopa;
+	private List<OPAssociation> opaList;
+        
     @PostConstruct
     public void init() {
         System.out.println("Init Summary Controller");
@@ -71,7 +69,10 @@ public class SummaryController implements Serializable {
         basket = new HashMap<Product, Integer>();
         basketNotNull = new HashMap<Product, Integer>();
 
-        basket = basketBean.getBasket();
+        opaList=menuCtrl.getOpaList();
+        basket = menuCtrl.getBasket();
+        ord=menuCtrl.getOrder();
+        
         for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
             if (entry.getValue() > 0) {
                 basketNotNull.put(entry.getKey(), entry.getValue());
@@ -86,8 +87,8 @@ public class SummaryController implements Serializable {
 
     }
 
-    public String toEditPage() {
-        return "edit?&faces-redirect=true";
+    public String editOrder() {
+        return "menu?&faces-redirect=true";
 
     }
 
@@ -115,25 +116,22 @@ public class SummaryController implements Serializable {
         userAssoDao.insertUserAssociation(ord, client, isFood, isDrink);
         orderProductDao.insertProdAssociation(ord, basketNotNull);*/
         
-        if(menuCtrl != null){
+       // if(menuCtrl != null){
             
-            ord = menuCtrl.getOrder();
+            //ord = menuCtrl.getOrder();
             if (isFood && isDrink) {
                 ord.setSizeOrder('b');
             } else {
                 ord.setSizeOrder('a');
             }
             orderDao.save(ord);
+            
+            orderProductDao.insertProdAssociation(ord, opaList);
+    		
 
-            vopa = menuCtrl.getVopa();
-            for(OPAssociation opa : vopa){
-                opa.setOrder(ord);
-                orderProductDao.save(opa);
-            }
-        }
+            menuCtrl.endConversation();
         
-
-        return "orderList?&faces-redirect=true";
+            return "orderList?&faces-redirect=true";
     }
 
     public Map<Product, Integer> getBasket() {
@@ -200,11 +198,19 @@ public class SummaryController implements Serializable {
         this.basketNotNull = basketNotNull;
     }
 
-    public Vector<OPAssociation> getVopa() {
-        return vopa;
-    }
+	public List<OPAssociation> getOpaList() {
+		return opaList;
+	}
 
-    public void setVopa(Vector<OPAssociation> vopa) {
-        this.vopa = vopa;
-    }
+	public void setOpaList(List<OPAssociation> opaList) {
+		this.opaList = opaList;
+	}
+
+//    public Vector<OPAssociation> getVopa() {
+//        return vopa;
+//    }
+//
+//    public void setVopa(Vector<OPAssociation> vopa) {
+//        this.vopa = vopa;
+//    }
 }

@@ -35,7 +35,7 @@ public class OrderListController implements Serializable {
 
 	@Inject
 	private OrderDAO orderDao;
-
+	
 	private List<Ordine> orderList;
 
 	private boolean isOperatore;

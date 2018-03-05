@@ -21,12 +21,28 @@ public class OrderDAO extends BaseDao<Ordine>{
 		super(Ordine.class);
 	}
 	
+//	@Transactional
+//	public Ordine insertOrder(Pub pub,boolean isFood,boolean isDrink){
+//		
+//		Ordine ord= new Ordine();
+//		ord.setLocal(pub);
+//		ord.setStateOrder('a');
+//		
+//		if(isFood && isDrink){
+//			ord.setSizeOrder('b');
+//		}else{
+//			ord.setSizeOrder('a');
+//		}
+//
+//		this.save(ord);
+//		
+//		return ord;
+//
+//	}
+	
 	@Transactional
-	public Ordine insertOrder(Pub pub,boolean isFood,boolean isDrink){
+	public void insertOrder(Ordine ord,boolean isFood,boolean isDrink){
 		
-		Ordine ord= new Ordine();
-		ord.setLocal(pub);
-		ord.setStateOrder('a');
 		
 		if(isFood && isDrink){
 			ord.setSizeOrder('b');
@@ -36,7 +52,6 @@ public class OrderDAO extends BaseDao<Ordine>{
 
 		this.save(ord);
 		
-		return ord;
 
 	}
 

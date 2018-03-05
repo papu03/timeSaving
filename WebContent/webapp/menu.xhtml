@@ -121,10 +121,7 @@
         <f:view>
             <h:form id="frmMenu">
                 <h1 class="display-3 text-center font-italic scrittona">Menu</h1>
-             <!--   <div id="logo">
-                    <h:graphicImage class="sfondo" value="images/jumpQueueLogo.png"
-                                    width="80%" />
-                </div>-->
+           
                 <div id="userlog">
                     <button type="button" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-user"></span> #{userSessionBean.user.username}
@@ -155,20 +152,16 @@
                                             <h:outputLabel class="scrittaqta" value="Quantity: " />
 
                                             <h:panelGrid columns="5">
-                                                <!--<h:outputLabel value="Quantity: " style="color: cadetblue" />-->
+                                                              
+ 												<h:outputText id="qnt" value="#{menuController.basket[product]}" />
+                                                              
 
-                                                <h:outputText id="qnt"
-                                                              value="#{menuController.basket[product] == -1 ? 0 : menuController.basket[product]}" />
-
-                                                <!--<h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">-->
                                                 <p:commandButton value="+"
                                                                  actionListener="#{menuController.addToOrder(product)}"
                                                                  update="qnt" />
                                                 <p:commandButton value="-"
                                                                  actionListener="#{menuController.removeItem(product)}"
                                                                  update="qnt" />
-                                                         <!--<f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>-->
-                                                <!--</h:commandButton>-->
 
 
                                             </h:panelGrid>

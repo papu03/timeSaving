@@ -40,6 +40,10 @@ public class SelectPubController implements Serializable {
 	
 	@Inject
 	private UserSessionBean userSessionBean;
+	
+
+    @Inject
+    private MenuController menuCtrl;
 
 	private Pub selectedPub;
 	private List<Pub> pubList;
@@ -67,7 +71,7 @@ public class SelectPubController implements Serializable {
 	public String select() {
 
 		selectPubBean.setPub(selectedPub);
-
+		menuCtrl.initConversation();
 		return "menu?&faces-redirect=true";
 	}
 	
