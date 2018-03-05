@@ -1,268 +1,279 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-		crossorigin="anonymous" />
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous" />
 
-	<title>Menu</title>
+        <title>Menu</title>
 
-	<style>
-.scritta {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: large;
-	color: cadetblue;
-	line-height: 21px;
-}
+        <style>
+            .scritta {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+                line-height: 21px;
+            }
 
-.scrittaqta {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: large;
-	color: cadetblue;
-	line-height: 32px;
-}
+            .scrittaqta {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+                line-height: 32px;
+            }
 
-.scrittona {
-	color: cadetblue;
-}
+            .scrittona {
+                color: cadetblue;
+            }
 
-#titolo {
-	position: relative;
-}
+            #titolo {
+                position: relative;
+            }
 
-.riquadro {
-	position: relative;
-	margin-bottom: 25px;
-	width: 99%;
-	border: 5px solid cadetblue;
-	padding: 15px;
-	border-radius: 40px;
-	box-shadow: 3px 3px #bbb;
-	background-color: white;
-}
+            .riquadro {
+                position: relative;
+                margin-bottom: 25px;
+                width: 99%;
+                border: 5px solid cadetblue;
+                padding: 15px;
+                border-radius: 40px;
+                box-shadow: 3px 3px #bbb;
+                background-color: white;
+            }
 
-.riquadrino {
-	width: 280px;
-	margin-left: 10px;
-	height: 25px;
-}
+            .riquadrino {
+                width: 280px;
+                margin-left: 10px;
+                height: 25px;
+            }
 
-.quantita {
-	width: 102%;
-	display: inline-flex;
-	height: 50px;
-	margin-left: 3%;
-	margin-top: 3%;
-}
+            .quantita {
+                width: 102%;
+                display: inline-flex;
+                height: 50px;
+                margin-left: 3%;
+                margin-top: 3%;
+            }
 
-.menu {
-	position: absolute;
-	top: 100px;
-	bottom: 100px;
-	left: 2%;
-	right: 70%;
-	overflow: auto;
-}
+            .menu {
+                position: absolute;
+                top: 100px;
+                bottom: 100px;
+                left: 2%;
+                right: 70%;
+                overflow: auto;
+            }
 
-.bottone {
-	margin-left: 15px;
-}
+            .bottone {
+                margin-left: 15px;
+            }
 
-#pulsantiera {
-	position: absolute;
-	bottom: 15px;
-	left: 2%;
-	display: inline-flex;
-}
+            #pulsantiera {
+                position: absolute;
+                bottom: 15px;
+                left: 2%;
+                display: inline-flex;
+            }
 
-#pulsanteProcedi {
-	margin-left: 20px;
-	float: right;
-}
+            #pulsanteProcedi {
+                margin-left: 20px;
+                float: right;
+            }
 
-.pulsanteDettaglio {
-	margin-left: 10px;
-}
+            .pulsanteDettaglio {
+                margin-left: 10px;
+            }
 
-.sfondo {
-	z-index: -1;
-}
+            .sfondo {
+                z-index: -1;
+            }
 
-#logo {
-	position: absolute;
-	left: 10%;
-	width: 100%;
-}
-</style>
+            #logo {
+                position: absolute;
+                left: 10%;
+                width: 100%;
+            }
 
-	<script type="text/javascript">
-		
-	</script>
+            #userlog{
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 15px;
+            }
+        </style>
 
-</h:head>
-<h:body>
-	<f:view>
-		<h:form id="frmMenu">
-			<h1 class="display-3 text-center font-italic scrittona">Menu</h1>
-			<div id="logo">
-				<h:graphicImage class="sfondo" value="images/jumpQueueLogo.png"
-					width="80%" />
-			</div>
+        <script type="text/javascript">
 
-			<div class="container container-fluid">
-				<div class="row">
+        </script>
 
-					<c:if test="#{menuController.isClient}">
-						<ui:repeat value="#{menuController.productList}" var="product"
-							varStatus="status">
-							<div class="col-sm-12 col-xl-4">
-								<div class="riquadro mb-2">
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Name: " />
-										<h:outputText value="#{product.prodName}" />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Price: " />
-										<h:outputText value="#{product.price}" />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Time to Prepare: " />
-										<h:outputText value="#{product.tmpExe}" />
-										<h:outputLabel value=" mins." />
-									</div>
-									<div class="quantita">
-										<h:outputLabel class="scrittaqta" value="Quantity: " />
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="frmMenu">
+                <h1 class="display-3 text-center font-italic scrittona">Menu</h1>
+             <!--   <div id="logo">
+                    <h:graphicImage class="sfondo" value="images/jumpQueueLogo.png"
+                                    width="80%" />
+                </div>-->
+                <div id="userlog">
+                    <button type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-user"></span> #{userSessionBean.user.username}
+                    </button>
+                </div>
+                <div class="container container-fluid">
+                    <div class="row">
 
-										<h:panelGrid columns="5">
-											<!--<h:outputLabel value="Quantity: " style="color: cadetblue" />-->
+                        <c:if test="#{menuController.isClient}">
+                            <ui:repeat value="#{menuController.productList}" var="product"
+                                       varStatus="status">
+                                <div class="col-sm-12 col-xl-4">
+                                    <div class="riquadro mb-2">
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Name: " />
+                                            <h:outputText value="#{product.prodName}" />
+                                        </div>
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Price: " />
+                                            <h:outputText value="#{product.price}" />
+                                        </div>
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Time to Prepare: " />
+                                            <h:outputText value="#{product.tmpExe}" />
+                                            <h:outputLabel value=" mins." />
+                                        </div>
+                                        <div class="quantita">
+                                            <h:outputLabel class="scrittaqta" value="Quantity: " />
 
-											<h:outputText id="qnt"
-												value="#{menuController.basket[product] == -1 ? 0 : menuController.basket[product]}" />
+                                            <h:panelGrid columns="5">
+                                                <!--<h:outputLabel value="Quantity: " style="color: cadetblue" />-->
 
-											<!--<h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">-->
-											<p:commandButton value="+"
-												actionListener="#{menuController.addItem(product)}"
-												update="qnt" />
-											<p:commandButton value="-"
-												actionListener="#{menuController.removeItem(product)}"
-												update="qnt" />
-											<!--<f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>-->
-											<!--</h:commandButton>-->
+                                                <h:outputText id="qnt"
+                                                              value="#{menuController.basket[product] == -1 ? 0 : menuController.basket[product]}" />
+
+                                                <!--<h:commandButton class="w3-button w3-teal w3-circle bottone" value="+">-->
+                                                <p:commandButton value="+"
+                                                                 actionListener="#{menuController.addToOrder(product)}"
+                                                                 update="qnt" />
+                                                <p:commandButton value="-"
+                                                                 actionListener="#{menuController.removeItem(product)}"
+                                                                 update="qnt" />
+                                                         <!--<f:ajax execute="@form" render="qnt" listener="#{menuController.addItem(product)}"/>-->
+                                                <!--</h:commandButton>-->
 
 
-										</h:panelGrid>
-									</div>
-									<div class="pulsanteDettaglio">
-										<h:commandButton class="w3-button w3-teal w3-round-medium"
-											value="Dettagli prodotto"
-											action="#{menuController.showProductDetails}">
-											<f:setPropertyActionListener value="#{product}"
-												target="#{menuController.selectedProduct}" />
-										</h:commandButton>
-									</div>
-								</div>
-							</div>
-						</ui:repeat>
-					</c:if>
+                                            </h:panelGrid>
+                                        </div>
+                                        <div class="pulsanteDettaglio">
+                                            <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                                             value="Dettagli prodotto"
+                                                             action="#{menuController.showProductDetails}">
+                                                <f:setPropertyActionListener value="#{product}"
+                                                                             target="#{menuController.selectedProduct}" />
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </c:if>
 
-					<c:if test="#{menuController.isOperatore}">
-						<ui:repeat value="#{menuController.productList}" var="product"
-							varStatus="status">
-							<div class="col-sm-12 col-xl-4">
-								<div class="riquadro mb-2">
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Name: " />
-										<h:inputText binding="#{name}" value="#{product.prodName}" />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Price: " />
-										<h:inputText binding="#{price}" value="#{product.price}" />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Time to Prepare: " />
-										<h:inputText binding="#{tmp}" value="#{product.tmpExe}" />
-										<h:outputLabel value=" mins." />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Image: " />
-										<h:inputText binding="#{img}" value="#{product.image}" />
-									</div>
-									<div class="pulsanteDettaglio">
-										<h:commandButton class="w3-button w3-teal w3-round-medium"
-											value="Modifica prodotto"
-											action="#{menuController.editProduct(name,price,tmp,img)}">
-											<f:setPropertyActionListener value="#{product}"
-												target="#{menuController.selectedProduct}" />
-										</h:commandButton>
-									</div>
-									<div class="pulsanteDettaglio">
-										<h:commandButton class="w3-button w3-teal w3-round-medium"
-											value="Elimina prodotto"
-											action="#{menuController.removeProduct}">
-											<f:setPropertyActionListener value="#{product}"
-												target="#{menuController.selectedProduct}" />
-										</h:commandButton>
-									</div>
-								</div>
-							</div>
-						</ui:repeat>
-						
-						 <div class="col-sm-12 col-xl-4">
-								<div class="riquadro mb-2">
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Name: " />
-										<h:inputText binding="#{newname}" value=" " />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Price: " />
-										<h:inputText binding="#{newprice}" value=" " />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Time to Prepare: " />
-										<h:inputText binding="#{newtmp}" value=" " />
-										<h:outputLabel value=" mins." />
-									</div>
-									<div class="riquadrino">
-										<h:outputLabel class="scritta" value="Image: " />
-										<h:inputText binding="#{newimg}" value=" " />
-									</div>
-									<div class="pulsanteDettaglio">
-										<h:commandButton class="w3-button w3-teal w3-round-medium"
-											value="Aggiungi prodotto"
-											action="#{menuController.addProduct(newname,newprice,newtmp,newimg)}">
-										</h:commandButton>
-									</div>
-									
-								</div>
-							</div>
-					</c:if>
-				</div>
-			</div>
-			<div id="pulsantiera">
-				<div id="pulsanteIndietro">
-					<h:commandButton class="w3-button w3-teal w3-round-medium"
-						value="Back" action="#{menuController.toSelectPub}" />
-				</div>
-				
-				<c:if test="#{menuController.isClient}">
-					<div id="pulsanteProcedi">
-						<h:commandButton class="w3-button w3-teal w3-round-medium"
-							value="Procedi ordine" action="#{menuController.toSummaryPage}" />
-					</div>
-				</c:if>
-		
-			</div>
-		</h:form>
-	</f:view>
-</h:body>
+                        <c:if test="#{menuController.isOperatore}">
+                            <ui:repeat value="#{menuController.productList}" var="product"
+                                       varStatus="status">
+                                <div class="col-sm-12 col-xl-4">
+                                    <div class="riquadro mb-2">
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Name: " />
+                                            <h:inputText binding="#{name}" value="#{product.prodName}" />
+                                        </div>
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Price: " />
+                                            <h:inputText binding="#{price}" value="#{product.price}" />
+                                        </div>
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Time to Prepare: " />
+                                            <h:inputText binding="#{tmp}" value="#{product.tmpExe}" />
+                                            <h:outputLabel value=" mins." />
+                                        </div>
+                                        <div class="riquadrino">
+                                            <h:outputLabel class="scritta" value="Image: " />
+                                            <h:inputText binding="#{img}" value="#{product.image}" />
+                                        </div>
+                                        <div class="pulsanteDettaglio">
+                                            <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                                             value="Modifica prodotto"
+                                                             action="#{menuController.editProduct(name,price,tmp,img)}">
+                                                <f:setPropertyActionListener value="#{product}"
+                                                                             target="#{menuController.selectedProduct}" />
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="pulsanteDettaglio">
+                                            <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                                             value="Elimina prodotto"
+                                                             action="#{menuController.removeProduct}">
+                                                <f:setPropertyActionListener value="#{product}"
+                                                                             target="#{menuController.selectedProduct}" />
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+
+                            <div class="col-sm-12 col-xl-4">
+                                <div class="riquadro mb-2">
+                                    <div class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Name: " />
+                                        <h:inputText binding="#{newname}" value=" " />
+                                    </div>
+                                    <div class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Price: " />
+                                        <h:inputText binding="#{newprice}" value=" " />
+                                    </div>
+                                    <div class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Time to Prepare: " />
+                                        <h:inputText binding="#{newtmp}" value=" " />
+                                        <h:outputLabel value=" mins." />
+                                    </div>
+                                    <div class="riquadrino">
+                                        <h:outputLabel class="scritta" value="Image: " />
+                                        <h:inputText binding="#{newimg}" value=" " />
+                                    </div>
+                                    <div class="pulsanteDettaglio">
+                                        <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                                         value="Aggiungi prodotto"
+                                                         action="#{menuController.addProduct(newname,newprice,newtmp,newimg)}">
+                                        </h:commandButton>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
+                <div id="pulsantiera">
+                    <div id="pulsanteIndietro">
+                        <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                         value="Back" action="#{menuController.toSelectPub}" />
+                    </div>
+
+                    <c:if test="#{menuController.isClient}">
+                        <div id="pulsanteProcedi">
+                            <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                             value="Procedi ordine" action="#{menuController.toSummaryPage}" />
+                        </div>
+                    </c:if>
+
+                </div>
+            </h:form>
+        </f:view>
+    </h:body>
 </html>

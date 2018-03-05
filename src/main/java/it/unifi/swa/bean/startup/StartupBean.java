@@ -48,7 +48,7 @@ public class StartupBean {
 		ale.setName("Alessandro");
 		ale.setSurname("Baroni");
 		ale.setUsername("b4r0");
-		ale.setPassword("saltacoda");
+		ale.setPassword("a");
         
         clientDao.save(papu);
         clientDao.save(ale);

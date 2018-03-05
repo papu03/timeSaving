@@ -18,163 +18,193 @@ import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.dao.OrderProductDAO;
 import it.unifi.swa.dao.UserAssoDAO;
+import it.unifi.swa.domain.OPAssociation;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
 import it.unifi.swa.domain.User;
+import java.util.Vector;
 
 @Named
 @ViewScoped
 public class SummaryController implements Serializable {
 
-	@Inject
-	private BasketBean basketBean;
+    @Inject
+    private BasketBean basketBean;
 
-	@Inject
-	private SelectPubBean selectPubBean;
+    @Inject
+    private SelectPubBean selectPubBean;
 
-	@Inject
-	private UserSessionBean userSessionBean;
+    @Inject
+    private UserSessionBean userSessionBean;
 
 //	@Inject
 //	private BaseStrategy baseStrategy;
+    @Inject
+    private OrderDAO orderDao;
 
-	@Inject
-	private OrderDAO orderDao;
-	
-	@Inject
-	private UserAssoDAO userAssoDao;
-	
-	@Inject
-	private OrderProductDAO orderProductDao;
+    @Inject
+    private UserAssoDAO userAssoDao;
 
-	private List<Product> productList;
-	private Map<Product, Integer> basket;
-	private Map<Product, Integer> basketNotNull;
+    @Inject
+    private OrderProductDAO orderProductDao;
 
-	private User client;
-	private Pub pub;
-	private boolean isFood;
-	private boolean isDrink;
-	private Ordine ord;
+    @Inject
+    private MenuController menuCtrl;
 
-	@PostConstruct
-	public void init() {
-		System.out.println("Init Summary Controller");
+    private List<Product> productList;
+    private Map<Product, Integer> basket;
+    private Map<Product, Integer> basketNotNull;
 
-		productList = new ArrayList<Product>();
-		basket = new HashMap<Product, Integer>();
-		basketNotNull = new HashMap<Product, Integer>();
+    private User client;
+    private Pub pub;
+    private boolean isFood;
+    private boolean isDrink;
+    private Ordine ord;
+    private Vector<OPAssociation> vopa;
+            
+    @PostConstruct
+    public void init() {
+        System.out.println("Init Summary Controller");
 
-		basket = basketBean.getBasket();
-		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
-			if (entry.getValue() > 0) {
-				basketNotNull.put(entry.getKey(), entry.getValue());
-			}
-		}
+        productList = new ArrayList<Product>();
+        basket = new HashMap<Product, Integer>();
+        basketNotNull = new HashMap<Product, Integer>();
 
-		for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
+        basket = basketBean.getBasket();
+        for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+            if (entry.getValue() > 0) {
+                basketNotNull.put(entry.getKey(), entry.getValue());
+            }
+        }
 
-			System.out.println(entry.getKey().getProdName() + "," + entry.getValue());
-			productList.add(entry.getKey());
-		}
+        for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
 
-	}
+            System.out.println(entry.getKey().getProdName() + "," + entry.getValue());
+            productList.add(entry.getKey());
+        }
 
-	public String toEditPage() {
-		return "edit?&faces-redirect=true";
-                
-	}
+    }
 
-	@Transactional
-	public String saveOrder() {
-		client = userSessionBean.getUser();
-		pub = selectPubBean.getPub();
+    public String toEditPage() {
+        return "edit?&faces-redirect=true";
 
-		isFood = false;
-		isDrink = false;
+    }
 
-		for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
+    @Transactional
+    public String saveOrder() {
+        client = userSessionBean.getUser();
+        pub = selectPubBean.getPub();
 
-	         //System.out.println(entry.getKey().getTpProduct() );
+        isFood = false;
+        isDrink = false;
 
-			if (entry.getKey().getTpProduct() == 'f') {
-				isFood = true;
-			}
-			if (entry.getKey().getTpProduct() == 'd') {
-				isDrink = true;
-			}
-		}
-         //System.out.println(isFood+" "+isDrink);
-		 ord=orderDao.insertOrder(pub,isFood,isDrink);
-		 userAssoDao.insertUserAssociation(ord,client,isFood,isDrink);
-		 orderProductDao.insertProdAssociation(ord, basketNotNull);
+        for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
 
-		 return "orderList?&faces-redirect=true";
-	}
+            //System.out.println(entry.getKey().getTpProduct() );
+            if (entry.getKey().getTpProduct() == 'f') {
+                isFood = true;
+            }
+            if (entry.getKey().getTpProduct() == 'd') {
+                isDrink = true;
+            }
+        }
+        //System.out.println(isFood+" "+isDrink);
 
-	public Map<Product, Integer> getBasket() {
-		return basket;
-	}
+        /*ord = orderDao.insertOrder(pub, isFood, isDrink);
+        userAssoDao.insertUserAssociation(ord, client, isFood, isDrink);
+        orderProductDao.insertProdAssociation(ord, basketNotNull);*/
+        
+        if(menuCtrl != null){
+            
+            ord = menuCtrl.getOrder();
+            if (isFood && isDrink) {
+                ord.setSizeOrder('b');
+            } else {
+                ord.setSizeOrder('a');
+            }
+            orderDao.save(ord);
 
-	public void setBasket(Map<Product, Integer> basket) {
-		this.basket = basket;
-	}
+            vopa = menuCtrl.getVopa();
+            for(OPAssociation opa : vopa){
+                opa.setOrder(ord);
+                orderProductDao.save(opa);
+            }
+        }
+        
 
-	public List<Product> getProductList() {
-		return productList;
-	}
+        return "orderList?&faces-redirect=true";
+    }
 
-	public void setProductList(List<Product> productList) {
-		this.productList = productList;
-	}
+    public Map<Product, Integer> getBasket() {
+        return basket;
+    }
 
-	public User getClient() {
-		return client;
-	}
+    public void setBasket(Map<Product, Integer> basket) {
+        this.basket = basket;
+    }
 
-	public void setClient(User client) {
-		this.client = client;
-	}
+    public List<Product> getProductList() {
+        return productList;
+    }
 
-	public Pub getPub() {
-		return pub;
-	}
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
 
-	public void setPub(Pub pub) {
-		this.pub = pub;
-	}
+    public User getClient() {
+        return client;
+    }
 
-	public boolean isFood() {
-		return isFood;
-	}
+    public void setClient(User client) {
+        this.client = client;
+    }
 
-	public void setFood(boolean isFood) {
-		this.isFood = isFood;
-	}
+    public Pub getPub() {
+        return pub;
+    }
 
-	public boolean isDrink() {
-		return isDrink;
-	}
+    public void setPub(Pub pub) {
+        this.pub = pub;
+    }
 
-	public void setDrink(boolean isDrink) {
-		this.isDrink = isDrink;
-	}
+    public boolean isFood() {
+        return isFood;
+    }
 
-	public Ordine getOrd() {
-		return ord;
-	}
+    public void setFood(boolean isFood) {
+        this.isFood = isFood;
+    }
 
-	public void setOrd(Ordine ord) {
-		this.ord = ord;
-	}
+    public boolean isDrink() {
+        return isDrink;
+    }
 
-	public Map<Product, Integer> getBasketNotNull() {
-		return basketNotNull;
-	}
+    public void setDrink(boolean isDrink) {
+        this.isDrink = isDrink;
+    }
 
-	public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
-		this.basketNotNull = basketNotNull;
-	}
+    public Ordine getOrd() {
+        return ord;
+    }
 
+    public void setOrd(Ordine ord) {
+        this.ord = ord;
+    }
+
+    public Map<Product, Integer> getBasketNotNull() {
+        return basketNotNull;
+    }
+
+    public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
+        this.basketNotNull = basketNotNull;
+    }
+
+    public Vector<OPAssociation> getVopa() {
+        return vopa;
+    }
+
+    public void setVopa(Vector<OPAssociation> vopa) {
+        this.vopa = vopa;
+    }
 }
