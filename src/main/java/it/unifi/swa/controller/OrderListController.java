@@ -12,10 +12,8 @@ import javax.inject.Named;
 import it.unifi.swa.bean.OrderBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderDAO;
-import it.unifi.swa.dao.UserAssoDAO;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.User;
-import it.unifi.swa.domain.UserAssociation;
 import javax.transaction.Transactional;
 
 @Named
@@ -30,8 +28,6 @@ public class OrderListController implements Serializable {
 	@Inject
 	private OrderBean orderBean;
 
-	@Inject
-	private UserAssoDAO userAssoDao;
 
 	@Inject
 	private OrderDAO orderDao;
@@ -52,10 +48,10 @@ public class OrderListController implements Serializable {
 		isClient = false;
 		changeStateCount = 0;
 
-		for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
-			Ordine ord = userAssoc.getOrdine();
-			orderList.add(ord);
-		}
+//		for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
+//			Ordine ord = userAssoc.getOrdine();
+//			orderList.add(ord);
+//		}
 
 		if (userSessionBean.getType() != 'u') {
 			isOperatore = true;

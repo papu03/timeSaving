@@ -22,8 +22,9 @@ public class Ordine {
 	private char sizeOrder; // 'a' o food o drink 'b' sia food sia drink
 
 	private Pub local;
+	private User client;
 	private List<OPAssociation> products;
-	private List<UserAssociation> users;
+	//private List<UserAssociation> users;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,6 +44,16 @@ public class Ordine {
 
 	public void setLocal(Pub local) {
 		this.local = local;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "idClient_FK")
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
 	}
 
 	@OneToMany(mappedBy = "order")
@@ -72,30 +83,30 @@ public class Ordine {
 	}
 
 	// @OneToMany(mappedBy="ordine")
-	@OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<UserAssociation> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<UserAssociation> users) {
-		this.users = users;
-	}
-
-	public UserAssociation addUser(User user) {
-		UserAssociation association = new UserAssociation();
-		association.setUtente(user);
-		association.setOrdine(this);
-		association.setUtenteId(user.getIdUser());
-		association.setOrdineId(this.getIdOrder());
-		if (this.users == null) {
-			this.users = new ArrayList<>();
-		}
-
-		this.users.add(association);
-		user.getOrders().add(association);
-
-		return association;
-	}
+//	@OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	public List<UserAssociation> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<UserAssociation> users) {
+//		this.users = users;
+//	}
+//
+//	public UserAssociation addUser(User user) {
+//		UserAssociation association = new UserAssociation();
+//		association.setUtente(user);
+//		association.setOrdine(this);
+//		association.setUtenteId(user.getIdUser());
+//		association.setOrdineId(this.getIdOrder());
+//		if (this.users == null) {
+//			this.users = new ArrayList<>();
+//		}
+//
+//		this.users.add(association);
+//		user.getOrders().add(association);
+//
+//		return association;
+//	}
 
 	public String ottieniDescState() {
 
@@ -141,5 +152,9 @@ public class Ordine {
 	public void setSizeOrder(char sizeOrder) {
 		this.sizeOrder = sizeOrder;
 	}
+
+	
+
+	
 
 }

@@ -101,6 +101,7 @@ public class MenuController implements Serializable {
 		Ordine ord = new Ordine();
 		ord.setLocal(selectPubBean.getPub());
 		ord.setStateOrder('a');
+		ord.setClient(userSessionBean.getUser());
 		this.order = ord;
 		// setOrder(ord);
 

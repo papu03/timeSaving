@@ -16,7 +16,6 @@ import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.dao.OrderProductDAO;
-import it.unifi.swa.dao.UserAssoDAO;
 import it.unifi.swa.domain.OPAssociation;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
@@ -40,8 +39,8 @@ public class SummaryController implements Serializable {
     @Inject
     private OrderDAO orderDao;
 
-    @Inject
-    private UserAssoDAO userAssoDao;
+//    @Inject
+//    private UserAssoDAO userAssoDao;
 
     @Inject
     private OrderProductDAO orderProductDao;
@@ -124,6 +123,7 @@ public class SummaryController implements Serializable {
             } else {
                 ord.setSizeOrder('a');
             }
+            
             orderDao.save(ord);
             
             orderProductDao.insertProdAssociation(ord, opaList);
