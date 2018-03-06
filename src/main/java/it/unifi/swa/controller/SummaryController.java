@@ -14,9 +14,11 @@ import javax.transaction.Transactional;
 
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
+import it.unifi.swa.dao.OperatorDAO;
 import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.dao.OrderProductDAO;
 import it.unifi.swa.domain.OPAssociation;
+import it.unifi.swa.domain.Operator;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
@@ -38,6 +40,9 @@ public class SummaryController implements Serializable {
 
     @Inject
     private OrderDAO orderDao;
+    
+    @Inject
+    private OperatorDAO operatorDao;
 
 //    @Inject
 //    private UserAssoDAO userAssoDao;
@@ -118,13 +123,16 @@ public class SummaryController implements Serializable {
        // if(menuCtrl != null){
             
             //ord = menuCtrl.getOrder();
-            if (isFood && isDrink) {
-                ord.setSizeOrder('b');
-            } else {
-                ord.setSizeOrder('a');
-            }
+//            if (isFood && isDrink) {
+//                ord.setSizeOrder('b');
+//            } else {
+//                ord.setSizeOrder('a');
+//            }
+//            
+//            orderDao.save(ord);
+            List<Operator> operators=operatorDao.getOperators(ord, isFood, isDrink);
             
-            orderDao.save(ord);
+            orderDao.insertOrder(ord,operators, isFood, isDrink);
             
             orderProductDao.insertProdAssociation(ord, opaList);
     		

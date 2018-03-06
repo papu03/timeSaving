@@ -23,6 +23,8 @@ public class Ordine {
 
 	private Pub local;
 	private User client;
+	private User cook;
+	private User barman;
 	private List<OPAssociation> products;
 	//private List<UserAssociation> users;
 
@@ -54,6 +56,26 @@ public class Ordine {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "idCook_FK")
+	public User getCook() {
+		return cook;
+	}
+	
+	public void setCook(User cook) {
+		this.cook = cook;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "idBarman_FK")
+	public User getBarman() {
+		return barman;
+	}
+
+	public void setBarman(User barman) {
+		this.barman = barman;
 	}
 
 	@OneToMany(mappedBy = "order")
@@ -152,6 +174,7 @@ public class Ordine {
 	public void setSizeOrder(char sizeOrder) {
 		this.sizeOrder = sizeOrder;
 	}
+
 
 	
 

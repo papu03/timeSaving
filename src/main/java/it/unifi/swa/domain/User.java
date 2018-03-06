@@ -25,8 +25,7 @@ public class User {
 	private int idUser;
 	private String username;
 	private String password;
-	//private List<Ordine> orders = new ArrayList<Ordine>();
-	//private List<UserAssociation> orders;
+	
 	private List<Ordine> orders;
 
 	
@@ -51,29 +50,6 @@ public class User {
 		this.username = username;
 	}
 	
-//	@ManyToMany 
-//	@JoinTable(name="JOIN_ORDINE_USER",
-//				joinColumns={@JoinColumn(name="idUser")},
-//				inverseJoinColumns={@JoinColumn(name="idOrdine")})
-//	public List<Ordine> getOrders() {
-//		return orders;
-//	}
-//	public void setOrders(List<Ordine> orders) {
-//		this.orders = orders;
-//	}
-	
-	//@OneToMany(mappedBy="user")
-//	@OneToMany(targetEntity=UserAssociation.class, mappedBy="utente",
-//			cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-//	public List<UserAssociation> getOrders() {
-//		if(this.orders == null)
-//		       this.orders = new ArrayList<>();
-//		return orders;
-//	}
-//	public void setOrders(List<UserAssociation> orders) {
-//		this.orders = orders;
-//	}
-
 	@OneToMany(targetEntity = Ordine.class, mappedBy = "client", cascade = CascadeType.ALL)
 	public List<Ordine> getOrders() {
 		if(this.orders == null)

@@ -53,9 +53,24 @@ public class OrderListController implements Serializable {
 //			orderList.add(ord);
 //		}
 
-		if (userSessionBean.getType() != 'u') {
+		if (userSessionBean.getType() == 'c') {
+			for (Ordine ord : orderDao.getOrderByCook(userSession)) {
+				orderList.add(ord);
+			}
 			isOperatore = true;
-		} else {
+		} else if (userSessionBean.getType() == 'b') {
+			
+			for (Ordine ord : orderDao.getOrderByBarman(userSession)) {
+				orderList.add(ord);
+			}
+			isOperatore = true;
+			
+		}else{
+			
+			for (Ordine ord : orderDao.getOrderByClient(userSession)) {
+				orderList.add(ord);
+			}
+			
 			isClient = true;
 		}
 	}
