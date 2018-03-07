@@ -24,59 +24,58 @@ import it.unifi.swa.domain.Product;
 @ViewScoped
 public class ProductController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// @Inject
-	// private ProductBean productBean;
-	//
+    // @Inject
+    // private ProductBean productBean;
+    //
+    @Inject
+    @HttpParam("idProd")
+    private String productId;
 
-	@Inject
-	@HttpParam("idProd")
-	private String productId;
+    @Inject
+    private ProductDAO productDao;
 
-	@Inject
-	private ProductDAO productDao;
-	
 //	@Inject
 //	private MenuController menuCtrl;
-	
-	private Product selectedProduct;
+    private Product selectedProduct;
 
-	@PostConstruct
-	public void init() {
-		System.out.println("Init Product Controller");
-		
+    @PostConstruct
+    public void init() {
+        System.out.println("Init Product Controller");
+
 //		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 //		        .getRequest();
 //
 //		productId= request.getParameter("idProd");
-		//productId="13";
-		selectedProduct = productDao.getProductById(productId);
-		
+        //productId="13";
+        if(productId != null){
+            selectedProduct = productDao.getProductById(productId);
+        }
 
 //		selectedProduct = productBean.getProduct();
-		// System.out.println("Immagine: "+selectedProduct.getImage());
-	}
+        // System.out.println("Immagine: "+selectedProduct.getImage());
+    }
 
-	@PreDestroy
-	public void end() {
-		//productId=null;
-		System.out.println("End Product Controller");
-	}
-	
-	public String toMenu() {
+    @PreDestroy
+    public void end() {
+        //productId=null;
+        System.out.println("End Product Controller");
+    }
 
-		//menuCtrl.initConversation();
-		return "menu?&faces-redirect=true";
+    public String toMenu() {
 
-	}
+        //menuCtrl.initConversation();
+        return "menu?&faces-redirect=true";
 
-	public Product getSelectedProduct() {
-		return selectedProduct;
-	}
+    }
 
-	public void setSelectedProduct(Product selectedProduct) {
-		this.selectedProduct = selectedProduct;
-	}
+    public Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
+    }
 
 }
