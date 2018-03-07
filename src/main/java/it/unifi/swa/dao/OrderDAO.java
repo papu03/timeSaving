@@ -41,7 +41,7 @@ public class OrderDAO extends BaseDao<Ordine> {
 	//
 	// }
 
-	public void insertOrder(Ordine ord, List<Operator> operators, boolean isFood, boolean isDrink) {
+	public void insertOrder(Ordine ord, List<Operator> operators) {
 
 		for (Operator op : operators) {
 
@@ -54,11 +54,11 @@ public class OrderDAO extends BaseDao<Ordine> {
 			}
 		}
 
-		if (isFood && isDrink) {
-			ord.setSizeOrder('b');
-		} else {
-			ord.setSizeOrder('a');
-		}
+//		if (isFood && isDrink) {
+//			ord.setSizeOrder('b');
+//		} else {
+//			ord.setSizeOrder('a');
+//		}
 
 		this.save(ord);
 
@@ -68,10 +68,10 @@ public class OrderDAO extends BaseDao<Ordine> {
 
 		List<Ordine> orderList = new ArrayList<Ordine>();
 
-		orderList = entityManager.createQuery("from Ordine o where o.client = :client", Ordine.class)
-				.setParameter("client", client).getResultList();
+		orderList = entityManager.createQuery("from Ordine o where o.client.idUser= :clientId", Ordine.class)
+				.setParameter("clientId", client.getIdUser()).getResultList();
 
-		System.out.println("L'id dell'ordine è: "+orderList.get(0).getIdOrder());
+		//System.out.println("L'id dell'ordine è: "+orderList.get(0).getIdOrder());
 
 		return orderList;
 
@@ -81,8 +81,8 @@ public class OrderDAO extends BaseDao<Ordine> {
 
 		List<Ordine> orderList = new ArrayList<Ordine>();
 
-		orderList = entityManager.createQuery("from Ordine o where o.cook = :cook", Ordine.class)
-				.setParameter("cook", cook).getResultList();
+		orderList = entityManager.createQuery("from Ordine o where o.cook.idUser = :cookId", Ordine.class)
+				.setParameter("cookId", cook.getIdUser()).getResultList();
 
 		return orderList;
 
@@ -92,8 +92,8 @@ public class OrderDAO extends BaseDao<Ordine> {
 
 		List<Ordine> orderList = new ArrayList<Ordine>();
 
-		orderList = entityManager.createQuery("from Ordine o where o.barman = :barman", Ordine.class)
-				.setParameter("barman", barman).getResultList();
+		orderList = entityManager.createQuery("from Ordine o where o.barman.idUser = :barmanId", Ordine.class)
+				.setParameter("barmanId", barman.getIdUser()).getResultList();
 
 		return orderList;
 

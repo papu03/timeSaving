@@ -28,10 +28,9 @@ public class OrderListController implements Serializable {
 	@Inject
 	private OrderBean orderBean;
 
-
 	@Inject
 	private OrderDAO orderDao;
-	
+
 	private List<Ordine> orderList;
 
 	private boolean isOperatore;
@@ -48,10 +47,11 @@ public class OrderListController implements Serializable {
 		isClient = false;
 		changeStateCount = 0;
 
-//		for (UserAssociation userAssoc : userAssoDao.getUserAssocByUser(userSession)) {
-//			Ordine ord = userAssoc.getOrdine();
-//			orderList.add(ord);
-//		}
+		// for (UserAssociation userAssoc :
+		// userAssoDao.getUserAssocByUser(userSession)) {
+		// Ordine ord = userAssoc.getOrdine();
+		// orderList.add(ord);
+		// }
 
 		if (userSessionBean.getType() == 'c') {
 			for (Ordine ord : orderDao.getOrderByCook(userSession)) {
@@ -59,18 +59,18 @@ public class OrderListController implements Serializable {
 			}
 			isOperatore = true;
 		} else if (userSessionBean.getType() == 'b') {
-			
+
 			for (Ordine ord : orderDao.getOrderByBarman(userSession)) {
 				orderList.add(ord);
 			}
 			isOperatore = true;
-			
-		}else{
-			
+
+		} else {
+
 			for (Ordine ord : orderDao.getOrderByClient(userSession)) {
 				orderList.add(ord);
 			}
-			
+
 			isClient = true;
 		}
 	}
@@ -86,15 +86,33 @@ public class OrderListController implements Serializable {
 	@Transactional
 	public void changeOrderState(Ordine order) {
 
-		if (changeStateCount != 1) {
-			
-			if (order.getStateOrder() == 'a') {
-				order.setStateOrder('b');
-			} else if (order.getStateOrder() == 'b') {
-				order.setStateOrder('c');
-			}
-			if (order.getStateOrder() == 'c') {
-				order.setStateOrder('d');
+		if (changeStateCount != 2) {
+
+			if (!order.getBarman().equals(null) && !order.getCook().equals(null)) {
+				
+				if (order.getStateOrder() == 'a') {
+					order.setStateOrder('b');
+				} else if (order.getStateOrder() == 'b') {
+
+					if (userSessionBean.getType() == 'c') { // cuoco
+						order.setStateOrder('c');
+					} else if (userSessionBean.getType() == 'b') { // barista
+						order.setStateOrder('d');
+					}
+
+				} else {
+
+					order.setStateOrder('e');
+
+				}
+
+			} else {
+
+				if (order.getStateOrder() == 'a') {
+					order.setStateOrder('b');
+				} else {
+					order.setStateOrder('e');
+				}
 			}
 
 			try {
@@ -105,6 +123,8 @@ public class OrderListController implements Serializable {
 			changeStateCount++;
 		}
 	}
+
+	
 
 	public List<Ordine> getOrderList() {
 		return orderList;

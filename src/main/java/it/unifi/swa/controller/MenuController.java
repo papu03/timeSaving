@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.html.HtmlInputText;
@@ -14,7 +15,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.unifi.swa.bean.ProductBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.MenuDAO;
@@ -39,8 +39,8 @@ public class MenuController implements Serializable {
 	private SelectPubBean selectPubBean;
 
 
-	@Inject
-	private ProductBean productBean;
+//	@Inject
+//	private ProductBean productBean;
 
 	@Inject
 	private UserSessionBean userSessionBean;
@@ -53,6 +53,8 @@ public class MenuController implements Serializable {
 
 	@Inject
 	private OrderDAO orderDao;
+	
+	
 
 	private List<Product> productList;
 	private Map<Product, Integer> basket;
@@ -110,6 +112,11 @@ public class MenuController implements Serializable {
 		opaList = new ArrayList<OPAssociation>();
 		
 	}
+	
+	@PreDestroy
+	public void end() {
+		System.out.println("End Menu Controller");
+	}
 
 	public List<Product> getProductList() {
 
@@ -120,26 +127,7 @@ public class MenuController implements Serializable {
 		this.productList = productList;
 	}
 
-	// public void addToOrder(Product p) {
-	//
-	// boolean presente = false;
-	// for(OPAssociation op : vopa){
-	// if(p == op.getProduct()){
-	// int qty = op.getQuantity();
-	// op.setQuantity(++qty);
-	// presente = true;
-	// }
-	// }
-	//
-	// if(!presente){
-	// OPAssociation opa = getOrder().addProduct(p, 1);
-	// vopa.add(opa);
-	// }
-	//
-	// System.out.println("Aggiungo " + p.getProdName() + " all\'ordine");
-	//
-	//
-	// }
+
 
 	public void addToOrder(Product p) {
 
@@ -166,31 +154,6 @@ public class MenuController implements Serializable {
 
 	}
 	
-//	public int getProductQnt(Product p){
-//		
-//		for (OPAssociation op : opaList) {
-//			if (p == op.getProduct()) {
-//				
-//				return op.getQuantity();
-//			}
-//		}
-//		return 0;
-//	}
-
-	// public void addItem(Product p) {
-	//
-	// for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
-	//
-	// if (entry.getKey().equals(p)) {
-	// int increment = entry.getValue();
-	// entry.setValue(++increment);
-	// System.out.println("Quantità " + entry.getValue());
-	//
-	// }
-	// }
-	// System.out.println("Item " + p.getProdName() + " aggiunto");
-	//
-	// }
 
 	public void removeItem(Product p) {
 
@@ -224,9 +187,9 @@ public class MenuController implements Serializable {
 
 	public String showProductDetails() {
 
-		productBean.initConversation();
-		productBean.setProduct(selectedProduct);
-		return "product?faces-redirect=true";
+		this.endConversation();
+		return "product?idProd=" + selectedProduct.getIdProduct() + "&faces-redirect=true";
+
 	}
 
 	public String editProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {

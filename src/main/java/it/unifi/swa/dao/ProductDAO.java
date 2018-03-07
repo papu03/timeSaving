@@ -37,5 +37,17 @@ public class ProductDAO extends BaseDao<Product> {
 		this.save(product);
 
 	}
+	
+	public Product getProductById(String idProduct){
+  	  
+  	int productId= Integer.parseInt(idProduct);
+  	
+  	Product result = entityManager
+	                .createQuery("FROM Product p WHERE p.idProduct = :productId", Product.class)
+	                .setParameter("productId", productId)
+	                .getSingleResult();
+		  
+	return result;
+	}
 
 }

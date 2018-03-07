@@ -19,14 +19,13 @@ public class Ordine {
 	private int idOrder;
 	private char stateOrder; // "a" arrivato "b" in esecuzione "c" 1 tipo
 								// concluso "d" 2 tipi conclusi
-	private char sizeOrder; // 'a' o food o drink 'b' sia food sia drink
 
 	private Pub local;
 	private User client;
 	private User cook;
 	private User barman;
 	private List<OPAssociation> products;
-	//private List<UserAssociation> users;
+	// private List<UserAssociation> users;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,7 +46,7 @@ public class Ordine {
 	public void setLocal(Pub local) {
 		this.local = local;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idClient_FK")
 	public User getClient() {
@@ -57,13 +56,13 @@ public class Ordine {
 	public void setClient(User client) {
 		this.client = client;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idCook_FK")
 	public User getCook() {
 		return cook;
 	}
-	
+
 	public void setCook(User cook) {
 		this.cook = cook;
 	}
@@ -92,43 +91,44 @@ public class Ordine {
 		association.setProduct(product);
 		association.setOrder(this);
 		association.setIdProduct(product.getIdProduct());
-		//association.setIdOrder(this.getIdOrder());
+		// association.setIdOrder(this.getIdOrder());
 		association.setQuantity(quantity);
 		if (this.products == null) {
 			this.products = new ArrayList<>();
 		}
 
-		//this.products.add(association);
+		// this.products.add(association);
 		product.getOrders().add(association);
 
 		return association;
 	}
 
 	// @OneToMany(mappedBy="ordine")
-//	@OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	public List<UserAssociation> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<UserAssociation> users) {
-//		this.users = users;
-//	}
-//
-//	public UserAssociation addUser(User user) {
-//		UserAssociation association = new UserAssociation();
-//		association.setUtente(user);
-//		association.setOrdine(this);
-//		association.setUtenteId(user.getIdUser());
-//		association.setOrdineId(this.getIdOrder());
-//		if (this.users == null) {
-//			this.users = new ArrayList<>();
-//		}
-//
-//		this.users.add(association);
-//		user.getOrders().add(association);
-//
-//		return association;
-//	}
+	// @OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine",
+	// cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	// public List<UserAssociation> getUsers() {
+	// return users;
+	// }
+	//
+	// public void setUsers(List<UserAssociation> users) {
+	// this.users = users;
+	// }
+	//
+	// public UserAssociation addUser(User user) {
+	// UserAssociation association = new UserAssociation();
+	// association.setUtente(user);
+	// association.setOrdine(this);
+	// association.setUtenteId(user.getIdUser());
+	// association.setOrdineId(this.getIdOrder());
+	// if (this.users == null) {
+	// this.users = new ArrayList<>();
+	// }
+	//
+	// this.users.add(association);
+	// user.getOrders().add(association);
+	//
+	// return association;
+	// }
 
 	public String ottieniDescState() {
 
@@ -138,20 +138,29 @@ public class Ordine {
 
 			char orderState = getStateOrder();
 			if (orderState == 'a') {
-				state = "Da Prendere In Carico";
+				state = "Ordine pagato in attesa";
 			} else if (orderState == 'b') {
-				state = "In Esecuzione";
-			} else if (this.sizeOrder == 'a') { //food o drink
-
-				if (orderState == 'c') {
-					state = "Eseguito";
-				}
-			} else if (this.sizeOrder == 'b') {//food e drink
+				state = "Ordine in Esecuzione";
+			} else if (orderState == 'c') {
 				
-				if (orderState == 'd'){
-					state = "Eseguito";
-				}
+				state = "Ordine cucina concluso. Ordine drink in esecuzione";
+			} if (orderState == 'd') {
+				state = "Ordine drink concluso. Ordine cucina in esecuzione";
+			}if (orderState == 'e') {
+				state = "Ordine drink e cucina concluso";
 			}
+
+			// } else if (this.sizeOrder == 'a') { //food o drink
+			//
+			// if (orderState == 'c') {
+			// state = "Eseguito";
+			// }
+			// } else if (this.sizeOrder == 'b') {//food e drink
+			//
+			// if (orderState == 'd'){
+			// state = "Eseguito";
+			// }
+			// }
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -166,18 +175,5 @@ public class Ordine {
 	public void setStateOrder(char stateOrder) {
 		this.stateOrder = stateOrder;
 	}
-
-	public char getSizeOrder() {
-		return sizeOrder;
-	}
-
-	public void setSizeOrder(char sizeOrder) {
-		this.sizeOrder = sizeOrder;
-	}
-
-
-	
-
-	
 
 }

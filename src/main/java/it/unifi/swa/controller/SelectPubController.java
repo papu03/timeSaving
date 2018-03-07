@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.unifi.swa.bean.PubBean;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OperatorDAO;
@@ -28,45 +28,49 @@ public class SelectPubController implements Serializable {
 
 	@Inject
 	private PubDAO pubDao;
-	
+
 	@Inject
 	private OperatorDAO operatorDao;
 
 	@Inject
 	private SelectPubBean selectPubBean;
 
-	@Inject
-	private PubBean pubBean;
-	
+	// @Inject
+	// private PubBean pubBean;
+
 	@Inject
 	private UserSessionBean userSessionBean;
-	
 
-    @Inject
-    private MenuController menuCtrl;
+	@Inject
+	private MenuController menuCtrl;
 
 	private Pub selectedPub;
 	private List<Pub> pubList;
-	
+
 	private Pub operatorPub;
 
 	private boolean isOperatore;
-    private boolean isClient;
-	
-	 @PostConstruct
-	 public void init() {
-	        System.out.println("Select Pub Controller Init");
+	private boolean isClient;
 
-	        isOperatore=false;
-	        isClient=false;
+	@PostConstruct
+	public void init() {
+		System.out.println("Select Pub Controller Init");
 
-	        if(userSessionBean.getType() != 'u'){
-	        	isOperatore=true;
-	        	operatorPub=operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
-	        }else{
-	        	isClient=true;
-	        }
-	    }
+		isOperatore = false;
+		isClient = false;
+
+		if (userSessionBean.getType() != 'u') {
+			isOperatore = true;
+			operatorPub = operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
+		} else {
+			isClient = true;
+		}
+	}
+
+	@PreDestroy
+	public void end() {
+		System.out.println("End SelectPub Controller");
+	}
 
 	public String select() {
 
@@ -74,18 +78,20 @@ public class SelectPubController implements Serializable {
 		menuCtrl.initConversation();
 		return "menu?&faces-redirect=true";
 	}
-	
-	public String goToOrders(){
-		
+
+	public String goToOrders() {
+
 		return "orderList?&faces-redirect=true";
 
 	}
 
 	public String showInfo() {
 
-		pubBean.initConversation();
-		pubBean.setSelectedPub(selectedPub);
-		return "pubInfo?&faces-redirect=true";
+		// pubBean.initConversation();
+		// pubBean.setSelectedPub(selectedPub);
+		return "pubInfo?id=" + selectedPub.getIdLocale() + "&faces-redirect=true";
+
+		// return "pubInfo?&faces-redirect=true";
 
 	}
 
@@ -128,7 +134,7 @@ public class SelectPubController implements Serializable {
 	}
 
 	public Pub getOperatorPub() {
-	
+
 		return operatorPub;
 	}
 

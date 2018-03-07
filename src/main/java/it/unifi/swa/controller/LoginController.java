@@ -1,6 +1,8 @@
 package it.unifi.swa.controller;
 
 import it.unifi.swa.bean.SelectPubBean;
+
+import javax.annotation.PreDestroy;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import it.unifi.swa.bean.UserSessionBean;
@@ -28,6 +30,12 @@ public class LoginController {
     private String username;
     private String password;
 
+    @PreDestroy
+	public void end() {
+		System.out.println("End Login Controller");
+	}
+    
+    
     public String login() {
 
         userData = new User();
@@ -38,6 +46,7 @@ public class LoginController {
         userData.setPassword(password);
 
         User loggedUser = null;
+        
         
         try{
             loggedUser = clientDao.findByLoginInfo(userData);

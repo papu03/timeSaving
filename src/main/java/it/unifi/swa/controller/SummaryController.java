@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -90,6 +91,11 @@ public class SummaryController implements Serializable {
         }
 
     }
+    
+    @PreDestroy
+	public void end() {
+		System.out.println("End Summary Controller");
+	}
 
     public String editOrder() {
         return "menu?&faces-redirect=true";
@@ -132,8 +138,9 @@ public class SummaryController implements Serializable {
 //            orderDao.save(ord);
             List<Operator> operators=operatorDao.getOperators(ord, isFood, isDrink);
             
-            orderDao.insertOrder(ord,operators, isFood, isDrink);
-            
+            //orderDao.insertOrder(ord,operators, isFood, isDrink);
+            orderDao.insertOrder(ord,operators);
+
             orderProductDao.insertProdAssociation(ord, opaList);
     		
 

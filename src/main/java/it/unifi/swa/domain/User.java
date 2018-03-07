@@ -1,6 +1,7 @@
 package it.unifi.swa.domain;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class User {
+public class User{
 
 	private int idUser;
 	private String username;

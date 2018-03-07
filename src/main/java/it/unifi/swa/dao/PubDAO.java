@@ -2,6 +2,7 @@ package it.unifi.swa.dao;
 
 import javax.enterprise.context.Dependent;
 
+import it.unifi.swa.domain.Operator;
 import it.unifi.swa.domain.Pub;
 import java.util.List;
 
@@ -21,6 +22,18 @@ public class PubDAO extends BaseDao<Pub> {
             return null;
         }
 
+    }
+    
+    public Pub getPubById(String idPub){
+    	  
+    	int pubId= Integer.parseInt(idPub);
+    	
+    	Pub result = entityManager
+	                .createQuery("FROM Pub p WHERE p.idLocale = :idPub", Pub.class)
+	                .setParameter("idPub", pubId)
+	                .getSingleResult();
+		  
+	      return result;
     }
 
 }
