@@ -9,8 +9,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.unifi.swa.bean.OrderBean;
 import it.unifi.swa.bean.UserSessionBean;
+import it.unifi.swa.bean.producer.HttpParam;
+import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.dao.OrderProductDAO;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
@@ -19,17 +20,20 @@ import it.unifi.swa.domain.Product;
 @ViewScoped
 public class DetailOrderController implements Serializable {
 	
+
+	private static final long serialVersionUID = 1L;
+	
 	@Inject
 	private UserSessionBean userSessionBean;
 	
-	
-	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private OrderBean orderBean;
+	private OrderProductDAO orderProductDao;
 	
 	@Inject
-	private OrderProductDAO orderProductDao;
+	@HttpParam("id")
+	private String orderId;
+	
 	
 	private Map<Product, Integer> qntProductMap;
 
@@ -40,17 +44,12 @@ public class DetailOrderController implements Serializable {
 		
 		qntProductMap=new HashMap<Product, Integer>();
 		
-		//User userSession=userSessionBean.getUser();
-		Ordine ord=orderBean.getOrder();
-		System.out.println("L'id dell'ordine è "+ord.getIdOrder());
-		
-		qntProductMap=orderProductDao.getProdQntByOrder(ord,userSessionBean.getType());
-			
+		int idOrder=Integer.parseInt(orderId);
+		qntProductMap=orderProductDao.getProdQntByIdOrder(idOrder,userSessionBean.getType());
+	
 	}
 	
 	public String toOrderList(){
-		
-		orderBean.endConversation();
 		
 		return "orderList?&faces-redirect=true";
 

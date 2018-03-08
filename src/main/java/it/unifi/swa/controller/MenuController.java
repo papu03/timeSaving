@@ -38,10 +38,6 @@ public class MenuController implements Serializable {
 	@Inject
 	private SelectPubBean selectPubBean;
 
-
-//	@Inject
-//	private ProductBean productBean;
-
 	@Inject
 	private UserSessionBean userSessionBean;
 
@@ -51,9 +47,6 @@ public class MenuController implements Serializable {
 	@Inject
 	private ProductDAO productDao;
 
-	@Inject
-	private OrderDAO orderDao;
-	
 	
 
 	private List<Product> productList;
@@ -61,7 +54,6 @@ public class MenuController implements Serializable {
 	private Product selectedProduct;
 	private Menu myMenu;
 	private Ordine order;
-	private OPAssociation opa;
 	private List<OPAssociation> opaList;
 
 	private boolean isOperatore;
@@ -154,24 +146,27 @@ public class MenuController implements Serializable {
 
 	}
 	
+	public void removeFromOrder(Product p) {
 
-	public void removeItem(Product p) {
-
-		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
-
-			if (entry.getKey().equals(p)) {
-				int increment = entry.getValue();
-				if (increment == 0) {
+		
+		for (OPAssociation op : opaList) {
+			if (p == op.getProduct()) {
+				int qty = op.getQuantity();
+				if(qty==0){
 					return;
 				}
-				entry.setValue(--increment);
-				System.out.println("Quantità " + entry.getValue());
+				op.setQuantity(--qty);
+				basket.put(p, op.getQuantity());
+				System.out.println("Modificato opa " + op.getProduct().getProdName() + " qnt " + op.getQuantity());
+				System.out.println("Rimosso " + p.getProdName() + " all\'ordine");
 
 			}
 		}
-		System.out.println("Item " + p.getProdName() + " rimosso");
+
 
 	}
+	
+
 
 	public String toSelectPub() {
 		
@@ -180,14 +175,11 @@ public class MenuController implements Serializable {
 	}
 
 	public String toSummaryPage() {
-		// basketBean.setBasket(basket);
-		// setVopa(vopa);
 		return "summary?&faces-redirect=true";
 	}
 
 	public String showProductDetails() {
 
-		this.endConversation();
 		return "product?idProd=" + selectedProduct.getIdProduct() + "&faces-redirect=true";
 
 	}
@@ -279,13 +271,6 @@ public class MenuController implements Serializable {
 		this.order = order;
 	}
 
-	public OPAssociation getOpa() {
-		return opa;
-	}
-
-	public void setOpa(OPAssociation opa) {
-		this.opa = opa;
-	}
 
 	public List<OPAssociation> getOpaList() {
 		return opaList;
@@ -306,11 +291,5 @@ public class MenuController implements Serializable {
 		return "back";
 	}
 
-	// public Vector<OPAssociation> getVopa() {
-	// return vopa;
-	// }
-	//
-	// public void setVopa(Vector<OPAssociation> vopa) {
-	// this.vopa = vopa;
-	// }
+
 }

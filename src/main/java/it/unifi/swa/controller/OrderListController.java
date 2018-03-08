@@ -9,7 +9,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import it.unifi.swa.bean.OrderBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.domain.Ordine;
@@ -24,9 +23,6 @@ public class OrderListController implements Serializable {
 
 	@Inject
 	private UserSessionBean userSessionBean;
-
-	@Inject
-	private OrderBean orderBean;
 
 	@Inject
 	private OrderDAO orderDao;
@@ -47,11 +43,6 @@ public class OrderListController implements Serializable {
 		isClient = false;
 		changeStateCount = 0;
 
-		// for (UserAssociation userAssoc :
-		// userAssoDao.getUserAssocByUser(userSession)) {
-		// Ordine ord = userAssoc.getOrdine();
-		// orderList.add(ord);
-		// }
 
 		if (userSessionBean.getType() == 'c') {
 			for (Ordine ord : orderDao.getOrderByCook(userSession)) {
@@ -77,10 +68,8 @@ public class OrderListController implements Serializable {
 
 	public String toDetailOrder(Ordine order) {
 
-		orderBean.initConversation();
-		orderBean.setOrder(order);
+		return "detailOrder?id=" + order.getIdOrder()+ "&faces-redirect=true";
 
-		return "detailOrder?&faces-redirect=true";
 	}
 
 	@Transactional

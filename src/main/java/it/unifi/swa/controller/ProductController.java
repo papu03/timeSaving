@@ -9,12 +9,9 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import it.unifi.swa.bean.producer.HttpParam;
 import it.unifi.swa.dao.ProductDAO;
@@ -26,9 +23,6 @@ public class ProductController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // @Inject
-    // private ProductBean productBean;
-    //
     @Inject
     @HttpParam("idProd")
     private String productId;
@@ -36,25 +30,17 @@ public class ProductController implements Serializable {
     @Inject
     private ProductDAO productDao;
 
-//	@Inject
-//	private MenuController menuCtrl;
     private Product selectedProduct;
 
     @PostConstruct
     public void init() {
         System.out.println("Init Product Controller");
 
-//		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-//		        .getRequest();
-//
-//		productId= request.getParameter("idProd");
-        //productId="13";
+
         if(productId != null){
             selectedProduct = productDao.getProductById(productId);
         }
 
-//		selectedProduct = productBean.getProduct();
-        // System.out.println("Immagine: "+selectedProduct.getImage());
     }
 
     @PreDestroy

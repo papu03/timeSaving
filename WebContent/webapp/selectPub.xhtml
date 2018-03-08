@@ -122,7 +122,7 @@
                                     </h:commandButton>
                                 </div>
                                 <div class="pulsanteInfo">
-                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo()}">
+                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Dettagli" action="#{selectPubController.showInfo()}">
                                         <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
                                     </h:commandButton>
                                 </div>
@@ -140,14 +140,19 @@
                                 <span class="dot"/>
                                 <h:outputLabel class="scrittaPub" value="#{selectPubController.operatorPub.nome}"/>
                             </div>
-                            <div class="pulsantiera">
-                                <div class="pulsanteInfo">
+                            <div >
+                                <div>
                                     <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Modifica Menù" action="#{selectPubController.select()}">
                                         <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
                                     </h:commandButton>
                                 </div>
-                                <div class="pulsanteInfo">
+                                <div >
                                     <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Vai agli ordini" action="#{selectPubController.goToOrders}">
+                                        <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
+                                    </h:commandButton>
+                                </div>
+                                <div>
+                                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge" value="Dettagli" action="#{selectPubController.showInfo()}">
                                         <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
                                     </h:commandButton>
                                 </div>

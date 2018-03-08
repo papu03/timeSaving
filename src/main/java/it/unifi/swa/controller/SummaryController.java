@@ -30,9 +30,6 @@ import java.util.Vector;
 @ViewScoped
 public class SummaryController implements Serializable {
 
-//    @Inject
-//    private BasketBean basketBean;
-
     @Inject
     private SelectPubBean selectPubBean;
 
@@ -45,9 +42,6 @@ public class SummaryController implements Serializable {
     @Inject
     private OperatorDAO operatorDao;
 
-//    @Inject
-//    private UserAssoDAO userAssoDao;
-
     @Inject
     private OrderProductDAO orderProductDao;
 
@@ -56,7 +50,6 @@ public class SummaryController implements Serializable {
 
     private List<Product> productList;
     private Map<Product, Integer> basket;
-    private Map<Product, Integer> basketNotNull;
 
     private User client;
     private Pub pub;
@@ -72,7 +65,6 @@ public class SummaryController implements Serializable {
 
         productList = new ArrayList<Product>();
         basket = new HashMap<Product, Integer>();
-        basketNotNull = new HashMap<Product, Integer>();
 
         opaList=menuCtrl.getOpaList();
         basket = menuCtrl.getBasket();
@@ -80,14 +72,9 @@ public class SummaryController implements Serializable {
         
         for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
             if (entry.getValue() > 0) {
-                basketNotNull.put(entry.getKey(), entry.getValue());
+                productList.add(entry.getKey());
+
             }
-        }
-
-        for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
-
-            System.out.println(entry.getKey().getProdName() + "," + entry.getValue());
-            productList.add(entry.getKey());
         }
 
     }
@@ -110,40 +97,21 @@ public class SummaryController implements Serializable {
         isFood = false;
         isDrink = false;
 
-        for (Map.Entry<Product, Integer> entry : basketNotNull.entrySet()) {
+		 for (Product element : productList) {
+			 if (element.getTpProduct() == 'f') {
+	                isFood = true;
+	            }
+	            if (element.getTpProduct() == 'd') {
+	                isDrink = true;
+	            }
+		 }
 
-            //System.out.println(entry.getKey().getTpProduct() );
-            if (entry.getKey().getTpProduct() == 'f') {
-                isFood = true;
-            }
-            if (entry.getKey().getTpProduct() == 'd') {
-                isDrink = true;
-            }
-        }
-        //System.out.println(isFood+" "+isDrink);
-
-        /*ord = orderDao.insertOrder(pub, isFood, isDrink);
-        userAssoDao.insertUserAssociation(ord, client, isFood, isDrink);
-        orderProductDao.insertProdAssociation(ord, basketNotNull);*/
-        
-       // if(menuCtrl != null){
-            
-            //ord = menuCtrl.getOrder();
-//            if (isFood && isDrink) {
-//                ord.setSizeOrder('b');
-//            } else {
-//                ord.setSizeOrder('a');
-//            }
-//            
-//            orderDao.save(ord);
             List<Operator> operators=operatorDao.getOperators(ord, isFood, isDrink);
             
-            //orderDao.insertOrder(ord,operators, isFood, isDrink);
             orderDao.insertOrder(ord,operators);
 
             orderProductDao.insertProdAssociation(ord, opaList);
-    		
-
+            
             menuCtrl.endConversation();
         
             return "orderList?&faces-redirect=true";
@@ -205,13 +173,13 @@ public class SummaryController implements Serializable {
         this.ord = ord;
     }
 
-    public Map<Product, Integer> getBasketNotNull() {
-        return basketNotNull;
-    }
-
-    public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
-        this.basketNotNull = basketNotNull;
-    }
+//    public Map<Product, Integer> getBasketNotNull() {
+//        return basketNotNull;
+//    }
+//
+//    public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
+//        this.basketNotNull = basketNotNull;
+//    }
 
 	public List<OPAssociation> getOpaList() {
 		return opaList;
@@ -221,11 +189,4 @@ public class SummaryController implements Serializable {
 		this.opaList = opaList;
 	}
 
-//    public Vector<OPAssociation> getVopa() {
-//        return vopa;
-//    }
-//
-//    public void setVopa(Vector<OPAssociation> vopa) {
-//        this.vopa = vopa;
-//    }
 }

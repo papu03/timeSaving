@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.inject.Model;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,6 +23,7 @@ import it.unifi.swa.domain.Pub;
 
 @Named
 @ViewScoped
+//@Model
 public class SelectPubController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,9 +36,6 @@ public class SelectPubController implements Serializable {
 
 	@Inject
 	private SelectPubBean selectPubBean;
-
-	// @Inject
-	// private PubBean pubBean;
 
 	@Inject
 	private UserSessionBean userSessionBean;
@@ -87,11 +86,7 @@ public class SelectPubController implements Serializable {
 
 	public String showInfo() {
 
-		// pubBean.initConversation();
-		// pubBean.setSelectedPub(selectedPub);
 		return "pubInfo?id=" + selectedPub.getIdLocale() + "&faces-redirect=true";
-
-		// return "pubInfo?&faces-redirect=true";
 
 	}
 

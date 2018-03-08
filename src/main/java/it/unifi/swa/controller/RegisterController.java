@@ -3,7 +3,10 @@ package it.unifi.swa.controller;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Model;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,8 +14,7 @@ import javax.inject.Named;
 import it.unifi.swa.dao.ClientDAO;
 import it.unifi.swa.domain.Client;
 
-@Named
-@SessionScoped
+@Model
 public class RegisterController implements Serializable {
 
     
@@ -30,7 +32,17 @@ public class RegisterController implements Serializable {
     @Inject
     private ClientDAO clientDao;
 
+    @PostConstruct
+	public void init() {
+		System.out.println("Register Controller Init");
 
+    }
+
+    @PreDestroy
+	public void end() {
+		System.out.println("End Register Controller");
+	}
+    
     public String register() {
         
         if(!password.equals(password_check)){
