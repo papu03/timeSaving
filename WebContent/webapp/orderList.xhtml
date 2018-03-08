@@ -9,7 +9,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <title>Lista ordini</title>
 
         <style>
@@ -19,7 +19,7 @@
                 font-family:  Arial, Helvetica, sans-serif;
                 font-size: large;
                 color: cadetblue;
-                line-height: 10px;
+                line-height: 20px;
                 float: left;
                 padding-left: 8px
             }
@@ -43,14 +43,14 @@
             }
 
             .pulsantiera{
-                display: inline-flex;
                 margin-top: 15px;
+                display: inline-flex;
             }
 
             .pulsanteModificaStato{
                 margin-left: 12px;
             }
-            
+
             .pulsanteModificaMenu{
                 position: absolute;
                 padding: 15px;
@@ -62,16 +62,119 @@
             }
 
 
+            .riga{
+                margin-top: 5px;
+            }
+
+            #userArea{
+                position: absolute;
+                padding: 15px;
+                right: 4%;
+                width: 12%;
+                top: 12px;
+
+            }
+
+            #icona{
+                margin-right: 20px;
+            }
+
+            .bottoncino{
+                display: inline-flex;
+                padding: 6px 12px;
+                margin-bottom: 0;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                -ms-touch-action: manipulation;
+                touch-action: manipulation;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                background-image: none;
+                border: 1px solid transparent;
+                border-top-color: transparent;
+                border-right-color: transparent;
+                border-bottom-color: transparent;
+                border-left-color: transparent;
+                border-radius: 4px;
+            }
+
+            #pulsantiera_alta{
+                padding: 15px;
+            }
+
+            .bott{
+                margin-top: 5px;
+            }
+
+            .scrittaUserArea{
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: x-large;
+                color: cadetblue;
+            }
+
+
+            #titolo{
+                width: 30%;
+                left: 35%;
+                position: absolute;
+            }
+
+            .bestiacane{
+                width: 50%;
+                top: 12%;
+                position: absolute;
+                left: 25%;
+                height: 80%;
+                overflow: auto;
+            }
+
         </style>
+
+        <script type="text/javascript">
+
+            var mostrato = false;
+            function portan() {
+
+                if (!mostrato) {
+                    document.getElementById("pulsantiera_alta").style.display = "block";
+                    mostrato = true;
+                } else {
+                    document.getElementById("pulsantiera_alta").style.display = "none";
+                    mostrato = false;
+                }
+            }
+        </script>
 
     </h:head>
     <h:body>
         <f:view>
             <h:form>
-                <h1 class="display-3 text-center font-italic scrittona">
-                    Order List
-                </h1>
-                <div class="container container-fluid">
+                <div id="titolo">
+                    <h1 class="display-3 text-center font-italic scrittona">
+                        Order List
+                    </h1>
+                </div>
+                <div id="userArea">
+                    <button type="button" class="bottoncino btn-default largo" onclick="javascript: portan();">
+                        <div id="icona">
+                            <i class="glyphicon glyphicon-user" style="font-size:36px;color:cadetblue;"></i>
+                        </div>
+                        <h:outputLabel class="scrittaUserArea" value="  #{userSessionBean.user.username}"/>
+                    </button>
+                    <div id="pulsantiera_alta" style="display: none">
+                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="Home" action="#{menuController.goToHomePage}"/>
+                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="I tuoi ordini" action="#{menuController.goToOrders}"/>
+                        <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{menuController.logOut}"/>
+                    </div>
+                </div>
+                <div class="container container-fluid bestiacane">
                     <div class="row" style="text-align: center">
                         <ui:repeat value="#{orderListController.orderList}" var="order" varStatus="status">
                             <div class="col-sm-12 col-xl-6">
@@ -80,9 +183,13 @@
                                         <h:outputLabel class="scritta" value="Order ID   "/>
                                         <h:outputText class="scritteController" value="#{order.idOrder}" />
                                     </div>
-                                    <div>
+                                    <div class="riga">
                                         <h:outputLabel class="scritta" value="State   "/>
                                         <h:outputText class="scritteController" value="#{order.ottieniDescState()}" />
+                                    </div>
+                                    <div class="riga">
+                                        <h:outputLabel class="scritta" value="Time to expire   "/>
+                                        <h:outputText class="scritteController" value="#{order.ottieniTempoAttesa(order)} mins." />
                                     </div>
                                     <div class="pulsantiera">
                                         <div>

@@ -5,6 +5,7 @@
  */
 package it.unifi.swa.controller;
 
+import it.unifi.swa.bean.UserSessionBean;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +22,7 @@ import it.unifi.swa.domain.Product;
 @ViewScoped
 public class ProductController implements Serializable {
 
+
     private static final long serialVersionUID = 1L;
 
     @Inject
@@ -29,6 +31,11 @@ public class ProductController implements Serializable {
 
     @Inject
     private ProductDAO productDao;
+    @Inject
+    private UserSessionBean userSessionBean;
+
+    private boolean isOperatore;
+    private boolean isClient;
 
     private Product selectedProduct;
 
@@ -36,9 +43,14 @@ public class ProductController implements Serializable {
     public void init() {
         System.out.println("Init Product Controller");
 
-
-        if(productId != null){
+        if (productId != null) {
             selectedProduct = productDao.getProductById(productId);
+        }
+
+        if (userSessionBean.getType() != 'u') {
+            setIsOperatore(true);
+        } else {
+            setIsClient(true);
         }
 
     }
@@ -64,4 +76,21 @@ public class ProductController implements Serializable {
         this.selectedProduct = selectedProduct;
     }
 
+    public boolean isIsOperatore() {
+        return isOperatore;
+    }
+
+    public void setIsOperatore(boolean isOperatore) {
+        this.isOperatore = isOperatore;
+    }
+
+    public boolean isIsClient() {
+        return isClient;
+    }
+
+    public void setIsClient(boolean isClient) {
+        this.isClient = isClient;
+    }
+
+    
 }

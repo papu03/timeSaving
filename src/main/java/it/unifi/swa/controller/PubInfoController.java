@@ -19,91 +19,87 @@ import java.io.Serializable;
 @ViewScoped
 public class PubInfoController implements Serializable {
 
-	@Inject
-	@HttpParam("id")
-	private String pubId;
-	
+    @Inject
+    @HttpParam("id")
+    private String pubId;
+
     @Inject
     private PubDAO pubDao;
-    
+
     @Inject
-	private UserSessionBean userSessionBean;
-	private boolean isOperatore;
-	private boolean isClient;
-	
+    private UserSessionBean userSessionBean;
+    private boolean isOperatore;
+    private boolean isClient;
+
     private Pub selectedPub;
     private String description;
 
     @PostConstruct
-	public void init() {
-    	System.out.println("Init Pub info controller");
+    public void init() {
+        System.out.println("Init Pub info controller");
 
-    	//selectedPub=pubBean.getSelectedPub();
-    	selectedPub=pubDao.getPubById(pubId);
-    	description=selectedPub.getDescrizione();
-    	
-    	System.out.println("Info del pub "+selectedPub.getNome());
-    	
-    	if (userSessionBean.getType() != 'u') {
-			isOperatore = true;
-		} else {
-			isClient = true;
-		}
+        //selectedPub=pubBean.getSelectedPub();
+        selectedPub = pubDao.getPubById(pubId);
+        description = selectedPub.getDescrizione();
 
+        System.out.println("Info del pub " + selectedPub.getNome());
+
+        if (userSessionBean.getType() != 'u') {
+            isOperatore = true;
+        } else {
+            isClient = true;
+        }
 
     }
-    
+
     @PreDestroy
-	public void end() {
-		System.out.println("End Pub info Controller");
-	}
-	
-    @Transactional
-    public String updateDescription(){
-    	selectedPub.setDescrizione(description);
-    	pubDao.update(selectedPub);
-		return "pubInfo?id=" + selectedPub.getIdLocale() + "&faces-redirect=true";
- 
+    public void end() {
+        System.out.println("End Pub info Controller");
     }
-    
-	public String toSelectPub(){
-		
+
+    @Transactional
+    public String updateDescription() {
+        selectedPub.setDescrizione(description);
+        pubDao.update(selectedPub);
+        return "pubInfo?id=" + selectedPub.getIdLocale() + "&faces-redirect=true";
+
+    }
+
+    public String toSelectPub() {
+
         return "selectPub?&faces-redirect=true";
-	}
+    }
 
+    public Pub getSelectedPub() {
+        return selectedPub;
+    }
 
-	public Pub getSelectedPub() {
-		return selectedPub;
-	}
+    public void setSelectedPub(Pub selectedPub) {
+        this.selectedPub = selectedPub;
+    }
 
+    public boolean isIsOperatore() {
+        return isOperatore;
+    }
 
-	public void setSelectedPub(Pub selectedPub) {
-		this.selectedPub = selectedPub;
-	}
+    public void setOperatore(boolean isOperatore) {
+        this.isOperatore = isOperatore;
+    }
 
-	public boolean isIsOperatore() {
-		return isOperatore;
-	}
+    public boolean isIsClient() {
+        return isClient;
+    }
 
-	public void setOperatore(boolean isOperatore) {
-		this.isOperatore = isOperatore;
-	}
+    public void setClient(boolean isClient) {
+        this.isClient = isClient;
+    }
 
-	public boolean isIsClient() {
-		return isClient;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setClient(boolean isClient) {
-		this.isClient = isClient;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

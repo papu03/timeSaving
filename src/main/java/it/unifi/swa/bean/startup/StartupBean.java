@@ -133,6 +133,7 @@ public class StartupBean {
         moretti.setTpProduct('d');
         moretti.setMenu(menu2);
         moretti.setImage("http://www.unmondodisapori.it/wp-content/uploads/2017/10/moretti.jpg");
+        moretti.setTmpExe(3);
         productDao.save(moretti);
         
         Product tennets = new Product();
@@ -141,6 +142,7 @@ public class StartupBean {
         tennets.setTpProduct('d');
         tennets.setMenu(menu2);
         tennets.setImage("http://www.imolabevande.it/wp-content/uploads/2015/03/536birra-tennents-super-bottiglia.jpg");
+        tennets.setTmpExe(3);
         productDao.save(tennets);
 
         Product corona = new Product();
@@ -149,6 +151,7 @@ public class StartupBean {
         corona.setTpProduct('d');
         corona.setMenu(menu2);
         corona.setImage("https://www.drinksupermarket.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/o/corona-premium-mexican-lager-beer-12x-710ml-4-6-abv_temp.jpg");
+        corona.setTmpExe(3);
         productDao.save(corona);
 
         Product cuba = new Product();
@@ -157,6 +160,7 @@ public class StartupBean {
         cuba.setTpProduct('d');
         cuba.setMenu(menu2);
         cuba.setImage("https://images.eatsmarter.com/sites/default/files/styles/max_size/public/cuba-libre-with-mint-626296.jpg");
+        cuba.setTmpExe(5);
         productDao.save(cuba);
         
         Product invisibile = new Product();
@@ -165,6 +169,7 @@ public class StartupBean {
         invisibile.setTpProduct('d');
         invisibile.setMenu(menu1);
         invisibile.setImage("https://www.preparacocktails.it/wp-content/uploads/2017/01/preparazione-ricetta-cocktail-invisibile.jpg");
+        invisibile.setTmpExe(10);
         productDao.save(invisibile);
         
         Product spritz = new Product();
@@ -173,6 +178,7 @@ public class StartupBean {
         spritz.setTpProduct('d');
         spritz.setMenu(menu1);
         spritz.setImage("https://dk24rv5jt17s8.cloudfront.net/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/p/aperol_baloon_2013_1.png");
+        spritz.setTmpExe(7);
         productDao.save(spritz);
 
         Product panino = new Product();
@@ -181,6 +187,7 @@ public class StartupBean {
         panino.setTpProduct('f');
         panino.setMenu(menu1);
         panino.setImage("https://images.lacucinaitaliana.it/wp-content/uploads/2016/06/panino-tonno-e-pomodoro.jpg");
+        panino.setTmpExe(15);
         productDao.save(panino);
         
         Product pizza = new Product();
@@ -189,6 +196,7 @@ public class StartupBean {
         pizza.setTpProduct('f');
         pizza.setMenu(menu1);
         pizza.setImage("http://www.teleischia.com/wp-content/uploads/2017/08/pizza-napoletana.jpg");
+        pizza.setTmpExe(13);
         productDao.save(pizza);
         
         Product schiacciata = new Product();
@@ -197,6 +205,7 @@ public class StartupBean {
         schiacciata.setTpProduct('f');
         schiacciata.setMenu(menu1);
         schiacciata.setImage("https://www.biancolievito.it/wp-content/uploads/2016/05/shutterstock_138483227.jpg");
+        schiacciata.setTmpExe(9);
         productDao.save(schiacciata);
         
         operatorDao.save(barista);

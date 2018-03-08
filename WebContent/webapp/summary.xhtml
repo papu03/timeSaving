@@ -7,7 +7,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <title>Riepilogo acquisti</title>
     </h:head>
 
@@ -60,26 +60,103 @@
             margin-left: 25px;
         }
 
-        .sfondo{
-            z-index: -1;
+
+        #userArea{
+            position: absolute;
+            padding: 15px;
+            right: 15px;
+            width: 12%;
+            top: 12px;
+
         }
 
-        #logo{
-            position: absolute;
-            left: 10%;
-            width: 100%;
+        #icona{
+            margin-right: 20px;
+        }
+
+        .bottoncino{
+            display: inline-flex;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            border-radius: 4px;
+        }
+
+        #pulsantiera_alta{
+            padding: 15px;
+        }
+
+        .bott{
+            margin-top: 5px;
+        }
+
+        .scrittaUserArea{
+            font-family:  Arial, Helvetica, sans-serif;
+            font-size: x-large;
+            color: cadetblue;
+        }
+
+
+        #titolo{
+            width: 30%;
+            left: 35%;
         }
 
     </style>
 
+    <script type="text/javascript">
+
+        var mostrato = false;
+        function portan() {
+
+            if (!mostrato) {
+                document.getElementById("pulsantiera_alta").style.display = "block";
+                mostrato = true;
+            } else {
+                document.getElementById("pulsantiera_alta").style.display = "none";
+                mostrato = false;
+            }
+        }
+    </script>
+
     <h:body>
         <f:view>
             <h:form>
-                <h1 class="display-3 text-center font-italic scrittona">
-                    Your Order
-                </h1>
-                <div id="logo">
-                    <h:graphicImage class="sfondo" value="images/jumpQueueLogo.png" width="80%"/>
+                <div id="titolo">
+                    <h1 class="display-3 text-center font-italic scrittona">
+                        Your Order
+                    </h1>
+                </div>
+                <div id="userArea">
+                    <button type="button" class="bottoncino btn-default largo" onclick="javascript: portan();">
+                        <div id="icona">
+                            <i class="glyphicon glyphicon-user" style="font-size:36px;color:cadetblue;"></i>
+                        </div>
+                        <h:outputLabel class="scrittaUserArea" value="  #{userSessionBean.user.username}"/>
+                    </button>
+                    <div id="pulsantiera_alta" style="display: none">
+                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="Home" action="#{menuController.goToHomePage}"/>
+                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="I tuoi ordini" action="#{menuController.goToOrders}"/>
+                        <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{menuController.logOut}"/>
+                    </div>
                 </div>
                 <div id="sommario">
                     <ui:repeat value="#{summaryController.productList}" var="product"

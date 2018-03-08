@@ -26,115 +26,128 @@ import it.unifi.swa.domain.Pub;
 //@Model
 public class SelectPubController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private PubDAO pubDao;
+    @Inject
+    private PubDAO pubDao;
 
-	@Inject
-	private OperatorDAO operatorDao;
+    @Inject
+    private OperatorDAO operatorDao;
 
-	@Inject
-	private SelectPubBean selectPubBean;
+    @Inject
+    private SelectPubBean selectPubBean;
 
-	@Inject
-	private UserSessionBean userSessionBean;
+    @Inject
+    private UserSessionBean userSessionBean;
 
-	@Inject
-	private MenuController menuCtrl;
+    @Inject
+    private MenuController menuCtrl;
 
-	private Pub selectedPub;
-	private List<Pub> pubList;
+    private Pub selectedPub;
+    private List<Pub> pubList;
 
-	private Pub operatorPub;
+    private Pub operatorPub;
 
-	private boolean isOperatore;
-	private boolean isClient;
+    private boolean isOperatore;
+    private boolean isClient;
 
-	@PostConstruct
-	public void init() {
-		System.out.println("Select Pub Controller Init");
+    @PostConstruct
+    public void init() {
+        System.out.println("Select Pub Controller Init");
 
-		isOperatore = false;
-		isClient = false;
+        isOperatore = false;
+        isClient = false;
 
-		if (userSessionBean.getType() != 'u') {
-			isOperatore = true;
-			operatorPub = operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
-		} else {
-			isClient = true;
-		}
-	}
+        if (userSessionBean.getType() != 'u') {
+            isOperatore = true;
+            operatorPub = operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
+        } else {
+            isClient = true;
+        }
+    }
 
-	@PreDestroy
-	public void end() {
-		System.out.println("End SelectPub Controller");
-	}
+    @PreDestroy
+    public void end() {
+        System.out.println("End SelectPub Controller");
+    }
 
-	public String select() {
+    public String select() {
 
-		selectPubBean.setPub(selectedPub);
-		menuCtrl.initConversation();
-		return "menu?&faces-redirect=true";
-	}
+        selectPubBean.setPub(selectedPub);
+        menuCtrl.initConversation();
+        return "menu?&faces-redirect=true";
+    }
 
-	public String goToOrders() {
+    public String goToOrders() {
 
-		return "orderList?&faces-redirect=true";
+        return "orderList?&faces-redirect=true";
 
-	}
+    }
 
-	public String showInfo() {
+    public String goToHomePage() {
 
-		return "pubInfo?id=" + selectedPub.getIdLocale() + "&faces-redirect=true";
+        return "selectPub?&faces-redirect=true";
 
-	}
+    }
 
-	public Pub getSelectedPub() {
-		return selectedPub;
-	}
+    public String logOut() {
 
-	public void setSelectedPub(Pub selectedPub) {
-		this.selectedPub = selectedPub;
-	}
+        userSessionBean = null;
+        return "login?&faces-redirect=true";
 
-	public List<Pub> getPubList() {
+    }
 
-		List<Pub> lista = pubDao.getListOfPub();
-		if (!lista.isEmpty()) {
-			this.pubList = lista;
-		}
+    public String showInfo() {
 
-		return pubList;
-	}
+        return "pubInfo?id=" + selectedPub.getIdLocale() + "&faces-redirect=true";
 
-	public void setPubList(List<Pub> pubList) {
-		this.pubList = pubList;
-	}
+    }
 
-	public boolean isIsOperatore() {
-		return isOperatore;
-	}
+    public Pub getSelectedPub() {
+        return selectedPub;
+    }
 
-	public void setOperatore(boolean isOperatore) {
-		this.isOperatore = isOperatore;
-	}
+    public void setSelectedPub(Pub selectedPub) {
+        this.selectedPub = selectedPub;
+    }
 
-	public boolean isIsClient() {
-		return isClient;
-	}
+    public List<Pub> getPubList() {
 
-	public void setClient(boolean isClient) {
-		this.isClient = isClient;
-	}
+        List<Pub> lista = pubDao.getListOfPub();
+        if (!lista.isEmpty()) {
+            this.pubList = lista;
+        }
 
-	public Pub getOperatorPub() {
+        return pubList;
+    }
 
-		return operatorPub;
-	}
+    public void setPubList(List<Pub> pubList) {
+        this.pubList = pubList;
+    }
 
-	public void setOperatorPub(Pub operatorPub) {
-		this.operatorPub = operatorPub;
-	}
+    public boolean isIsOperatore() {
+        return isOperatore;
+    }
+
+    public void setOperatore(boolean isOperatore) {
+        this.isOperatore = isOperatore;
+    }
+
+    public boolean isIsClient() {
+        return isClient;
+    }
+
+    public void setClient(boolean isClient) {
+        this.isClient = isClient;
+    }
+
+    public Pub getOperatorPub() {
+
+        return operatorPub;
+    }
+
+    public void setOperatorPub(Pub operatorPub) {
+        this.operatorPub = operatorPub;
+    }
 
 }

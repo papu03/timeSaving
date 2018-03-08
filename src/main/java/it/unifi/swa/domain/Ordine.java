@@ -168,6 +168,26 @@ public class Ordine {
 		return state;
 	}
 
+        public int ottieniTempoAttesa(Ordine order){
+            
+            int eta = 0;
+            
+            try{
+                
+                for(OPAssociation opa : products){
+                    if(opa.getIdOrder() == order.getIdOrder()){
+                        eta += (opa.getProduct().getTmpExe() * opa.getQuantity());
+                    }
+                }
+                
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+            
+            return eta;
+            
+        }
+        
 	public char getStateOrder() {
 		return stateOrder;
 	}
@@ -175,5 +195,6 @@ public class Ordine {
 	public void setStateOrder(char stateOrder) {
 		this.stateOrder = stateOrder;
 	}
+        
 
 }
