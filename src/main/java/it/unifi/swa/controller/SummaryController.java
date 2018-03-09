@@ -117,6 +117,31 @@ public class SummaryController implements Serializable {
             return "orderList?&faces-redirect=true";
     }
 
+    public String goToOrders() {
+
+    	menuCtrl.endConversation();
+
+        return "orderList?&faces-redirect=true";
+
+    }
+
+    public String goToHomePage() {
+
+    	menuCtrl.endConversation();
+
+        return "selectPub?&faces-redirect=true";
+
+    }
+
+    public String logOut() {
+
+        userSessionBean = null;
+        menuCtrl.endConversation();
+
+        return "login?&faces-redirect=true";
+
+    }
+    
     public Map<Product, Integer> getBasket() {
         return basket;
     }

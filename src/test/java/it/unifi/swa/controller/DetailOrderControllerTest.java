@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.InitializationError;
 
-import it.unifi.swa.bean.OrderBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OrderProductDAO;
 import it.unifi.swa.domain.Client;
@@ -25,7 +24,6 @@ import it.unifi.swa.domain.Product;
 public class DetailOrderControllerTest {
 	
 	private DetailOrderController detailOrderController;
-	private OrderBean orderBean;
 	private UserSessionBean userSessionBean;
 	private OrderProductDAO orderProductDao;
 	private Map<Product, Integer> qntProductMap;
@@ -34,14 +32,13 @@ public class DetailOrderControllerTest {
 	private Product p2;
 	private Product p3;
 	
-	private Conversation conversation;
 	private Ordine o1;
-	
+	private Integer orderId;
+
 	@Before
 	public void init() throws InitializationError {
 	
 		detailOrderController=new DetailOrderController();
-		orderBean= new OrderBean();
 		
 		userSessionBean= new UserSessionBean();
 		userSessionBean.setType('u');
@@ -60,19 +57,15 @@ public class DetailOrderControllerTest {
 		qntProductMap.put(p3, 1);
 		
 		o1=new Ordine();
-		orderBean.setOrder(o1);
+		orderId=o1.getIdOrder();
 		
-		conversation=mock(Conversation.class);
-		
-		when(orderProductDao.getProdQntByOrder(orderBean.getOrder(),userSessionBean.getType())).thenReturn(qntProductMap);
+		when(orderProductDao.getProdQntByIdOrder(orderId,userSessionBean.getType())).thenReturn(qntProductMap);
 
 		
 		try {
-			FieldUtils.writeField(detailOrderController, "orderBean", orderBean, true);
+			FieldUtils.writeField(detailOrderController, "orderId", orderId.toString(), true);
 			FieldUtils.writeField(detailOrderController, "orderProductDao", orderProductDao, true);
 			FieldUtils.writeField(detailOrderController, "userSessionBean", userSessionBean, true);
-
-			FieldUtils.writeField(orderBean, "conversation", conversation, true);
 
 		} catch (IllegalAccessException e) {
 			throw new InitializationError(e);

@@ -6,6 +6,7 @@
 package it.unifi.swa.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,7 @@ import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.OperatorDAO;
 import it.unifi.swa.dao.PubDAO;
+import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
 
 @Named
@@ -55,6 +57,8 @@ public class SelectPubController implements Serializable {
     public void init() {
         System.out.println("Select Pub Controller Init");
 
+    
+        
         isOperatore = false;
         isClient = false;
 
@@ -62,6 +66,9 @@ public class SelectPubController implements Serializable {
             isOperatore = true;
             operatorPub = operatorDao.findByLoginInfo(userSessionBean.getUser()).getLocal();
         } else {
+        	
+            pubList= new ArrayList<Pub>();
+            pubList = pubDao.getListOfPub();
             isClient = true;
         }
     }
@@ -113,10 +120,10 @@ public class SelectPubController implements Serializable {
 
     public List<Pub> getPubList() {
 
-        List<Pub> lista = pubDao.getListOfPub();
-        if (!lista.isEmpty()) {
-            this.pubList = lista;
-        }
+//        List<Pub> lista = pubDao.getListOfPub();
+//        if (!lista.isEmpty()) {
+//            this.pubList = lista;
+//        }
 
         return pubList;
     }

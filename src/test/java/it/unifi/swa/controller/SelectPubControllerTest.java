@@ -15,46 +15,72 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.InitializationError;
 
-import it.unifi.swa.bean.PubBean;
 import it.unifi.swa.bean.SelectPubBean;
+import it.unifi.swa.bean.UserSessionBean;
+import it.unifi.swa.dao.OperatorDAO;
 import it.unifi.swa.dao.PubDAO;
+import it.unifi.swa.domain.Operator;
 import it.unifi.swa.domain.Pub;
 
 public class SelectPubControllerTest {
 
 	private SelectPubBean selectPubBean;
+    private UserSessionBean userSessionBean;
+
 	private SelectPubController selectPubController;
+    private MenuController menuCtrl;
+    private Conversation conversation;
+
 	private Pub selectedPub;
 
-	private PubBean pubBean;
-	private Conversation conversation;
 
 	private List<Pub> pubList;
-	private PubDAO pubDao;
 
+	private PubDAO pubDao;
+    private OperatorDAO operatorDao;
+
+    private Operator operator;
+    private Pub operatorPub;
+    
 	@Before
 	public void init() throws InitializationError {
 
 		selectPubBean = new SelectPubBean();
+		userSessionBean=new UserSessionBean();
 		selectPubController = new SelectPubController();
-
+		
+		menuCtrl= new MenuController();
+		conversation=mock(Conversation.class);
+		
 		selectedPub = new Pub();
 		selectedPub.setNome("My pub");
 
-		pubBean = new PubBean();
-		conversation = mock(Conversation.class);
-
 		pubDao = mock(PubDAO.class);
+		operatorDao=mock(OperatorDAO.class);
+		
 		pubList = new ArrayList<Pub>();
+		
+		operatorPub= new Pub();
+		Pub p2 = new Pub();
+		pubList.add(operatorPub);
+		pubList.add(p2);
+
+		
+		operator= new Operator();
+		operator.setLocal(operatorPub);
+		
+		when(pubDao.getListOfPub()).thenReturn(pubList);
+
 
 		try {
 			FieldUtils.writeField(selectPubController, "selectPubBean", selectPubBean, true);
+			FieldUtils.writeField(selectPubController, "userSessionBean", userSessionBean, true);
 			FieldUtils.writeField(selectPubController, "selectedPub", selectedPub, true);
-
-			FieldUtils.writeField(selectPubController, "pubBean", pubBean, true);
-			FieldUtils.writeField(pubBean, "conversation", conversation, true);
-
 			FieldUtils.writeField(selectPubController, "pubDao", pubDao, true);
+			FieldUtils.writeField(selectPubController, "operatorDao", operatorDao, true);
+			FieldUtils.writeField(selectPubController, "menuCtrl", menuCtrl, true);
+			FieldUtils.writeField(menuCtrl, "conversation", conversation, true);
+
 
 		} catch (IllegalAccessException e) {
 			throw new InitializationError(e);
@@ -69,34 +95,32 @@ public class SelectPubControllerTest {
 		assertEquals(selectedPub, selectPubBean.getPub());
 	}
 
-	@Test
-	public void testShowInfo() {
-
-		assertNull(pubBean.getSelectedPub());
-		selectPubController.showInfo();
-		assertEquals(selectedPub, pubBean.getSelectedPub());
-
-	}
 
 	@Test
 	public void testGetPubList() {
 
-		Pub p1 = new Pub();
-		Pub p2 = new Pub();
-		pubList.add(p1);
-		pubList.add(p2);
+		assertNull(selectPubController.getPubList());
+		userSessionBean.setType('u');
 
-		when(pubDao.getListOfPub()).thenReturn(pubList);
-
+		selectPubController.init();
 		assertEquals(pubList, selectPubController.getPubList());
+		assertNull(selectPubController.getOperatorPub());
 	}
 	
 	@Test
-	public void testGetPubListEmpty() {
+	public void testGetOperatorPub() {
 
+		assertNull(selectPubController.getOperatorPub());
+		userSessionBean.setType('c');
+		userSessionBean.setUser(operator);
 		
-		when(pubDao.getListOfPub()).thenReturn(pubList);
+		when(operatorDao.findByLoginInfo(userSessionBean.getUser())).thenReturn(operator);
+
+
+		selectPubController.init();
+		assertEquals(operatorPub, selectPubController.getOperatorPub());
 		assertNull(selectPubController.getPubList());
 	}
+
 
 }

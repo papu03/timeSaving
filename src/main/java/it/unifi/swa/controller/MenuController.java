@@ -62,26 +62,38 @@ public class MenuController implements Serializable {
 
         System.out.println("Init Menu Controller");
         System.out.println("name pub " + selectPubBean.getPub().getNome());
-        //this.initConversation();
+
         basket = new HashMap<Product, Integer>();
-        List<Product> list = new ArrayList<Product>();
+        //List<Product> list = new ArrayList<Product>();
+        productList = new ArrayList<Product>();
+        opaList = new ArrayList<OPAssociation>();
+
+
         try {
-            list = menuDao.getListOfProduct(selectPubBean.getPub());
-            productList = list;
-            myMenu = productList.get(0).getMenu();
+            //list = menuDao.getListOfProduct(selectPubBean.getPub());
+            //productList = list;
+        	productList = menuDao.getListOfProduct(selectPubBean.getPub());
+
+        	myMenu = productList.get(0).getMenu();
+       
         } catch (NullPointerException ex) {
             productList = null;
             System.out.println("There is no Products in this pub menu");
         }
 
-        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
+//        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
+//
+//        for (Product element : productList) {
+//            listWithQnt.put(element, 0);
+//        }
+//
+//        if (!listWithQnt.isEmpty()) {
+//            basket = listWithQnt;
+//        }
+        
 
         for (Product element : productList) {
-            listWithQnt.put(element, 0);
-        }
-
-        if (!listWithQnt.isEmpty()) {
-            basket = listWithQnt;
+        	basket.put(element, 0);
         }
 
         if (userSessionBean.getType() != 'u') {
@@ -90,16 +102,22 @@ public class MenuController implements Serializable {
             isClient = true;
         }
 
-        Ordine ord = new Ordine();
-        ord.setLocal(selectPubBean.getPub());
-        ord.setStateOrder('a');
-        ord.setClient(userSessionBean.getUser());
-        this.order = ord;
+//        Ordine ord = new Ordine();
+//        
+//        ord.setLocal(selectPubBean.getPub());
+//        ord.setStateOrder('a');
+//        ord.setClient(userSessionBean.getUser());
+//        this.order = ord;
+        
+        this.order= new Ordine();
+        
+        this.order.setLocal(selectPubBean.getPub());
+        this.order.setStateOrder('a');
+        this.order.setClient(userSessionBean.getUser());
         // setOrder(ord);
 
         // vopa = new Vector<OPAssociation>();
         // setVopa(vopa);
-        opaList = new ArrayList<OPAssociation>();
 
     }
 
@@ -225,14 +243,17 @@ public class MenuController implements Serializable {
 
     public String goToOrders() {
 
+        this.endConversation();
+
         return "orderList?&faces-redirect=true";
 
     }
 
     public String goToHomePage() {
 
-        svuotaBasket();
-        
+        //svuotaBasket();
+        this.endConversation();
+
         return "selectPub?&faces-redirect=true";
 
     }
@@ -240,25 +261,27 @@ public class MenuController implements Serializable {
     public String logOut() {
 
         userSessionBean = null;
-        svuotaBasket();
+        //svuotaBasket();
+        this.endConversation();
+
         return "login?&faces-redirect=true";
 
     }
     
-    private void svuotaBasket(){
-        
-        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
-        for (Product element : productList) {
-            listWithQnt.put(element, 0);
-        }
-
-        if (!listWithQnt.isEmpty()) {
-            basket = listWithQnt;
-        }
-        
-        opaList = new ArrayList<OPAssociation>();
-        
-    }
+//    private void svuotaBasket(){
+//        
+//        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
+//        for (Product element : productList) {
+//            listWithQnt.put(element, 0);
+//        }
+//
+//        if (!listWithQnt.isEmpty()) {
+//            basket = listWithQnt;
+//        }
+//        
+//        opaList = new ArrayList<OPAssociation>();
+//        
+//    }
 
     public Map<Product, Integer> getBasket() {
         return basket;
