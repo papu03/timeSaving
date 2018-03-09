@@ -10,7 +10,34 @@
         <title>Product</title>
 
         <style>
-            
+
+            #immagine{
+                position: absolute;
+                padding: 25px;
+            }
+
+            #pulsante{
+                position: absolute;
+                padding: 25px;
+                bottom: 15px;
+            }
+
+            #descrizione{
+                position: absolute;
+                top: 60%;
+                padding: 25px;
+            }
+
+            .cornice{
+                border: 5px solid cadetblue;
+                box-shadow: 3px 3px #bbb;
+            }
+
+            .scritta{
+                font-size: larger;
+                color: cadetblue;
+            }
+
             #userArea{
             position: absolute;
             padding: 15px;
@@ -63,40 +90,25 @@
             font-size: x-large;
             color: cadetblue;
         }
-            
-        dettaglio{
-            padding: 15px;
-        }
-        
-        #pulsante{
-            padding: 15px;
-        }
-        
-        #immagine{
-            
-            border: 5px solid cadetblue;
-            box-shadow: 3px 3px #bbb;
-            width: 40%;
-        }
-        
+
+
         </style>
-        
+
         <script type="text/javascript">
 
-            var mostrato = false;
-            function portan() {
+        var mostrato = false;
+        function portan() {
 
-                if (!mostrato) {
-                    document.getElementById("pulsantiera_alta").style.display = "block";
-                    mostrato = true;
-                } else {
-                    document.getElementById("pulsantiera_alta").style.display = "none";
-                    mostrato = false;
-                }
+            if (!mostrato) {
+                document.getElementById("pulsantiera_alta").style.display = "block";
+                mostrato = true;
+            } else {
+                document.getElementById("pulsantiera_alta").style.display = "none";
+                mostrato = false;
             }
-
-        </script>
-
+        }
+    </script>
+        
     </h:head>
     <h:body>
         <f:view>
@@ -114,13 +126,16 @@
                         <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{menuController.logOut}"/>
                     </div>
                 </div>
-                <div id="dettaglio">
-                    <div id="immagine">
-                        <h:graphicImage value="#{productController.selectedProduct.image}" width="400" height="400" />
-                    </div>
-                    <div id="pulsante">
-                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge"  value="Back" action="#{productController.toMenu}" />
-                    </div>
+                <div id="immagine">
+                    <h:graphicImage class="cornice" value="#{productController.selectedProduct.image}" width="400" height="400" />
+                </div>
+                <div id="descrizione">
+                    <h:outputLabel class="scritta" value="#{productController.selectedProduct.prodName}"/> 
+                    <br/>
+                    <h:outputLabel value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                </div>
+                <div id="pulsante">
+                    <h:commandButton class="w3-button w3-teal w3-round-medium" value="Back" action="#{productController.toMenu}" />
                 </div>
 
             </h:form>
