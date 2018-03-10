@@ -20,6 +20,15 @@
                 font-size: large;
                 color: cadetblue;
                 line-height: 21px;
+                width: 30%;
+            }
+
+            .scrittaInput {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: cadetblue;
+                line-height: 30px;
+                width: 30%;
             }
 
             .scrittaqta {
@@ -27,8 +36,9 @@
                 font-size: large;
                 color: cadetblue;
                 line-height: 32px;
+                margin-right: 89px;
             }
-            
+
             .scrittaPub{
 
                 font-family:  Arial, Helvetica, sans-serif;
@@ -56,9 +66,10 @@
             }
 
             .riquadrino {
-                width: 280px;
+                width: 99%;
                 margin-left: 10px;
                 height: 25px;
+                display: inline-flex;
             }
 
             .quantita {
@@ -118,7 +129,7 @@
             #userArea{
                 position: absolute;
                 padding: 15px;
-                right: 15px;
+                right: 5%;
                 width: 12%;
                 top: 12px;
 
@@ -182,6 +193,12 @@
             .spazio{
                 margin-left: 10px;
             }
+
+            .pulsantiera{
+                display: inline-flex;
+                margin-top: 15px;
+            }
+
         </style>
 
         <script type="text/javascript">
@@ -195,6 +212,20 @@
                 } else {
                     document.getElementById("pulsantiera_alta").style.display = "none";
                     mostrato = false;
+                }
+            }
+
+            var aggiunto = false;
+            function mostraAggiungi() {
+
+                if (!aggiunto) {
+                    document.getElementById("aggiungiProd").style.display = "block";
+                    document.getElementById("frmMenu:scrittaPulsanteAdd").innerHTML = "Cancel";
+                    aggiunto = true;
+                } else {
+                    document.getElementById("aggiungiProd").style.display = "none";
+                    document.getElementById("frmMenu:scrittaPulsanteAdd").innerHTML = "Aggiungi Prodotto";
+                    aggiunto = false;
                 }
             }
 
@@ -223,36 +254,62 @@
                 <div class="portan container container-fluid">
                     <div class="row">
 
-                        <c:if test="#{menuController.isClient}">
-                            <ui:repeat value="#{menuController.productList}" var="product"
-                                       varStatus="status">
-                                <div class="col-sm-12 col-xl-4">
-                                    <div class="riquadro mb-2">
-                                        <div class="riquadrino">
+                        <ui:repeat value="#{menuController.productList}" var="product"
+                                   varStatus="status">
+                            <div class="col-sm-12 col-xl-4">
+                                <div class="riquadro mb-2">
+                                    <div class="riquadrino">
+
+                                        <c:if test="#{menuController.isOperatore}">
+                                            <h:outputLabel class="scrittaInput" value="Name: " />
+                                            <h:inputText binding="#{name}" value="#{product.prodName}" />
+                                        </c:if>
+                                        <c:if test="#{menuController.isClient}">
                                             <h:outputLabel class="scritta" value="Name: " />
                                             <h:outputText class="scrittaPub" value="#{product.prodName}" />
-                                        </div>
-                                        <div class="riquadrino">
+                                        </c:if>
+                                    </div>
+                                    <div class="riquadrino">
+
+                                        <c:if test="#{menuController.isOperatore}">
+                                            <h:outputLabel class="scrittaInput" value="Price: " />
+                                            <h:inputText binding="#{price}" value="#{product.price}" />
+                                        </c:if>
+                                        <c:if test="#{menuController.isClient}">
                                             <h:outputLabel class="scritta" value="Price: " />
-                                            <h:outputText class="scrittaPub" value="#{product.price}" />
-                                        </div>
-                                        <div class="riquadrino">
+                                            <h:outputText class="scrittaPub" value="#{product.price}" >
+                                                <f:convertNumber type="currency"  locale="pt-PT"/>
+                                            </h:outputText>
+                                        </c:if>
+                                    </div>
+                                    <div class="riquadrino">
+
+                                        <c:if test="#{menuController.isOperatore}">
+                                            <h:outputLabel class="scrittaInput" value="Time to Prepare: " />
+                                            <h:inputText binding="#{tmp}" value="#{product.tmpExe}" />
+                                            <h:outputText class="scrittaPub" value=" mins." />
+                                        </c:if>
+                                        <c:if test="#{menuController.isClient}">
                                             <h:outputLabel class="scritta" value="Time to Prepare: " />
                                             <h:outputText class="scrittaPub" value="#{product.tmpExe}" />
                                             <h:outputText class="scrittaPub" value=" mins." />
-                                        </div>
+
+                                        </c:if>
+                                    </div>
+                                    <c:if test="#{menuController.isClient}">
                                         <div class="quantita">
                                             <h:outputLabel class="scrittaqta" value="Quantity: " />
 
                                             <h:panelGrid columns="5">
 
-                                                <h:outputText id="qnt" value="#{menuController.basket[product]}" />
+                                                <h:outputText class="scrittaPub" id="qnt" value="#{menuController.basket[product]}" />
                                                 <div class="spazio"></div>
 
-                                                <p:commandButton value="+"
+                                                <p:commandButton class="w3-teal w3-round-small" value="+"
                                                                  actionListener="#{menuController.addToOrder(product)}"
                                                                  update="qnt" />
-                                                <p:commandButton value="-"
+                                                <div class="spazio"></div>
+                                                <p:commandButton class="w3-teal w3-round-small" value="-"
                                                                  actionListener="#{menuController.removeFromOrder(product)}"
                                                                  update="qnt" />
 
@@ -267,82 +324,72 @@
                                                                              target="#{menuController.selectedProduct}" />
                                             </h:commandButton>
                                         </div>
-                                    </div>
+                                    </c:if>
+
+                                    <c:if test="#{menuController.isOperatore}">
+                                        <div class="pulsantiera">
+                                            <div class="pulsanteDettaglio">
+                                                <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                                                 value="Modifica prodotto"
+                                                                 action="#{menuController.editProduct(name,price,tmp,img)}">
+                                                    <f:setPropertyActionListener value="#{product}"
+                                                                                 target="#{menuController.selectedProduct}" />
+                                                </h:commandButton>
+                                            </div>
+                                            <div class="pulsanteDettaglio">
+                                                <h:commandButton class="w3-button w3-teal w3-round-medium"
+                                                                 value="Elimina prodotto"
+                                                                 action="#{menuController.removeProduct}">
+                                                    <f:setPropertyActionListener value="#{product}"
+                                                                                 target="#{menuController.selectedProduct}" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+
+                                    </c:if>
                                 </div>
-                            </ui:repeat>
-                        </c:if>
+                            </div>
+                        </ui:repeat>
 
                         <c:if test="#{menuController.isOperatore}">
-                            <ui:repeat value="#{menuController.productList}" var="product"
-                                       varStatus="status">
+
+                            <div id="aggiungiProd" style="display: none">
                                 <div class="col-sm-12 col-xl-4">
                                     <div class="riquadro mb-2">
                                         <div class="riquadrino">
-                                            <h:outputLabel class="scritta" value="Name: " />
-                                            <h:inputText binding="#{name}" value="#{product.prodName}" />
+                                            <h:outputLabel class="scrittaInput" value="Name: " />
+                                            <h:inputText binding="#{newname}" value=" " />
                                         </div>
                                         <div class="riquadrino">
-                                            <h:outputLabel class="scritta" value="Price: " />
-                                            <h:inputText binding="#{price}" value="#{product.price}" />
+                                            <h:outputLabel class="scrittaInput" value="Price: " />
+                                            <h:inputText binding="#{newprice}" value=" " />
                                         </div>
                                         <div class="riquadrino">
-                                            <h:outputLabel class="scritta" value="Time to Prepare: " />
-                                            <h:inputText binding="#{tmp}" value="#{product.tmpExe}" />
-                                            <h:outputText class="scrittaPub" value=" mins." />
+                                            <h:outputLabel class="scrittaInput" value="Time to Prepare: " />
+                                            <h:inputText binding="#{newtmp}" value=" " />
+                                            <h:outputLabel value=" mins." />
                                         </div>
                                         <div class="riquadrino">
-                                            <h:outputLabel class="scritta" value="Image: " />
-                                            <h:inputText binding="#{img}" value="#{product.image}" />
+                                            <h:outputLabel class="scrittaInput" value="Image: " />
+                                            <h:inputText binding="#{newimg}" value=" " />
                                         </div>
-                                        <div class="pulsanteDettaglio">
+                                        <div class="pulsanteDettaglio pulsantiera">
                                             <h:commandButton class="w3-button w3-teal w3-round-medium"
-                                                             value="Modifica prodotto"
-                                                             action="#{menuController.editProduct(name,price,tmp,img)}">
-                                                <f:setPropertyActionListener value="#{product}"
-                                                                             target="#{menuController.selectedProduct}" />
+                                                             value="Conferma"
+                                                             action="#{menuController.addProduct(newname,newprice,newtmp,newimg)}">
                                             </h:commandButton>
                                         </div>
-                                        <div class="pulsanteDettaglio">
-                                            <h:commandButton class="w3-button w3-teal w3-round-medium"
-                                                             value="Elimina prodotto"
-                                                             action="#{menuController.removeProduct}">
-                                                <f:setPropertyActionListener value="#{product}"
-                                                                             target="#{menuController.selectedProduct}" />
-                                            </h:commandButton>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ui:repeat>
 
-                            <div class="col-sm-12 col-xl-4">
-                                <div class="riquadro mb-2">
-                                    <div class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Name: " />
-                                        <h:inputText binding="#{newname}" value=" " />
                                     </div>
-                                    <div class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Price: " />
-                                        <h:inputText binding="#{newprice}" value=" " />
-                                    </div>
-                                    <div class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Time to Prepare: " />
-                                        <h:inputText binding="#{newtmp}" value=" " />
-                                        <h:outputLabel value=" mins." />
-                                    </div>
-                                    <div class="riquadrino">
-                                        <h:outputLabel class="scritta" value="Image: " />
-                                        <h:inputText binding="#{newimg}" value=" " />
-                                    </div>
-                                    <div class="pulsanteDettaglio">
-                                        <h:commandButton class="w3-button w3-teal w3-round-medium"
-                                                         value="Aggiungi prodotto"
-                                                         action="#{menuController.addProduct(newname,newprice,newtmp,newimg)}">
-                                        </h:commandButton>
-                                    </div>
-
                                 </div>
                             </div>
+                            <div class="pulsantiera">
+                                <button type="button" class="w3-button w3-teal w3-round-medium" onclick="javascript: mostraAggiungi();">
+                                    <h:outputText id="scrittaPulsanteAdd"  value="Aggiungi Prodotto" />
+                                </button>
+                            </div>
                         </c:if>
+
                     </div>
                 </div>
                 <div id="pulsantiera">

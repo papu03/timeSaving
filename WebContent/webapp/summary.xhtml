@@ -18,6 +18,14 @@
             font-family:  Arial, Helvetica, sans-serif;
             font-size: large;
             color: cadetblue;
+            width: 55%;
+        }
+
+        .scrittaPub{
+
+            font-family:  Arial, Helvetica, sans-serif;
+            font-size: medium;
+            color: gray;
         }
 
         .scrittona{
@@ -28,7 +36,7 @@
         #sommario{
             position: absolute;
             height: 75%;
-            width: 28%;
+            width: 31%;
             top: 100px;
             margin-left: 30px;
             overflow: auto;
@@ -42,6 +50,7 @@
             border-radius: 40px;
             box-shadow: 3px 3px #bbb;
             background-color: white;
+            width: 99%;
         }
 
         #titolo{
@@ -119,6 +128,10 @@
             width: 30%;
             left: 35%;
         }
+        
+        .spazio{
+            margin-left: 112px;
+        }
 
     </style>
 
@@ -153,9 +166,9 @@
                         <h:outputLabel class="scrittaUserArea" value="  #{userSessionBean.user.username}"/>
                     </button>
                     <div id="pulsantiera_alta" style="display: none">
-                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="Home" action="#{summaryController.goToHomePage}"/>
-                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="I tuoi ordini" action="#{summaryController.goToOrders}"/>
-                        <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{summaryController.logOut}"/>
+                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="Home" action="#{menuController.goToHomePage}"/>
+                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="I tuoi ordini" action="#{menuController.goToOrders}"/>
+                        <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{menuController.logOut}"/>
                     </div>
                 </div>
                 <div id="sommario">
@@ -164,23 +177,25 @@
                         <div class="prodotto">
                             <div>
                                 <h:outputLabel class="scritta" value="Name: " />
-                                <h:outputText value="#{product.prodName}" />
+                                <h:outputText class="scrittaPub" value="#{product.prodName}" />
                             </div>
                             <div>
                                 <h:outputLabel class="scritta" value="Price: " />
-                                <h:outputText value="#{product.price}" />
+                                <h:outputText class="scrittaPub" value="#{product.price}">
+                                    <f:convertNumber type="currency"  locale="pt-PT"/>
+                                </h:outputText>
                             </div>
                             <div>
                                 <h:outputLabel class="scritta" value="Time to Prepare: " />
-                                <h:outputText value="#{product.tmpExe}" />
-                                <h:outputLabel value=" mins." />
+                                <h:outputText class="scrittaPub" value="#{product.tmpExe}" />
+                                <h:outputText class="scrittaPub" value=" mins." />
                             </div>
                             <div>    
                                 <h:panelGrid columns="4">
                                     <h:outputLabel class="scritta" value="Quantity: " />
 
                                     <h:form>
-                                        <h:outputText id="qnt" value="#{summaryController.basket[product]}" />
+                                        <h:outputText class="scrittaPub spazio" id="qnt" value="#{summaryController.basket[product]}" />
                                     </h:form>
 
                                 </h:panelGrid>

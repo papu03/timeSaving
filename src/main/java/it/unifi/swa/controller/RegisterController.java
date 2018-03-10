@@ -64,6 +64,9 @@ public class RegisterController implements Serializable {
         return "success?&faces-redirect=true";
     }
 
+    public String back(){
+        return "login?&faces-redirect=true";
+    }
 
     public Client getClient() {
         return client;

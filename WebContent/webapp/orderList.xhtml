@@ -134,6 +134,13 @@
                 height: 80%;
                 overflow: auto;
             }
+            
+            #pulsanteBack{
+                position: absolute;
+                padding: 15px;
+                bottom: 2%;
+                
+            }
 
         </style>
 
@@ -205,6 +212,9 @@
                             </div>
                         </ui:repeat>
                     </div>
+                </div>
+                <div id="pulsanteBack">
+                    <h:commandButton class="w3-button w3-teal w3-round-xxlarge bott" value="Go to Homepage" action="#{menuController.goToHomePage}"/>
                 </div>
             </h:form>
         </f:view>
