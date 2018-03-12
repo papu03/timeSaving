@@ -196,7 +196,7 @@ public class MenuController implements Serializable {
 
     public String editProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
         selectedProduct.setProdName(name.getValue().toString());
-        selectedProduct.setImage(image.getValue().toString());
+        selectedProduct.setImage(image == null ? "" : image.getValue().toString());
 
         selectedProduct.setPrice(Double.parseDouble(price.getValue().toString()));
         selectedProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
@@ -210,6 +210,7 @@ public class MenuController implements Serializable {
 
         if (productList.size() > 1) {
             productDao.removeProduct(selectedProduct);
+            productList.remove(selectedProduct);
         } else {
             System.out.println("Impossibile rimuovere tutti gli oggetti");
         }
@@ -230,6 +231,7 @@ public class MenuController implements Serializable {
             newProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
             productDao.addProduct(newProduct);
+            productList.add(newProduct);
             // } else {
             // System.out.println("Inserisci prezzo e tempo");
             // }

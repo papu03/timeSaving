@@ -33,8 +33,8 @@ public class OrderDaoTest extends DaoTest {
 		order=new Ordine();
 		
 		order.setClient(client);
-		order.setBarman(barman);
-		order.setCook(cook);
+		//order.setBarman(barman);
+		//order.setCook(cook);
 		
 		entityManager.persist(client);
 		entityManager.persist(barman);

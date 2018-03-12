@@ -21,8 +21,11 @@ public class MenuDAO extends BaseDao<Menu> {
 
 		List<Product> result = new ArrayList<Product>();
 
-		result = entityManager.createQuery("from Product p where p.menu = :menu", Product.class)
-					.setParameter("menu", pub.getMenu()).getResultList();
+                if(pub.getMenu() != null){
+                    result = entityManager.createQuery("from Product p where p.menu = :menu", Product.class)
+                                            .setParameter("menu", pub.getMenu()).getResultList();
+                }
+                
 
 		
 		return result;

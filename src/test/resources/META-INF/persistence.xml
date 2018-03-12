@@ -12,7 +12,7 @@
 	
 		<class>it.unifi.swa.domain.Menu</class>
 		<class>it.unifi.swa.domain.Pub</class>
-	    <class>it.unifi.swa.domain.Product</class>
+                <class>it.unifi.swa.domain.Product</class>
 		<class>it.unifi.swa.domain.Operator</class>
 		<class>it.unifi.swa.domain.Ordine</class>
 		<class>it.unifi.swa.domain.User</class>
@@ -26,9 +26,9 @@
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/timeSavingTestDB" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/saltacodaDB" />
 			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="root" />
+			<property name="hibernate.connection.password" value="sysadm" />
 			<property name="hibernate.show_sql" value="true" />
 			<!-- <property name="hibernate.show_sql" value="true"/> -->
 			<property name="hibernate.format_sql" value="false" />

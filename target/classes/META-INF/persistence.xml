@@ -9,7 +9,7 @@
 	<persistence-unit name="persistent-1"
 		transaction-type="JTA">
 		<!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
-		<jta-data-source>jdbc/SCresource</jta-data-source>
+		<jta-data-source>jdbc/datasourceMac</jta-data-source>
 
 		
 		<properties>
@@ -24,6 +24,7 @@
 			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc" />
 			<property name="eclipselink.ddl-generation.output-mode"
 				value="both" />
+                        <property name="eclipselink.logging.parameters" value="true"/>
 		</properties>
 
 	</persistence-unit>

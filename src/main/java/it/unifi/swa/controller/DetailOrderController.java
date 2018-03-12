@@ -19,54 +19,46 @@ import it.unifi.swa.domain.Product;
 @Named
 @ViewScoped
 public class DetailOrderController implements Serializable {
-	
 
-	private static final long serialVersionUID = 1L;
-	
-	@Inject
-	private UserSessionBean userSessionBean;
-	
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private OrderProductDAO orderProductDao;
-	
-	@Inject
-	@HttpParam("id")
-	private String orderId;
-	
-	
-	private Map<Product, Integer> qntProductMap;
+    @Inject
+    private UserSessionBean userSessionBean;
 
-	
-	@PostConstruct
-	public void init() {
-		System.out.println("Init DetailOrder Controller");
-		
-		qntProductMap=new HashMap<Product, Integer>();
-		
-		int idOrder=Integer.parseInt(orderId);
-		qntProductMap=orderProductDao.getProdQntByIdOrder(idOrder,userSessionBean.getType());
-	
-	}
-	
-	public String toOrderList(){
-		
-		return "orderList?&faces-redirect=true";
+    @Inject
+    private OrderProductDAO orderProductDao;
 
-	}
+    @Inject
+    @HttpParam("id")
+    private String orderId;
 
+    private Map<Product, Integer> qntProductMap;
 
-	public Map<Product, Integer> getQntProductMap() {
-		return qntProductMap;
-	}
+    @PostConstruct
+    public void init() {
+        System.out.println("Init DetailOrder Controller");
 
+        qntProductMap = new HashMap<Product, Integer>();
+        if (orderId != null) {
+            int idOrder = Integer.parseInt(orderId);
+            qntProductMap = orderProductDao.getProdQntByIdOrder(idOrder, userSessionBean.getType());
 
-	public void setQntProductMap(Map<Product, Integer> qntProductMap) {
-		this.qntProductMap = qntProductMap;
-	}
+        }
 
-	
+    }
 
+    public String toOrderList() {
 
+        return "orderList?&faces-redirect=true";
+
+    }
+
+    public Map<Product, Integer> getQntProductMap() {
+        return qntProductMap;
+    }
+
+    public void setQntProductMap(Map<Product, Integer> qntProductMap) {
+        this.qntProductMap = qntProductMap;
+    }
 
 }
