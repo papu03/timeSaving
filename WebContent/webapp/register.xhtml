@@ -69,6 +69,35 @@
                     <h1 class="display-3 text-center font-italic scrittona">Register</h1>
                 </div>
                 <div id="divRegistra">
+                    
+                    <div class="campo">
+                        <h:outputLabel class="scritta" value="Email*" />
+                        <h:inputText class="input" value="#{registerController.email}"></h:inputText>
+                    </div>
+                    <h:outputScript rendered="#{registerController.emailFail}">
+   					 alert('Email errata');
+					</h:outputScript>
+                    <div class="campo">
+                        <h:outputLabel class="scritta" value="Username*" />
+                        <h:inputText class="input" value="#{registerController.username}"></h:inputText>
+                    </div>
+                     <h:outputScript rendered="#{registerController.userNameFail}">
+   					 alert('Username troppo corto');
+					</h:outputScript>
+                    <div class="campo">
+                        <h:outputLabel class="scritta" value="Password*" />
+                        <h:inputText class="input" value="#{registerController.password}"></h:inputText>
+                    </div>
+                    <h:outputScript rendered="#{registerController.passFail}">
+   					 alert('Password troppo corta');
+					</h:outputScript>
+                    <div class="campo">
+                        <h:outputLabel class="scritta" value="Confirm Password*" />
+                        <h:inputText class="input" value="#{registerController.password_check}"></h:inputText>
+                    </div>
+                    <h:outputScript rendered="#{registerController.checkPassFail}">
+   					 alert('Inserite password differenti');
+					</h:outputScript>
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Nome" />
                         <h:inputText class="input" value="#{registerController.name}"></h:inputText>
@@ -80,18 +109,6 @@
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Indirizzo" />
                         <h:inputText class="input" value="#{registerController.address}"></h:inputText>
-                    </div>
-                    <div class="campo">
-                        <h:outputLabel class="scritta" value="Username" />
-                        <h:inputText class="input" value="#{registerController.username}"></h:inputText>
-                    </div>
-                    <div class="campo">
-                        <h:outputLabel class="scritta" value="Password" />
-                        <h:inputText class="input" value="#{registerController.password}"></h:inputText>
-                    </div>
-                    <div class="campo">
-                        <h:outputLabel class="scritta" value="Confirm Password" />
-                        <h:inputText class="input" value="#{registerController.password_check}"></h:inputText>
                     </div>
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Card Number" />

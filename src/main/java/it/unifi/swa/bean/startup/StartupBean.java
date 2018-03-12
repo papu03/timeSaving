@@ -43,12 +43,14 @@ public class StartupBean {
         Client papu = new Client();
         papu.setUsername("papu");
         papu.setPassword("password");
+        papu.setEmail("papu@gmail.com");
         
         Client ale= new Client();
 		ale.setName("Alessandro");
 		ale.setSurname("Baroni");
 		ale.setUsername("b4r0");
 		ale.setPassword("a");
+		ale.setEmail("ale@gmail.com");
         
         clientDao.save(papu);
         clientDao.save(ale);
@@ -95,37 +97,42 @@ public class StartupBean {
         cuoco.setPassword("cuoco");
         cuoco.setLocal(pub);
         cuoco.setoType('c');
+        cuoco.setEmail("cuoco1@gmail.com");
         
         Operator cuoco2 = new Operator();
         cuoco2.setUsername("cuoco2");
         cuoco2.setPassword("cuoco");
         cuoco2.setLocal(pub2);
         cuoco2.setoType('c');
-
+        cuoco2.setEmail("cuoco2@gmail.com");
+        
         Operator barista = new Operator();
         barista.setUsername("barista1");
         barista.setPassword("barista");
         barista.setLocal(pub);
         barista.setoType('b');
+        barista.setEmail("barista1@gmail.com");
 
         Operator barista2 = new Operator();
         barista2.setUsername("barista2");
         barista2.setPassword("barista");
         barista2.setLocal(pub2);
         barista2.setoType('b');
+        barista2.setEmail("barista2@gmail.com");
         
         Operator barista3 = new Operator();
         barista3.setUsername("barista3");
         barista3.setPassword("barista");
         barista3.setLocal(pub3);
         barista3.setoType('b');
-
+        barista3.setEmail("barista3@gmail.com");
+        
         Operator barista4 = new Operator();
         barista4.setUsername("barista4");
         barista4.setPassword("barista");
         barista4.setLocal(pub4);
         barista4.setoType('b');
-        
+        barista4.setEmail("barista4@gmail.com");
         
         Product moretti = new Product();
         moretti.setProdName("Moretti");
