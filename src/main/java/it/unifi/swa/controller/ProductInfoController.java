@@ -17,10 +17,11 @@ import javax.inject.Named;
 import it.unifi.swa.bean.producer.HttpParam;
 import it.unifi.swa.dao.ProductDAO;
 import it.unifi.swa.domain.Product;
+import javax.enterprise.context.RequestScoped;
 
 @Named
-@ViewScoped
-public class ProductController implements Serializable {
+@RequestScoped
+public class ProductInfoController implements Serializable {
 
 
     private static final long serialVersionUID = 1L;

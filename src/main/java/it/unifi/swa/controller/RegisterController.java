@@ -64,7 +64,7 @@ public class RegisterController implements Serializable {
         if(password.isEmpty()){
         	passFail=true;
         }
-        if(email.isEmpty()){
+        if(email != null && email.isEmpty()){
         	emailFail=true;
         }
         

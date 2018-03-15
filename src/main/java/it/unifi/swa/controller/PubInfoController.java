@@ -14,9 +14,10 @@ import it.unifi.swa.domain.Pub;
 
 import java.beans.Transient;
 import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class PubInfoController implements Serializable {
 
     @Inject
@@ -39,10 +40,11 @@ public class PubInfoController implements Serializable {
         System.out.println("Init Pub info controller");
 
         //selectedPub=pubBean.getSelectedPub();
-        selectedPub = pubDao.getPubById(pubId);
-        description = selectedPub.getDescrizione();
-
-        System.out.println("Info del pub " + selectedPub.getNome());
+        if(pubId != null){
+            selectedPub = pubDao.getPubById(pubId);
+            description = selectedPub.getDescrizione();
+            
+        }
 
         if (userSessionBean.getType() != 'u') {
             isOperatore = true;
