@@ -191,11 +191,14 @@
                         <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{selectPubController.logOut}"/>
                     </div>
                 </div>
-                <h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />
+                <!--<h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />-->
                 <div id="benvenuto">
                     <h1 class="titolo">Welcome #{userSessionBean.user.username}, Select the Pub</h1>
                 </div>
-               
+                <!--<div id="benvenuto">
+
+                    <h:outputLabel class="scritta" value="Welcome #{userSessionBean.user.username}, Select the Pub"/>
+                </div>-->
                 <div id="tabella">
                     <c:if test="#{selectPubController.isClient}">
 
@@ -207,12 +210,12 @@
                                 </div>
                                 <div class="pulsantiera">
                                     <div class="pulsanteInfo">
-                                        <h:commandButton class="w3-button color w3-round-xxlarge" value="Select" action="#{selectPubController.select}">
+                                        <h:commandButton class="w3-button color w3-round-xxlarge" value="Select" action="#{selectPubController.select()}">
                                             <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
                                         </h:commandButton>
                                     </div>
                                     <div class="pulsanteInfo">
-                                        <h:commandButton class="w3-button color w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo}">
+                                        <h:commandButton class="w3-button color w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo()}">
                                             <f:setPropertyActionListener value="#{pub}" target="#{selectPubController.selectedPub}" />
                                         </h:commandButton>
                                     </div>

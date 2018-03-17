@@ -140,14 +140,14 @@ public class Ordine {
 			if (orderState == 'a') {
 				state = "Ordine pagato in attesa";
 			} else if (orderState == 'b') {
-				state = "Ordine in Esecuzione";
+				state = "Ordine Bar in Esecuzione";
 			} else if (orderState == 'c') {
 				
-				state = "Ordine cucina concluso. Ordine drink in esecuzione";
+				state = "Ordine Cucina in Esecuzione";
 			} if (orderState == 'd') {
-				state = "Ordine drink concluso. Ordine cucina in esecuzione";
+				state = "Ordine Bar e Cucina in esecuzione";
 			}if (orderState == 'e') {
-				state = "Ordine drink e cucina concluso";
+				state = "Ordine  concluso";
 			}
 
 			// } else if (this.sizeOrder == 'a') { //food o drink

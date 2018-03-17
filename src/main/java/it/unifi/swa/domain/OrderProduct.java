@@ -2,8 +2,8 @@ package it.unifi.swa.domain;
 
 
 import java.io.Serializable;
-
-
+import javax.persistence.Entity;
+ 
 public class OrderProduct implements Serializable{
 
 	private int idOrder;

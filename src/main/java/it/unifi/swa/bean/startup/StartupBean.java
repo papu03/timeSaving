@@ -115,7 +115,7 @@ public class StartupBean {
 
         Operator barista2 = new Operator();
         barista2.setUsername("barista2");
-        barista2.setPassword("barista");
+        barista2.setPassword("b");
         barista2.setLocal(pub2);
         barista2.setoType('b');
         barista2.setEmail("barista2@gmail.com");

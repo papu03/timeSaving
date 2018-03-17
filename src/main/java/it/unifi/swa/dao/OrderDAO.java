@@ -16,87 +16,120 @@ import it.unifi.swa.domain.User;
 @Dependent
 public class OrderDAO extends BaseDao<Ordine> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected OrderDAO() {
-		super(Ordine.class);
-	}
+    protected OrderDAO() {
+        super(Ordine.class);
+    }
 
-	// @Transactional
-	// public Ordine insertOrder(Pub pub,boolean isFood,boolean isDrink){
-	//
-	// Ordine ord= new Ordine();
-	// ord.setLocal(pub);
-	// ord.setStateOrder('a');
-	//
-	// if(isFood && isDrink){
-	// ord.setSizeOrder('b');
-	// }else{
-	// ord.setSizeOrder('a');
-	// }
-	//
-	// this.save(ord);
-	//
-	// return ord;
-	//
-	// }
+    // @Transactional
+    // public Ordine insertOrder(Pub pub,boolean isFood,boolean isDrink){
+    //
+    // Ordine ord= new Ordine();
+    // ord.setLocal(pub);
+    // ord.setStateOrder('a');
+    //
+    // if(isFood && isDrink){
+    // ord.setSizeOrder('b');
+    // }else{
+    // ord.setSizeOrder('a');
+    // }
+    //
+    // this.save(ord);
+    //
+    // return ord;
+    //
+    // }
+    public void insertOrder(Ordine ord, List<Operator> operators) {
 
-	public void insertOrder(Ordine ord, List<Operator> operators) {
+        for (Operator op : operators) {
 
-		for (Operator op : operators) {
+            if (op.getoType() == 'c') {
+                ord.setCook(op);
+            }
 
-			if (op.getoType() == 'c') {
-				ord.setCook(op);
-			}
-
-			if (op.getoType() == 'b') {
-				ord.setBarman(op);
-			}
-		}
+            if (op.getoType() == 'b') {
+                ord.setBarman(op);
+            }
+        }
 
 //		if (isFood && isDrink) {
 //			ord.setSizeOrder('b');
 //		} else {
 //			ord.setSizeOrder('a');
 //		}
+        this.save(ord);
 
-		this.save(ord);
+    }
+    
+    public List<Ordine> getOrderByClient(User client) {
 
-	}
+        List<Ordine> orderList = new ArrayList<Ordine>();
 
-	public List<Ordine> getOrderByClient(User client) {
+        orderList = entityManager.createQuery("from Ordine o where o.client.idUser= :clientId", Ordine.class)
+                .setParameter("clientId", client.getIdUser()).getResultList();
 
-		List<Ordine> orderList = new ArrayList<Ordine>();
+        //System.out.println("L'id dell'ordine è: "+orderList.get(0).getIdOrder());
+        return orderList;
 
-		orderList = entityManager.createQuery("from Ordine o where o.client.idUser= :clientId", Ordine.class)
-				.setParameter("clientId", client.getIdUser()).getResultList();
+    }
 
-		//System.out.println("L'id dell'ordine è: "+orderList.get(0).getIdOrder());
+    public List<Ordine> getOrderByCook(User cook) {
 
-		return orderList;
+        List<Ordine> orderList = new ArrayList<Ordine>();
 
-	}
+        orderList = entityManager.createQuery("from Ordine o where o.cook.idUser = :cookId", Ordine.class)
+                .setParameter("cookId", cook.getIdUser()).getResultList();
 
-	public List<Ordine> getOrderByCook(User cook) {
+        return orderList;
 
-		List<Ordine> orderList = new ArrayList<Ordine>();
+    }
 
-		orderList = entityManager.createQuery("from Ordine o where o.cook.idUser = :cookId", Ordine.class)
-				.setParameter("cookId", cook.getIdUser()).getResultList();
+    public List<Ordine> getOrderByBarman(User barman) {
 
-		return orderList;
+        List<Ordine> orderList = new ArrayList<Ordine>();
 
-	}
+        orderList = entityManager.createQuery("from Ordine o where o.barman.idUser = :barmanId", Ordine.class)
+                .setParameter("barmanId", barman.getIdUser()).getResultList();
 
-	public List<Ordine> getOrderByBarman(User barman) {
+        return orderList;
 
-		List<Ordine> orderList = new ArrayList<Ordine>();
+    }
 
-		orderList = entityManager.createQuery("from Ordine o where o.barman.idUser = :barmanId", Ordine.class)
-				.setParameter("barmanId", barman.getIdUser()).getResultList();
+    public List<Ordine> getOrderByOperator(User user, char tpOperator) {
 
-		return orderList;
+        char tpProduct;
+        String condizione = "";
+        List<Integer> idOrderList = new ArrayList<Integer>();
+        List<Ordine> orderList = new ArrayList<Ordine>();
+        
+        
+        try {
 
-	}
+            
+            if(tpOperator == 'b'){
+                tpProduct = 'd';
+                condizione = "o.barman.idUser = :userId";
+            }else{
+                tpProduct = 'f';
+                condizione = "o.cook.idUser = :userId";
+            }
+            
+            String query = "select o.idOrder from Ordine o, OPAssociation op, Product p where o.idOrder = op.idOrder and op.idProduct = p.idProduct and (o.stateOrder = 'a' or " + condizione + " ) and p.tpProduct = :tpProd GROUP BY o.idOrder";
+
+            idOrderList = entityManager.createQuery(query)
+                    .setParameter("tpProd", tpProduct)
+                    .setParameter("userId", user.getIdUser()).getResultList();
+            
+            for(int idOrder : idOrderList){
+                orderList.add(this.findById(idOrder));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return orderList;
+    }
 
 }

@@ -1,19 +1,20 @@
 package it.unifi.swa.controller;
 
-import it.unifi.swa.bean.SelectPubBean;
-
 import javax.annotation.PreDestroy;
-import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.ClientDAO;
 import it.unifi.swa.dao.OperatorDAO;
 
 import it.unifi.swa.domain.User;
+import java.io.Serializable;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-
-@Model
-public class LoginController {
+@Named
+@ViewScoped
+//@Model
+public class LoginController implements Serializable{
 
     private User userData;
 

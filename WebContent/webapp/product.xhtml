@@ -149,15 +149,15 @@
                     <h1 class="titolo">Info</h1>
                 </div>
                 <div id="immagine">
-                    <h:graphicImage class="cornice" value="#{productController.selectedProduct.image}" width="400" height="400" />
+                    <h:graphicImage class="cornice" value="#{productInfoController.selectedProduct.image}" width="400" height="400" />
                 </div>
                 <div id="descrizione">
-                    <h:outputLabel class="scritta" value="#{productController.selectedProduct.prodName}"/> 
+                    <h:outputLabel class="scritta" value="#{productInfoController.selectedProduct.prodName}"/> 
                     <br/>
                     <h:outputLabel value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
                 </div>
                 <div id="pulsante">
-                    <h:commandButton class="w3-button color w3-round-medium" value="Back" action="#{productController.toMenu}" />
+                    <h:commandButton class="w3-button color w3-round-medium" value="Back" action="#{productInfoController.toMenu}" />
                 </div>
 
             </h:form>

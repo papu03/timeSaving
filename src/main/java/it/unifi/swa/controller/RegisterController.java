@@ -4,15 +4,16 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.inject.Model;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import it.unifi.swa.dao.ClientDAO;
 import it.unifi.swa.domain.Client;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@Model
+@Named
+@ViewScoped
+//@Model
 public class RegisterController implements Serializable {
 
     
