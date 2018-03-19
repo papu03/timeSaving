@@ -15,6 +15,9 @@ import it.unifi.swa.dao.OrderDAO;
 import it.unifi.swa.domain.Operator;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.User;
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.transaction.Transactional;
 
 @Named
@@ -73,15 +76,19 @@ public class OrderListController implements Serializable {
     }
 
     @Transactional
-    public void changeOrderState(Ordine order) {
+    public void changeOrderState(int idOrder) {
+
+        Ordine order = orderDao.findById(idOrder);
 
         //if (changeStateCount != 3) {
         if (order.getStateOrder() == 'a') {
 
             try {
                 if (userSessionBean.getType() == 'b') {
+
                     Operator barman = operatorDao.findById(userSessionBean.getUser().getIdUser());
                     order.setBarman(barman);
+
                     order.setStateOrder('b');
                 } else if (userSessionBean.getType() == 'c') {
                     Operator cook = operatorDao.findById(userSessionBean.getUser().getIdUser());
@@ -100,23 +107,51 @@ public class OrderListController implements Serializable {
 
             try {
 
-                if (order.getStateOrder() != 'd' && order.getStateOrder() != 'e') {
-
-                    if (order.getBarman() != null && order.getCook() == null && userSessionBean.getType() == 'c') {
-                        Operator cook = operatorDao.findById(userSessionBean.getUser().getIdUser());
-                        order.setCook(cook);
-                        order.setStateOrder('d');
-                    } else if (order.getCook() != null && order.getBarman() == null && userSessionBean.getType() == 'b') {
-                        Operator barman = operatorDao.findById(userSessionBean.getUser().getIdUser());
-                        order.setBarman(barman);
-                        order.setStateOrder('d');
-                    } else {
-                        order.setStateOrder('e');
-                    }
+                if (order.getTipoOrdine() == 'd') {
+                    order.setStateOrder('g');
+                } else if (order.getTipoOrdine() == 'f') {
+                    order.setStateOrder('g');
                 } else {
-                    order.setStateOrder('e');
+
+                    if (userSessionBean.getType() == 'c') {
+                        if (order.getBarman() != null && order.getCook() == null) {
+                            Operator cook = operatorDao.findById(userSessionBean.getUser().getIdUser());
+                            order.setCook(cook);
+                            if(order.getStateOrder() != 'f'){
+                                order.setStateOrder('d');
+                            }
+                        } else if (order.getBarman() != null && order.getCook() != null) {
+                            if (order.getStateOrder() == 'f') {
+                                order.setStateOrder('g');
+                            } else {
+                                order.setStateOrder('e');
+
+                            }
+                        } else {
+                            order.setStateOrder('e');
+                        }
+                    }
+
+                    if (userSessionBean.getType() == 'b') {
+                        if (order.getCook() != null && order.getBarman() == null) {
+                            Operator barman = operatorDao.findById(userSessionBean.getUser().getIdUser());
+                            order.setBarman(barman);
+                            order.setStateOrder('d');
+                        } else if (order.getCook() != null && order.getBarman() != null) {
+                            if (order.getStateOrder() == 'e') {
+                                order.setStateOrder('g');
+                            } else {
+                                order.setStateOrder('f');
+
+                            }
+                        } else {
+                            order.setStateOrder('f');
+                        }
+                    }
+
                 }
 
+                orderDao.update(order);
 
                 /*if (order.getBarman() != null && order.getCook() != null) {
 
@@ -141,16 +176,26 @@ public class OrderListController implements Serializable {
                             order.setStateOrder('e');
                         }
                     }*/
-                orderDao.update(order);
                 //changeStateCount++;
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
         }
 
+        setOrderList(orderDao.getOrderByOperator(userSessionBean.getUser(), userSessionBean.getType()));
         //}
+    }
+
+    public void refresh() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        String viewId = context.getViewRoot().getViewId();
+        ViewHandler handler = context.getApplication().getViewHandler();
+        UIViewRoot root = handler.createView(context, viewId);
+        root.setViewId(viewId);
+        context.setViewRoot(root);
+
     }
 
     public List<Ordine> getOrderList() {

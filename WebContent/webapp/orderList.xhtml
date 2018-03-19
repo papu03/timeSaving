@@ -162,6 +162,13 @@
                 background-color: lightgoldenrodyellow;
                 color: brown;
             }
+            
+            #pulsanteRef{
+                margin-left: 15px;
+                top: 28px;
+                position: absolute;
+                left: 59%;
+            }
 
         </style>
 
@@ -198,9 +205,12 @@
                         <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{menuController.logOut}"/>
                     </div>
                 </div>
-<!--                <h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />-->
+                <!--<h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />-->
                 <div id="benvenuto">
                     <h1 class="titolo">Your Orders</h1>
+                </div>
+                <div id="pulsanteRef">
+                    <h:commandButton class="w3-button color w3-round-medium" value="Refresh" action="#{orderListController.refresh()}" />
                 </div>
                 <div class="container container-fluid bestiacane">
                     <div class="row" style="text-align: center">
@@ -225,7 +235,7 @@
                                         </div>
                                         <c:if test="#{orderListController.isOperatore}">
                                             <div class="pulsanteModificaStato">
-                                                <h:commandButton class="w3-button color w3-round-medium" value="Modifica Stato" action="#{orderListController.changeOrderState(order)}" />
+                                                <h:commandButton class="w3-button color w3-round-medium" value="Modifica Stato" action="#{orderListController.changeOrderState(order.idOrder)}" />
                                             </div>
                                         </c:if>
                                     </div>
@@ -236,6 +246,7 @@
                 </div>
                 <div id="pulsanteBack">
                     <h:commandButton class="w3-button color w3-round-xxlarge bott" value="Go to Homepage" action="#{menuController.goToHomePage}"/>
+                    
                 </div>
             </h:form>
         </f:view>

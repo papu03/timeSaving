@@ -16,185 +16,205 @@ import javax.persistence.OneToMany;
 @Entity
 public class Ordine {
 
-	private int idOrder;
-	private char stateOrder; // "a" arrivato "b" in esecuzione "c" 1 tipo
-								// concluso "d" 2 tipi conclusi
+    
 
-	private Pub local;
-	private User client;
-	private User cook;
-	private User barman;
-	private List<OPAssociation> products;
-	// private List<UserAssociation> users;
+    private int idOrder;
+    private char stateOrder; // "a" arrivato "b" in esecuzione "c" 1 tipo
+    // concluso "d" 2 tipi conclusi
+    
+    private char tipoOrdine;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getIdOrder() {
-		return idOrder;
-	}
+    private Pub local;
+    private User client;
+    private User cook;
+    private User barman;
+    private List<OPAssociation> products;
+    // private List<UserAssociation> users;
 
-	public void setIdOrder(int idOrder) {
-		this.idOrder = idOrder;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public int getIdOrder() {
+        return idOrder;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "idLocale_FK")
-	public Pub getLocal() {
-		return local;
-	}
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
+    }
 
-	public void setLocal(Pub local) {
-		this.local = local;
-	}
+    @ManyToOne
+    @JoinColumn(name = "idLocale_FK")
+    public Pub getLocal() {
+        return local;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "idClient_FK")
-	public User getClient() {
-		return client;
-	}
+    public void setLocal(Pub local) {
+        this.local = local;
+    }
 
-	public void setClient(User client) {
-		this.client = client;
-	}
+    @ManyToOne
+    @JoinColumn(name = "idClient_FK")
+    public User getClient() {
+        return client;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "idCook_FK")
-	public User getCook() {
-		return cook;
-	}
+    public void setClient(User client) {
+        this.client = client;
+    }
 
-	public void setCook(User cook) {
-		this.cook = cook;
-	}
+    @ManyToOne
+    @JoinColumn(name = "idCook_FK")
+    public User getCook() {
+        return cook;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "idBarman_FK")
-	public User getBarman() {
-		return barman;
-	}
+    public void setCook(User cook) {
+        this.cook = cook;
+    }
 
-	public void setBarman(User barman) {
-		this.barman = barman;
-	}
+    @ManyToOne
+    @JoinColumn(name = "idBarman_FK")
+    public User getBarman() {
+        return barman;
+    }
 
-	@OneToMany(mappedBy = "order")
-	public List<OPAssociation> getProducts() {
-		return products;
-	}
+    public void setBarman(User barman) {
+        this.barman = barman;
+    }
 
-	public void setProducts(List<OPAssociation> products) {
-		this.products = products;
-	}
+    @OneToMany(mappedBy = "order")
+    public List<OPAssociation> getProducts() {
+        return products;
+    }
 
-	public OPAssociation addProduct(Product product, int quantity) {
-		OPAssociation association = new OPAssociation();
-		association.setProduct(product);
-		association.setOrder(this);
-		association.setIdProduct(product.getIdProduct());
-		// association.setIdOrder(this.getIdOrder());
-		association.setQuantity(quantity);
-		if (this.products == null) {
-			this.products = new ArrayList<>();
-		}
+    public void setProducts(List<OPAssociation> products) {
+        this.products = products;
+    }
 
-		// this.products.add(association);
-		product.getOrders().add(association);
-
-		return association;
-	}
-
-	// @OneToMany(mappedBy="ordine")
-	// @OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine",
-	// cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	// public List<UserAssociation> getUsers() {
-	// return users;
-	// }
-	//
-	// public void setUsers(List<UserAssociation> users) {
-	// this.users = users;
-	// }
-	//
-	// public UserAssociation addUser(User user) {
-	// UserAssociation association = new UserAssociation();
-	// association.setUtente(user);
-	// association.setOrdine(this);
-	// association.setUtenteId(user.getIdUser());
-	// association.setOrdineId(this.getIdOrder());
-	// if (this.users == null) {
-	// this.users = new ArrayList<>();
-	// }
-	//
-	// this.users.add(association);
-	// user.getOrders().add(association);
-	//
-	// return association;
-	// }
-
-	public String ottieniDescState() {
-
-		String state = "";
-
-		try {
-
-			char orderState = getStateOrder();
-			if (orderState == 'a') {
-				state = "Ordine pagato in attesa";
-			} else if (orderState == 'b') {
-				state = "Ordine Bar in Esecuzione";
-			} else if (orderState == 'c') {
-				
-				state = "Ordine Cucina in Esecuzione";
-			} if (orderState == 'd') {
-				state = "Ordine Bar e Cucina in esecuzione";
-			}if (orderState == 'e') {
-				state = "Ordine  concluso";
-			}
-
-			// } else if (this.sizeOrder == 'a') { //food o drink
-			//
-			// if (orderState == 'c') {
-			// state = "Eseguito";
-			// }
-			// } else if (this.sizeOrder == 'b') {//food e drink
-			//
-			// if (orderState == 'd'){
-			// state = "Eseguito";
-			// }
-			// }
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return state;
-	}
-
-        public int ottieniTempoAttesa(Ordine order){
-            
-            int eta = 0;
-            
-            try{
-                
-                for(OPAssociation opa : products){
-                    if(opa.getIdOrder() == order.getIdOrder()){
-                        eta += (opa.getProduct().getTmpExe() * opa.getQuantity());
-                    }
-                }
-                
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
-            
-            return eta;
-            
+    public OPAssociation addProduct(Product product, int quantity) {
+        OPAssociation association = new OPAssociation();
+        association.setProduct(product);
+        association.setOrder(this);
+        association.setIdProduct(product.getIdProduct());
+        // association.setIdOrder(this.getIdOrder());
+        association.setQuantity(quantity);
+        if (this.products == null) {
+            this.products = new ArrayList<>();
         }
-        
-	public char getStateOrder() {
-		return stateOrder;
-	}
 
-	public void setStateOrder(char stateOrder) {
-		this.stateOrder = stateOrder;
-	}
-        
+        // this.products.add(association);
+        product.getOrders().add(association);
+
+        return association;
+    }
+
+    // @OneToMany(mappedBy="ordine")
+    // @OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine",
+    // cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // public List<UserAssociation> getUsers() {
+    // return users;
+    // }
+    //
+    // public void setUsers(List<UserAssociation> users) {
+    // this.users = users;
+    // }
+    //
+    // public UserAssociation addUser(User user) {
+    // UserAssociation association = new UserAssociation();
+    // association.setUtente(user);
+    // association.setOrdine(this);
+    // association.setUtenteId(user.getIdUser());
+    // association.setOrdineId(this.getIdOrder());
+    // if (this.users == null) {
+    // this.users = new ArrayList<>();
+    // }
+    //
+    // this.users.add(association);
+    // user.getOrders().add(association);
+    //
+    // return association;
+    // }
+    public String ottieniDescState() {
+
+        String state = "";
+
+        try {
+
+            char orderState = getStateOrder();
+            if (orderState == 'a') {
+                state = "Ordine pagato in attesa";
+            } else if (orderState == 'b') {
+                state = "Ordine Bar in Esecuzione";
+            } else if (orderState == 'c') {
+
+                state = "Ordine Cucina in Esecuzione";
+            } else if (orderState == 'd') {
+                state = "Ordine Bar e Cucina in esecuzione";
+            } else if (orderState == 'e') {
+                state = "Ordine Cucina concluso, Ordine Bar in esecuzione";
+            } else if (orderState == 'f') {
+                state = "Ordine Bar concluso, Ordine Cucina in esecuzione";
+            } else {
+                state = "Ordine concluso";
+            }
+
+            // } else if (this.sizeOrder == 'a') { //food o drink
+            //
+            // if (orderState == 'c') {
+            // state = "Eseguito";
+            // }
+            // } else if (this.sizeOrder == 'b') {//food e drink
+            //
+            // if (orderState == 'd'){
+            // state = "Eseguito";
+            // }
+            // }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return state;
+    }
+
+    public int ottieniTempoAttesa(Ordine order) {
+
+        int eta = 0;
+
+        try {
+
+            for (OPAssociation opa : products) {
+                if (opa.getIdOrder() == order.getIdOrder()) {
+                    eta += (opa.getProduct().getTmpExe() * opa.getQuantity());
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return eta;
+
+    }
+
+    public char getStateOrder() {
+        return stateOrder;
+    }
+
+    public void setStateOrder(char stateOrder) {
+        this.stateOrder = stateOrder;
+    }
+    
+    /**
+     * @return the tipoOrdine
+     */
+    public char getTipoOrdine() {
+        return tipoOrdine;
+    }
+
+    /**
+     * @param tipoOrdine the tipoOrdine to set
+     */
+    public void setTipoOrdine(char tipoOrdine) {
+        this.tipoOrdine = tipoOrdine;
+    }
 
 }

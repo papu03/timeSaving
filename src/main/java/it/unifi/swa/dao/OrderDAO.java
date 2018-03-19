@@ -61,7 +61,7 @@ public class OrderDAO extends BaseDao<Ordine> {
         this.save(ord);
 
     }
-    
+
     public List<Ordine> getOrderByClient(User client) {
 
         List<Ordine> orderList = new ArrayList<Ordine>();
@@ -98,30 +98,24 @@ public class OrderDAO extends BaseDao<Ordine> {
 
     public List<Ordine> getOrderByOperator(User user, char tpOperator) {
 
-        char tpProduct;
         String condizione = "";
         List<Integer> idOrderList = new ArrayList<Integer>();
         List<Ordine> orderList = new ArrayList<Ordine>();
-        
-        
+
         try {
 
-            
-            if(tpOperator == 'b'){
-                tpProduct = 'd';
-                condizione = "o.barman.idUser = :userId";
-            }else{
-                tpProduct = 'f';
-                condizione = "o.cook.idUser = :userId";
+            if (tpOperator == 'b') {
+                condizione = "(o.barman is null or o.barman.idUser = :userId) and o.tipoOrdine in ('d', 'm')";
+            } else {
+                condizione = "(o.cook is null or o.cook.idUser = :userId) and o.tipoOrdine in ('f', 'm')";
             }
-            
-            String query = "select o.idOrder from Ordine o, OPAssociation op, Product p where o.idOrder = op.idOrder and op.idProduct = p.idProduct and (o.stateOrder = 'a' or " + condizione + " ) and p.tpProduct = :tpProd GROUP BY o.idOrder";
+
+            String query = "select o.idOrder from Ordine o where " + condizione;
 
             idOrderList = entityManager.createQuery(query)
-                    .setParameter("tpProd", tpProduct)
                     .setParameter("userId", user.getIdUser()).getResultList();
-            
-            for(int idOrder : idOrderList){
+
+            for (int idOrder : idOrderList) {
                 orderList.add(this.findById(idOrder));
             }
 
@@ -130,6 +124,17 @@ public class OrderDAO extends BaseDao<Ordine> {
         }
 
         return orderList;
+    }
+
+    public void setTipoOrdine(Ordine ord, boolean isFood, boolean isDrink) {
+
+        if (isFood && isDrink) {
+            ord.setTipoOrdine('m'); 
+        } else if (isFood) {
+            ord.setTipoOrdine('f');
+        } else {
+            ord.setTipoOrdine('d');
+        }
     }
 
 }

@@ -109,7 +109,8 @@ public class SummaryController implements Serializable {
             List<Operator> operators=operatorDao.getOperators(ord, isFood, isDrink);
             
             //orderDao.insertOrder(ord,operators);
-
+            
+            orderDao.setTipoOrdine(ord, isDrink, isFood);
             orderDao.save(ord);
             
             orderProductDao.insertProdAssociation(ord, opaList);

@@ -42,7 +42,7 @@ public class StartupBean {
         
         Client papu = new Client();
         papu.setUsername("papu");
-        papu.setPassword("password");
+        papu.setPassword("p");
         papu.setEmail("papu@gmail.com");
         
         Client ale= new Client();
@@ -101,7 +101,7 @@ public class StartupBean {
         
         Operator cuoco2 = new Operator();
         cuoco2.setUsername("cuoco2");
-        cuoco2.setPassword("cuoco");
+        cuoco2.setPassword("c");
         cuoco2.setLocal(pub2);
         cuoco2.setoType('c');
         cuoco2.setEmail("cuoco2@gmail.com");

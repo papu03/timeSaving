@@ -274,7 +274,7 @@
                         <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{menuController.logOut}"/>
                     </div>
                 </div>
-                <!-- <h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" /> -->
+                <!--<h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />-->
                 <div id="benvenuto">
                     <h1 class="titolo">Menu</h1>
                 </div>
@@ -340,11 +340,11 @@
                                                 <h:outputText class="scrittaPub" id="qnt" value="#{menuController.basket[product]}" />
                                                 <div class="spazio"></div>
 
-                                                <p:commandButton value="+"
+                                                <p:commandButton class="color w3-round-small" value="+"
                                                                  actionListener="#{menuController.addToOrder(product)}"
                                                                  update="qnt" />
                                                 <div class="spazio"></div>
-                                                <p:commandButton value="-"
+                                                <p:commandButton class="color w3-round-small" value="-"
                                                                  actionListener="#{menuController.removeFromOrder(product)}"
                                                                  update="qnt" />
 
