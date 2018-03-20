@@ -340,11 +340,11 @@
                                                 <h:outputText class="scrittaPub" id="qnt" value="#{menuController.basket[product]}" />
                                                 <div class="spazio"></div>
 
-                                                <p:commandButton class="color w3-round-small" value="+"
+                                              <p:commandButton value="+"
                                                                  actionListener="#{menuController.addToOrder(product)}"
                                                                  update="qnt" />
                                                 <div class="spazio"></div>
-                                                <p:commandButton class="color w3-round-small" value="-"
+                                                <p:commandButton value="-"
                                                                  actionListener="#{menuController.removeFromOrder(product)}"
                                                                  update="qnt" />
 

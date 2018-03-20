@@ -74,29 +74,29 @@ public class OrderDAO extends BaseDao<Ordine> {
 
     }
 
-    public List<Ordine> getOrderByCook(User cook) {
+//    public List<Ordine> getOrderByCook(User cook) {
+//
+//        List<Ordine> orderList = new ArrayList<Ordine>();
+//
+//        orderList = entityManager.createQuery("from Ordine o where o.cook.idUser = :cookId", Ordine.class)
+//                .setParameter("cookId", cook.getIdUser()).getResultList();
+//
+//        return orderList;
+//
+//    }
+//
+//    public List<Ordine> getOrderByBarman(User barman) {
+//
+//        List<Ordine> orderList = new ArrayList<Ordine>();
+//
+//        orderList = entityManager.createQuery("from Ordine o where o.barman.idUser = :barmanId", Ordine.class)
+//                .setParameter("barmanId", barman.getIdUser()).getResultList();
+//
+//        return orderList;
+//
+//    }
 
-        List<Ordine> orderList = new ArrayList<Ordine>();
-
-        orderList = entityManager.createQuery("from Ordine o where o.cook.idUser = :cookId", Ordine.class)
-                .setParameter("cookId", cook.getIdUser()).getResultList();
-
-        return orderList;
-
-    }
-
-    public List<Ordine> getOrderByBarman(User barman) {
-
-        List<Ordine> orderList = new ArrayList<Ordine>();
-
-        orderList = entityManager.createQuery("from Ordine o where o.barman.idUser = :barmanId", Ordine.class)
-                .setParameter("barmanId", barman.getIdUser()).getResultList();
-
-        return orderList;
-
-    }
-
-    public List<Ordine> getOrderByOperator(User user, char tpOperator) {
+    public List<Ordine> getOrderByOperator(Operator operator, char tpOperator) {
 
         String condizione = "";
         List<Integer> idOrderList = new ArrayList<Integer>();
@@ -105,19 +105,29 @@ public class OrderDAO extends BaseDao<Ordine> {
         try {
 
             if (tpOperator == 'b') {
-                condizione = "(o.barman is null or o.barman.idUser = :userId) and o.tipoOrdine in ('d', 'm')";
-            } else {
-                condizione = "(o.cook is null or o.cook.idUser = :userId) and o.tipoOrdine in ('f', 'm')";
-            }
+                condizione = "(o.barman is null or o.barman.idUser = :userId) and o.tipoOrdine in ('d', 'm') and o.local= :local";
+            } else if (tpOperator == 'c') {
+                condizione = "(o.cook is null or o.cook.idUser = :userId) and o.tipoOrdine in ('f', 'm') and o.local= :local";
+            } 
+//            else{
+//            	condizione = "o.client.idUser= :userId";
+//            }
 
-            String query = "select o.idOrder from Ordine o where " + condizione;
+//            String query = "select o.idOrder from Ordine o where " + condizione;
+//
+//            idOrderList = entityManager.createQuery(query)
+//                    .setParameter("userId", user.getIdUser()).getResultList();
+//
+//            for (int idOrder : idOrderList) {
+//                orderList.add(this.findById(idOrder));
+//            }
+            String query = "from Ordine o where " + condizione;
 
-            idOrderList = entityManager.createQuery(query)
-                    .setParameter("userId", user.getIdUser()).getResultList();
+            orderList = entityManager.createQuery(query, Ordine.class)
+            		.setParameter("local", operator.getLocal())
+                    .setParameter("userId", operator.getIdUser()).getResultList();
 
-            for (int idOrder : idOrderList) {
-                orderList.add(this.findById(idOrder));
-            }
+          
 
         } catch (Exception ex) {
             ex.printStackTrace();
