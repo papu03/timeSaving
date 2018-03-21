@@ -30,184 +30,185 @@ import java.util.Vector;
 @ViewScoped
 public class SummaryController implements Serializable {
 
-    @Inject
-    private SelectPubBean selectPubBean;
+	@Inject
+	private SelectPubBean selectPubBean;
 
-    @Inject
-    private UserSessionBean userSessionBean;
+	@Inject
+	private UserSessionBean userSessionBean;
 
-    @Inject
-    private OrderDAO orderDao;
-    
-    @Inject
-    private OperatorDAO operatorDao;
+	@Inject
+	private OrderDAO orderDao;
 
-    @Inject
-    private OrderProductDAO orderProductDao;
+	@Inject
+	private OperatorDAO operatorDao;
 
-    @Inject
-    private MenuController menuCtrl;
+	@Inject
+	private OrderProductDAO orderProductDao;
 
-    private List<Product> productList;
-    private Map<Product, Integer> basket;
+	@Inject
+	private MenuController menuCtrl;
 
-    private User client;
-    private Pub pub;
-    private boolean isFood;
-    private boolean isDrink;
-    private Ordine ord;
-    //private Vector<OPAssociation> vopa;
+	private List<Product> productList;
+	private Map<Product, Integer> basket;
+
+	private User client;
+	private Pub pub;
+	private boolean isFood;
+	private boolean isDrink;
+	private Ordine ord;
+	// private Vector<OPAssociation> vopa;
 	private List<OPAssociation> opaList;
-        
-    @PostConstruct
-    public void init() {
-        System.out.println("Init Summary Controller");
 
-        productList = new ArrayList<Product>();
-        basket = new HashMap<Product, Integer>();
+	@PostConstruct
+	public void init() {
+		System.out.println("Init Summary Controller");
 
-        opaList=menuCtrl.getOpaList();
-        basket = menuCtrl.getBasket();
-        ord=menuCtrl.getOrder();
-        
-        for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
-            if (entry.getValue() > 0) {
-                productList.add(entry.getKey());
+		productList = new ArrayList<Product>();
+		basket = new HashMap<Product, Integer>();
 
-            }
-        }
+		opaList = menuCtrl.getOpaList();
+		basket = menuCtrl.getBasket();
+		ord = menuCtrl.getOrder();
 
-    }
-    
-    @PreDestroy
+		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
+			if (entry.getValue() > 0) {
+				productList.add(entry.getKey());
+
+			}
+		}
+
+	}
+
+	@PreDestroy
 	public void end() {
 		System.out.println("End Summary Controller");
 	}
 
-    public String editOrder() {
-        return "menu?&faces-redirect=true";
+	public String editOrder() {
+		return "menu?&faces-redirect=true";
 
-    }
+	}
 
-    @Transactional
-    public String saveOrder() {
-        client = userSessionBean.getUser();
-        pub = selectPubBean.getPub();
+	@Transactional
+	public String saveOrder() {
+		client = userSessionBean.getUser();
+		pub = selectPubBean.getPub();
 
-        isFood = false;
-        isDrink = false;
+		isFood = false;
+		isDrink = false;
 
-		 for (Product element : productList) {
-			 if (element.getTpProduct() == 'f') {
-	                isFood = true;
-	            }
-	            if (element.getTpProduct() == 'd') {
-	                isDrink = true;
-	            }
-		 }
+		for (Product element : productList) {
 
-            List<Operator> operators=operatorDao.getOperators(ord, isFood, isDrink);
-            
-            //orderDao.insertOrder(ord,operators);
-            
-            orderDao.setTipoOrdine(ord, isDrink, isFood);
-            orderDao.save(ord);
-            
-            orderProductDao.insertProdAssociation(ord, opaList);
-            
-            menuCtrl.endConversation();
-        
-            return "orderList?&faces-redirect=true";
-    }
+			if (element.getTpProduct() == 'f') {
+				isFood = true;
+			}
+			if (element.getTpProduct() == 'd') {
+				isDrink = true;
+			}
+		}
 
-    public String goToOrders() {
+		//List<Operator> operators = operatorDao.getOperators(ord, isFood, isDrink);
 
-    	menuCtrl.endConversation();
+		// orderDao.insertOrder(ord,operators);
 
-        return "orderList?&faces-redirect=true";
+		orderDao.saveOrdine(ord, isFood, isDrink);
+		// orderDao.save(ord);
 
-    }
+		orderProductDao.insertProdAssociation(ord, opaList);
 
-    public String goToHomePage() {
+		menuCtrl.endConversation();
 
-    	menuCtrl.endConversation();
+		return "orderList?&faces-redirect=true";
+	}
 
-        return "selectPub?&faces-redirect=true";
+	public String goToOrders() {
 
-    }
+		menuCtrl.endConversation();
 
-    public String logOut() {
+		return "orderList?&faces-redirect=true";
 
-        userSessionBean = null;
-        menuCtrl.endConversation();
+	}
 
-        return "login?&faces-redirect=true";
+	public String goToHomePage() {
 
-    }
-    
-    public Map<Product, Integer> getBasket() {
-        return basket;
-    }
+		menuCtrl.endConversation();
 
-    public void setBasket(Map<Product, Integer> basket) {
-        this.basket = basket;
-    }
+		return "selectPub?&faces-redirect=true";
 
-    public List<Product> getProductList() {
-        return productList;
-    }
+	}
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
+	public String logOut() {
 
-    public User getClient() {
-        return client;
-    }
+		userSessionBean = null;
+		menuCtrl.endConversation();
 
-    public void setClient(User client) {
-        this.client = client;
-    }
+		return "login?&faces-redirect=true";
 
-    public Pub getPub() {
-        return pub;
-    }
+	}
 
-    public void setPub(Pub pub) {
-        this.pub = pub;
-    }
+	public Map<Product, Integer> getBasket() {
+		return basket;
+	}
 
-    public boolean isFood() {
-        return isFood;
-    }
+	public void setBasket(Map<Product, Integer> basket) {
+		this.basket = basket;
+	}
 
-    public void setFood(boolean isFood) {
-        this.isFood = isFood;
-    }
+	public List<Product> getProductList() {
+		return productList;
+	}
 
-    public boolean isDrink() {
-        return isDrink;
-    }
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
 
-    public void setDrink(boolean isDrink) {
-        this.isDrink = isDrink;
-    }
+	public User getClient() {
+		return client;
+	}
 
-    public Ordine getOrd() {
-        return ord;
-    }
+	public void setClient(User client) {
+		this.client = client;
+	}
 
-    public void setOrd(Ordine ord) {
-        this.ord = ord;
-    }
+	public Pub getPub() {
+		return pub;
+	}
 
-//    public Map<Product, Integer> getBasketNotNull() {
-//        return basketNotNull;
-//    }
-//
-//    public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
-//        this.basketNotNull = basketNotNull;
-//    }
+	public void setPub(Pub pub) {
+		this.pub = pub;
+	}
+
+	public boolean isFood() {
+		return isFood;
+	}
+
+	public void setFood(boolean isFood) {
+		this.isFood = isFood;
+	}
+
+	public boolean isDrink() {
+		return isDrink;
+	}
+
+	public void setDrink(boolean isDrink) {
+		this.isDrink = isDrink;
+	}
+
+	public Ordine getOrd() {
+		return ord;
+	}
+
+	public void setOrd(Ordine ord) {
+		this.ord = ord;
+	}
+
+	// public Map<Product, Integer> getBasketNotNull() {
+	// return basketNotNull;
+	// }
+	//
+	// public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
+	// this.basketNotNull = basketNotNull;
+	// }
 
 	public List<OPAssociation> getOpaList() {
 		return opaList;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +19,8 @@ import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
 
 @Named
-@ViewScoped
+//@ViewScoped
+@RequestScoped
 public class DetailOrderController implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +48,11 @@ public class DetailOrderController implements Serializable {
 
         }
 
+    }
+    
+    @PreDestroy
+    public void end() {
+        System.out.println("End DetailOrder Controller");
     }
 
     public String toOrderList() {

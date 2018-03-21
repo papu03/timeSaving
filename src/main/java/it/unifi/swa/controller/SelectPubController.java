@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -24,8 +25,9 @@ import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
 
 @Named
-@ViewScoped
+//@ViewScoped
 //@Model
+@RequestScoped
 public class SelectPubController implements Serializable {
 
     private static final long serialVersionUID = 1L;

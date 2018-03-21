@@ -1,6 +1,7 @@
 package it.unifi.swa.controller;
 
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.ClientDAO;
@@ -12,8 +13,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 @Named
-@ViewScoped
+//@ViewScoped
 //@Model
+@RequestScoped
 public class LoginController implements Serializable{
 
     private User userData;

@@ -85,12 +85,12 @@ public class OrderProductDAO extends BaseDao<OPAssociation> {
 //		return qntProductMap;
 //
 //	}
-	public Map<Product, Integer> getProdQntByIdOrder(int idOrder, int type) {
+	public Map<Product, Integer> getProdQntByIdOrder(int idOrder, char type) {
 
 		List<OPAssociation> prodAssociations = null;
 		Map<Product, Integer> qntProductMap = new HashMap<Product, Integer>();
 		
-		System.out.println("il tipo è "+type);
+		//System.out.println("il tipo è "+type);
 		try {
 			prodAssociations = entityManager
 					.createQuery("from OPAssociation opa where opa.idOrder= :idOrdine", OPAssociation.class)

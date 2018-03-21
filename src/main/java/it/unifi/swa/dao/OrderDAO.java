@@ -99,7 +99,6 @@ public class OrderDAO extends BaseDao<Ordine> {
     public List<Ordine> getOrderByOperator(Operator operator, char tpOperator) {
 
         String condizione = "";
-        List<Integer> idOrderList = new ArrayList<Integer>();
         List<Ordine> orderList = new ArrayList<Ordine>();
 
         try {
@@ -109,25 +108,12 @@ public class OrderDAO extends BaseDao<Ordine> {
             } else if (tpOperator == 'c') {
                 condizione = "(o.cook is null or o.cook.idUser = :userId) and o.tipoOrdine in ('f', 'm') and o.local= :local";
             } 
-//            else{
-//            	condizione = "o.client.idUser= :userId";
-//            }
 
-//            String query = "select o.idOrder from Ordine o where " + condizione;
-//
-//            idOrderList = entityManager.createQuery(query)
-//                    .setParameter("userId", user.getIdUser()).getResultList();
-//
-//            for (int idOrder : idOrderList) {
-//                orderList.add(this.findById(idOrder));
-//            }
             String query = "from Ordine o where " + condizione;
 
             orderList = entityManager.createQuery(query, Ordine.class)
             		.setParameter("local", operator.getLocal())
                     .setParameter("userId", operator.getIdUser()).getResultList();
-
-          
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -136,7 +122,7 @@ public class OrderDAO extends BaseDao<Ordine> {
         return orderList;
     }
 
-    public void setTipoOrdine(Ordine ord, boolean isFood, boolean isDrink) {
+    public void saveOrdine(Ordine ord, boolean isFood, boolean isDrink) {
 
         if (isFood && isDrink) {
             ord.setTipoOrdine('m'); 
@@ -145,6 +131,8 @@ public class OrderDAO extends BaseDao<Ordine> {
         } else {
             ord.setTipoOrdine('d');
         }
+
+        this.save(ord);
     }
 
 }
