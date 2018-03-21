@@ -1,213 +1,230 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-          
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
-    <h:head >
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <title>Pub Info</title>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<title>Pub Info</title>
 
-        <style>
+	<style>
+.scritta {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: brown;
+	width: 26%;
+}
 
-            .scritta{
+.scrittaPub {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: gray;
+}
 
-                font-family:  Arial, Helvetica, sans-serif;
-                font-size: x-large;
-                color: brown;
-                width: 26%;
-            }
-            
-            .scrittaPub{
+#userArea {
+	position: absolute;
+	padding: 15px;
+	right: 15px;
+	width: 12%;
+	top: 12px;
+}
 
-                font-family:  Arial, Helvetica, sans-serif;
-                font-size: x-large;
-                color: gray;
-            }
+#icona {
+	margin-right: 20px;
+}
 
-            #userArea{
-                position: absolute;
-                padding: 15px;
-                right: 15px;
-                width: 12%;
-                top: 12px;
+.bottoncino {
+	display: inline-flex;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: antiquewhite;
+	background-image: none;
+	border: 5px solid;
+	border-top-color: lightgoldenrodyellow;
+	border-right-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: lightgoldenrodyellow;
+	border-radius: 4px;
+	box-shadow: 3px 3px brown;
+}
 
-            }
+#pulsantiera_alta {
+	padding: 15px;
+}
 
-            #icona{
-                margin-right: 20px;
-            }
+.bott {
+	margin-top: 5px;
+}
 
-            .bottoncino{
-                display: inline-flex;
-                padding: 6px 12px;
-                margin-bottom: 0;
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 1.42857143;
-                text-align: center;
-                white-space: nowrap;
-                vertical-align: middle;
-                -ms-touch-action: manipulation;
-                touch-action: manipulation;
-                cursor: pointer;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                background-color: antiquewhite;
-                background-image: none;
-                border: 5px solid;
-                border-top-color: lightgoldenrodyellow;
-                border-right-color: transparent;
-                border-bottom-color: transparent;
-                border-left-color: lightgoldenrodyellow;
-                border-radius: 4px;
-                box-shadow: 3px 3px brown;
-            }
+.scrittaUserArea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: brown;
+}
 
-            #pulsantiera_alta{
-                padding: 15px;
-            }
+#titolo {
+	width: 30%;
+	left: 35%;
+}
 
-            .bott{
-                margin-top: 5px;
-            }
+#info {
+	position: absolute;
+	padding: 15px;
+	width: 50%;
+	top: 12%;
+	border: 5px solid;
+	border-top-color: lightgoldenrodyellow;
+	border-left-color: lightgoldenrodyellow;
+	border-right-color: transparent;
+	border-bottom-color: transparent;
+	background-color: antiquewhite;
+	border-radius: 5px;
+	box-shadow: 3px 3px brown;
+	left: 25%;
+}
 
-            .scrittaUserArea{
-                font-family:  Arial, Helvetica, sans-serif;
-                font-size: x-large;
-                color: brown;
-            }
+#pulsantiera {
+	padding-top: 15px;
+}
 
+.boton {
+	margin-left: 10px;
+}
 
-            #titolo{
-                width: 30%;
-                left: 35%;
-            }
-            
-            #info{
-                position: absolute;
-                padding: 15px;
-                width: 50%;
-                top: 12%;
-                border: 5px solid;
-                border-top-color: lightgoldenrodyellow;
-                border-left-color: lightgoldenrodyellow;
-                border-right-color: transparent;
-                border-bottom-color: transparent;
-                background-color: antiquewhite;
-                border-radius: 5px;
-                box-shadow: 3px 3px brown;
-                left: 25%;
-            }
+#benvenuto {
+	position: absolute;
+	top: 1%;
+	left: 48%;
+}
 
-            #pulsantiera{
-                padding-top: 15px;
-            }
-            
-            .boton{
-                margin-left: 10px;
-            }
-            
-            #benvenuto{
-                position: absolute;
-                top: 1%;
-                left: 48%;
-            }  
+.titolo {
+	font-style: italic;
+	color: brown;
+}
 
-            .titolo{
-                font-style: italic;
-                color: brown;
-            }
+.color {
+	background-color: lightgoldenrodyellow;
+	color: brown;
+}
+</style>
 
-            .color{
-                background-color: lightgoldenrodyellow;
-                color: brown;
-            }
+	<script type="text/javascript">
+		function editDescription() {
+			var textArea = document
+					.getElementById("frmPubInfo:textAreaDescrizione");
+			var modifyButton = document
+					.getElementById("frmPubInfo:modifyButton");
+			if (textArea !== null) {
+				/* if (textArea.disabled === false) {
+				 	textArea.disabled = false;
+				     modifyButton.value = "Confirm";
+				 } else {
+				     textArea.disabled = false;
+				     modifyButton.value = "Confirm";
+				 }*/
+				if (textArea.disabled === true) {
+					textArea.disabled = false;
+					modifyButton.value = "Confirm";
+				}
+			} else {
+				alert("textArea nullo");
+			}
+		}
 
-        </style>
+		var mostrato = false;
+		function portan() {
 
-        <script type="text/javascript">
-            function editDescription() {
-                var textArea = document.getElementById("frmPubInfo:textAreaDescrizione");
-                var modifyButton = document.getElementById("frmPubInfo:modifyButton");
-                if (textArea !== null) {
-                    if (textArea.disabled === false) {
-                        textArea.disabled = true;
-                        modifyButton.value = "Modify";
-                    } else {
-                        textArea.disabled = false;
-                        modifyButton.value = "Confirm";
-                    }
-                } else {
-                    alert("textArea nullo");
-                }
-            }
+			if (!mostrato) {
+				document.getElementById("pulsantiera_alta").style.display = "block";
+				mostrato = true;
+			} else {
+				document.getElementById("pulsantiera_alta").style.display = "none";
+				mostrato = false;
+			}
+		}
+	</script>
 
-            var mostrato = false;
-            function portan() {
+</h:head>
+<h:body>
+	<f:view>
+		<h:form id="frmPubInfo">
+			<div id="userArea">
+				<button type="button" class="bottoncino btn-default largo"
+					onclick="javascript: portan();">
+					<div id="icona">
+						<i class="glyphicon glyphicon-user"
+							style="font-size: 36px; color: brown;"></i>
+					</div>
+					<h:outputLabel class="scritta"
+						value="  #{userSessionBean.user.username}" />
+				</button>
+				<div id="pulsantiera_alta" style="display: none">
+					<h:commandButton class="w3-button color w3-round-xxlarge bott"
+						value="Home" action="#{selectPubController.goToHomePage}" />
+					<h:commandButton class="w3-button color w3-round-xxlarge bott"
+						value="I tuoi ordini" action="#{selectPubController.goToOrders}" />
+					<h:commandButton class="w3-button w3-red w3-round-xxlarge bott"
+						value="Logout" action="#{selectPubController.logOut}" />
+				</div>
+			</div>
+			<h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />
+			<div id="benvenuto">
+				<h1 class="titolo">Info</h1>
+			</div>
+			<div id="info">
+				<div>
+					<h:outputLabel class="scritta" value="Info Locale "
+						style="color: brown" />
+					<h:outputText class="scrittaPub"
+						value="#{pubInfoController.selectedPub.nome}" />
+				</div>
+				<div>
+					<h:outputLabel class="scritta" value="Description"
+						style="color: brown" />
+				</div>
+				<div>
+					<c:if test="#{pubInfoController.isOperatore}">
+						<h:inputTextarea value="#{pubInfoController.description}"
+							id="textAreaDescrizione" disabled="false"
+							style="width: 500px; height: 100px;" a:maxlength="255" />
+					</c:if>
+					<c:if test="#{pubInfoController.isClient}">
+						<h:outputText class="scrittaPub"
+							value="#{pubInfoController.selectedPub.descrizione}" />
+					</c:if>
+				</div>
+				<div id="pulsantiera">
+					<h:commandButton class="w3-button color w3-round-xxlarge boton"
+						value="Back" action="#{pubInfoController.toSelectPub}" />
+					<c:if test="#{pubInfoController.isOperatore}">
+						<!--  <h:commandButton class="w3-button color w3-round-xxlarge boton" id="modifyButton"  value="Modify" onclick="editDescription();" type="reset"/> -->
+						<h:commandButton class="w3-button color w3-round-xxlarge boton"
+							value="Update" onclick="updateSuccess();"
+							action="#{pubInfoController.updateDescription}" />
 
-                if (!mostrato) {
-                    document.getElementById("pulsantiera_alta").style.display = "block";
-                    mostrato = true;
-                } else {
-                    document.getElementById("pulsantiera_alta").style.display = "none";
-                    mostrato = false;
-                }
-            }
-        </script>
-
-    </h:head>
-    <h:body>
-        <f:view>
-            <h:form id="frmPubInfo">
-                <div id="userArea">
-                    <button type="button" class="bottoncino btn-default largo" onclick="javascript: portan();">
-                        <div id="icona">
-                            <i class="glyphicon glyphicon-user" style="font-size:36px;color:brown;"></i>
-                        </div>
-                        <h:outputLabel class="scritta" value="  #{userSessionBean.user.username}"/>
-                    </button>
-                    <div id="pulsantiera_alta" style="display: none">
-                        <h:commandButton class="w3-button color w3-round-xxlarge bott" value="Home" action="#{selectPubController.goToHomePage}"/>
-                        <h:commandButton class="w3-button color w3-round-xxlarge bott" value="I tuoi ordini" action="#{selectPubController.goToOrders}"/>
-                        <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{selectPubController.logOut}"/>
-                    </div>
-                </div>
-                <h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />
-                <div id="benvenuto">
-                    <h1 class="titolo">Info</h1>
-                </div>
-                <div id="info">
-                    <div>
-                        <h:outputLabel class="scritta" value="Info Locale " style="color: brown" />
-                        <h:outputText class="scrittaPub" value="#{pubInfoController.selectedPub.nome}"/>
-                    </div>
-                    <div>
-                        <h:outputLabel class="scritta" value="Description" style="color: brown" />
-                    </div>
-                    <div>
-                        <c:if test="#{pubInfoController.isOperatore}">
-                            <h:inputTextarea value="#{pubInfoController.selectedPub.descrizione}" id="textAreaDescrizione" disabled="true" style="width: 500px; height: 100px;" a:maxlength="255"/>
-                        </c:if>
-                        <c:if test="#{pubInfoController.isClient}">
-                            <h:outputText class="scrittaPub" value="#{pubInfoController.selectedPub.descrizione}"/>
-                        </c:if>
-                    </div>
-                    <div id="pulsantiera">
-                        <h:commandButton class="w3-button color w3-round-xxlarge boton" value="Back" action="#{pubInfoController.toSelectPub}"/> 
-                        <c:if test="#{pubInfoController.isOperatore}">
-                            <h:commandButton class="w3-button color w3-round-xxlarge boton" id="modifyButton"  value="Modify" onclick="editDescription();" type="reset"/> 
-                        </c:if>
-                    </div>
-                </div>
-            </h:form>
-        </f:view>
-    </h:body>
+					</c:if>
+				</div>
+			</div>
+		</h:form>
+	</f:view>
+</h:body>
 
 </html>

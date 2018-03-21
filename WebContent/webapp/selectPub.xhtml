@@ -243,6 +243,11 @@
                                         <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
                                     </h:commandButton>
                                 </div>
+                                  <div class="pulsanteInfo">
+                                        <h:commandButton class="w3-button color w3-round-xxlarge" value="Detail" action="#{selectPubController.showInfo()}">
+                                            <f:setPropertyActionListener value="#{selectPubController.operatorPub}" target="#{selectPubController.selectedPub}" />
+                                        </h:commandButton>
+                                    </div>
                             </div>  
 
                         </div>

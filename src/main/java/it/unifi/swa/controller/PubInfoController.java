@@ -17,7 +17,7 @@ import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class PubInfoController implements Serializable {
 
     @Inject
