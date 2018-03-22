@@ -47,7 +47,9 @@ public class ProductInfoController implements Serializable {
         System.out.println("Init Product Controller");
 
         if (productId != null) {
-            selectedProduct = productDao.getProductById(productId);
+          	int idProduct= Integer.parseInt(productId);
+
+            selectedProduct = productDao.getProductById(idProduct);
         }
 
         if (userSessionBean.getType() != 'u') {

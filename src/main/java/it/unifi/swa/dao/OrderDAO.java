@@ -96,9 +96,10 @@ public class OrderDAO extends BaseDao<Ordine> {
 //
 //    }
 
-    public List<Ordine> getOrderByOperator(Operator operator, char tpOperator) {
+    public List<Ordine> getOrderByOperator(Operator operator) {
 
         String condizione = "";
+        char tpOperator=operator.getoType();
         List<Ordine> orderList = new ArrayList<Ordine>();
 
         try {

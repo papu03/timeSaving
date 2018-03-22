@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.Conversation;
+import javax.faces.component.html.HtmlInputText;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -25,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.MenuDAO;
+import it.unifi.swa.dao.ProductDAO;
 import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
 
@@ -35,6 +37,7 @@ public class MenuControllerTest {
 	private UserSessionBean userSessionBean;
 
 	private MenuDAO menuDao;
+	private ProductDAO productDao;
 	private MenuController menuController;
 
 	private List<Product> list;
@@ -59,12 +62,22 @@ public class MenuControllerTest {
 		userSessionBean= new UserSessionBean();
 		
 		menuDao=mock(MenuDAO.class);
+		productDao=mock(ProductDAO.class);
+		
 		list= new ArrayList<Product>();
 		basket = new HashMap<Product, Integer>();
 
 		p1=new Product();
 		p2=new Product();
 		p3=new Product();
+		
+		p1.setProdName("prodotto1");
+		p2.setProdName("prodotto2");
+		p3.setProdName("prodotto3");
+
+		p1.setIdProduct(10);
+		p2.setIdProduct(20);
+		p3.setIdProduct(30);
 
 		list.add(p1);
 		list.add(p2);
@@ -84,6 +97,7 @@ public class MenuControllerTest {
 			FieldUtils.writeField(menuController, "userSessionBean", userSessionBean, true);
 			FieldUtils.writeField(menuController, "selectedProduct", selectedProduct, true);
 			FieldUtils.writeField(menuController, "conversation", conversation, true);
+			FieldUtils.writeField(menuController, "productDao", productDao, true);
 
 
 		} catch (IllegalAccessException e) {
@@ -124,17 +138,62 @@ public class MenuControllerTest {
 		assertEquals(basket,menuController.getBasket());
 	}
 	
+		@Test
+		public void addToOrderTest() {
+			
+			when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
+			userSessionBean.setType('u');
+	
+			menuController.init();
+			
+			for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
+				assertTrue(entry.getValue().equals(0));
+			}
+			
+			menuController.addToOrder(p1);
+			
+			for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
+				
+				if (entry.getKey().equals(p1)) {
+					assertTrue(entry.getValue().equals(1));
+				}else{
+					assertTrue(entry.getValue().equals(0));
+				}
+			}
+			
+			menuController.addToOrder(p1);
+			
+			for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
+				
+				if (entry.getKey().equals(p1)) {
+					assertTrue(entry.getValue().equals(2));
+				}else{
+					assertTrue(entry.getValue().equals(0));
+				}
+			}
+			
+			menuController.addToOrder(p2);
+			
+			for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
+				
+				if (entry.getKey().equals(p1)) {
+					assertTrue(entry.getValue().equals(2));
+				}if (entry.getKey().equals(p2)) {
+					assertTrue(entry.getValue().equals(1));
+				}if (entry.getKey().equals(p3)) {
+					assertTrue(entry.getValue().equals(0));
+				}
+			}
+			
+		}
+	
 	@Test
-	public void addToOrderTest() {
+	public void removeFromOrderTest() {
 		
 		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
 		userSessionBean.setType('u');
 
 		menuController.init();
-		
-		for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
-			assertTrue(entry.getValue().equals(0));
-		}
 		
 		menuController.addToOrder(p1);
 		
@@ -147,17 +206,83 @@ public class MenuControllerTest {
 			}
 		}
 		
-		menuController.addToOrder(p1);
+		menuController.removeFromOrder(p1);
 		
 		for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
-			
-			if (entry.getKey().equals(p1)) {
-				assertTrue(entry.getValue().equals(2));
-			}else{
-				assertTrue(entry.getValue().equals(0));
-			}
+			assertTrue(entry.getValue().equals(0));
 		}
 		
+		menuController.removeFromOrder(p1);
+
+		for (Map.Entry<Product, Integer> entry : menuController.getBasket().entrySet()) {
+			assertTrue(entry.getValue().equals(0));
+		}
+		
+		
+	}
+	
+//	@Test
+//	public void addProductTest() {
+//		
+//		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
+//		menuController.init();
+//
+//		HtmlInputText name= new HtmlInputText();
+//		HtmlInputText price= new HtmlInputText();
+//		HtmlInputText tmpExe= new HtmlInputText();
+//		HtmlInputText image= new HtmlInputText();
+//		
+////		name.setValue(String.valueOf("prodotto4"));
+////		price.setValue(String.valueOf("4,0"));
+////		tmpExe.setValue(String.valueOf("5"));
+////		image.setValue(String.valueOf("image.jpg"));
+//		
+//		name.setValue("prodotto4");
+//		price.setValue(4.0);
+//		tmpExe.setValue(5);
+//		image.setValue("image.jpg");
+//		
+//		Product p4=new Product();
+//		p4.setProdName("prodotto4");
+//		p4.setPrice(4.0);
+//		p4.setTmpExe(5);
+//		p4.setImage("image.jpg");
+//		
+//		//list.add(p4);
+//		
+//		assertThatExceptionOfType(IndexOutOfBoundsException.class).isThrownBy(() -> {
+//        	System.out.println(menuController.getProductList().get(3).getProdName());
+//        });	   
+//		
+//		
+//        
+//		menuController.addProduct(name, price, tmpExe, image);
+//		
+//
+//		for (Product element : menuController.getProductList()) {
+//			System.out.println(element.getProdName());
+//		}
+//		//assertEquals(menuController.getProductList().get(4),p4);
+//
+//		
+//		
+//	}
+	
+	@Test
+	public void removeProductTest() {
+		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
+		menuController.init();
+
+		when(productDao.getProductById(selectedProduct.getIdProduct())).thenReturn(selectedProduct);
+
+
+		menuController.removeProduct();
+		
+		//assertEquals(productDao.getProductById(selectedProduct.getIdProduct()),selectedProduct.)
+		
+//		System.out.println(productDao.getProductById(selectedProduct.getIdProduct()).getIdProduct());
+//		System.out.println(selectedProduct.getIdProduct());
+
 	}
 
 

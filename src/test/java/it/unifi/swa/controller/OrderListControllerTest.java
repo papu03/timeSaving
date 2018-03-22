@@ -49,7 +49,9 @@ public class OrderListControllerTest {
 		
 		client= new Client();
 		cook= new Operator();
+		cook.setoType('c');
 		barman= new Operator();
+		barman.setoType('b');
 		
 		o1=new Ordine();
 		o2=new Ordine();
@@ -71,8 +73,8 @@ public class OrderListControllerTest {
 		orderDao= mock(OrderDAO.class);
 
 		when( orderDao.getOrderByClient(client)).thenReturn(clientOrderList);
-		when( orderDao.getOrderByCook(cook)).thenReturn(cookOrderList);
-		when( orderDao.getOrderByBarman(barman)).thenReturn(barmanOrderList);
+		when( orderDao.getOrderByOperator(cook)).thenReturn(cookOrderList);
+		when( orderDao.getOrderByOperator(barman)).thenReturn(barmanOrderList);
 
 		try {
 			FieldUtils.writeField(orderListController, "userSessionBean", userSessionBean, true);
@@ -99,25 +101,25 @@ public class OrderListControllerTest {
 	@Test
 	public void getCookOrderListTest(){
 		
-		/*assertNull(orderListController.getOrderList());
+		assertNull(orderListController.getOrderList());
 		
 		userSessionBean.setUser(cook);
 		userSessionBean.setType('c');
 
 		orderListController.init();
-		assertEquals(orderListController.getOrderList(),cookOrderList);*/
+		assertEquals(orderListController.getOrderList(),cookOrderList);
 
 	}
 	@Test
 	public void getBarmanOrderListTest(){
 		
-		/*assertNull(orderListController.getOrderList());
+		assertNull(orderListController.getOrderList());
 		
 		userSessionBean.setUser(barman);
 		userSessionBean.setType('b');
 
 		orderListController.init();
-		assertEquals(orderListController.getOrderList(),barmanOrderList);*/
+		assertEquals(orderListController.getOrderList(),barmanOrderList);
 
 	}
 

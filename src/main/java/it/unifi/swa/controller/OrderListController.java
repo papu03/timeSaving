@@ -56,7 +56,7 @@ public class OrderListController implements Serializable {
             /*for (Ordine ord : orderDao.getOrderByOperator(userSession, userSessionBean.getType())) {
                 orderList.add(ord);
             }*/
-            setOrderList(orderDao.getOrderByOperator((Operator)userSession, userSessionBean.getType()));
+            setOrderList(orderDao.getOrderByOperator((Operator)userSession));
             isOperatore = true;
 
         } else {
@@ -183,7 +183,7 @@ public class OrderListController implements Serializable {
 
         }
 
-        setOrderList(orderDao.getOrderByOperator((Operator)userSessionBean.getUser(), userSessionBean.getType()));
+        setOrderList(orderDao.getOrderByOperator((Operator)userSessionBean.getUser()));
         //}
     }
 

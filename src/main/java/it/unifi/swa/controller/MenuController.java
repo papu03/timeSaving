@@ -14,6 +14,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
@@ -194,6 +195,7 @@ public class MenuController implements Serializable {
 
     }
 
+    @Transactional
     public String editProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
         selectedProduct.setProdName(name.getValue().toString());
         selectedProduct.setImage(image == null ? "" : image.getValue().toString());
@@ -201,15 +203,18 @@ public class MenuController implements Serializable {
         selectedProduct.setPrice(Double.parseDouble(price.getValue().toString()));
         selectedProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
-        productDao.updateProduct(selectedProduct);
+        //productDao.updateProduct(selectedProduct);
+        productDao.update(selectedProduct);
 
         return "menu?faces-redirect=true";
     }
 
+    @Transactional
     public String removeProduct() {
 
         if (productList.size() > 1) {
-            productDao.removeProduct(selectedProduct);
+            //productDao.removeProduct(selectedProduct);
+        	productDao.delete(selectedProduct);
             productList.remove(selectedProduct);
         } else {
             System.out.println("Impossibile rimuovere tutti gli oggetti");
@@ -217,24 +222,23 @@ public class MenuController implements Serializable {
         return "menu?faces-redirect=true";
     }
 
+	@Transactional
     public String addProduct(HtmlInputText name, HtmlInputText price, HtmlInputText tmpExe, HtmlInputText image) {
         Product newProduct = new Product();
 
         try {
-            // if (!price.getValue().toString().equals("") &&
-            // !tmpExe.getValue().toString().equals("")) {
             newProduct.setMenu(myMenu);
             newProduct.setProdName(name.getValue().toString());
             newProduct.setImage(image.getValue().toString());
 
+            
             newProduct.setPrice(Double.parseDouble(price.getValue().toString()));
             newProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
-            productDao.addProduct(newProduct);
+            //productDao.addProduct(newProduct);
+            productDao.save(newProduct);
             productList.add(newProduct);
-            // } else {
-            // System.out.println("Inserisci prezzo e tempo");
-            // }
+            
         } catch (Exception e) {
             System.out.println("Inserisci prezzo e tempo");
         }
