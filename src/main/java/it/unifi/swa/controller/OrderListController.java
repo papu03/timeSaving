@@ -61,9 +61,10 @@ public class OrderListController implements Serializable {
 
         } else {
 
-            for (Ordine ord : orderDao.getOrderByClient(userSession)) {
-                orderList.add(ord);
-            }
+//            for (Ordine ord : orderDao.getOrderByClient(userSession)) {
+//                orderList.add(ord);
+//            }
+            setOrderList(orderDao.getOrderByClient(userSession));
             //setOrderList(orderDao.getOrderByOperator(userSession, userSessionBean.getType()));
             isClient = true;
         }

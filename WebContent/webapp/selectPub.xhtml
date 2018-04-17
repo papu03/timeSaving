@@ -16,19 +16,19 @@
 
                 font-family:  Arial, Helvetica, sans-serif;
                 font-size: x-large;
-                color: brown;
+                color: #365899;
             }
             
             .titolo{
                 font-style: italic;
-                color: brown;
+                color: #365899;
             }
 
             .scrittaPub{
 
                 font-family:  Arial, Helvetica, sans-serif;
                 font-size: x-large;
-                color: brown;
+                color: #365899;
                 padding-left: 10%;
             }
 
@@ -40,14 +40,14 @@
                 margin-left: 15%;
                 margin-bottom: 5%;
                 border: 5px solid ;
-                border-top-color: lightgoldenrodyellow;
-                border-left-color: lightgoldenrodyellow;
+                border-top-color: #e9ebee;
+                border-left-color: #e9ebee;
                 border-right-color: transparent;
                 border-bottom-color: transparent;
                 padding: 15px;
                 border-radius: 10px;
-                box-shadow: 3px 3px brown;
-                background-color: antiquewhite;
+                box-shadow: 3px 3px #173d5d;
+                background-color: #f3f5f7;
 
             }
 
@@ -88,7 +88,7 @@
             .dot {
                 height: 20px;
                 width: 20px;
-                background-color: brown;
+                background-color: #365899;
                 border-radius: 50%;
                 display: inline-block;
             }
@@ -129,15 +129,15 @@
                 -moz-user-select: none;
                 -ms-user-select: none;
                 user-select: none;
-                background-color: antiquewhite;
+                background-color: #f3f5f7;
                 background-image: none;
                 border: 5px solid;
-                border-top-color: lightgoldenrodyellow;
+                border-top-color: #e9ebee;
                 border-right-color: transparent;
                 border-bottom-color: transparent;
-                border-left-color: lightgoldenrodyellow;
+                border-left-color: #e9ebee;
                 border-radius: 4px;
-                box-shadow: 3px 3px brown;
+                box-shadow: 3px 3px #173d5d;
             }
 
             #pulsantiera_alta{
@@ -153,8 +153,8 @@
             }
             
             .color{
-                background-color: lightgoldenrodyellow;
-                color: brown;
+                background-color: #e9ebee;
+                color: #365899;
             }
 
         </style>
@@ -181,7 +181,7 @@
                 <div id="userArea">
                     <button type="button" class="bottoncino btn-default largo" onclick="javascript: portan();">
                         <div id="icona">
-                            <i class="glyphicon glyphicon-user" style="font-size:36px;color:brown;"></i>
+                            <i class="glyphicon glyphicon-user" style="font-size:36px;color:#365899;"></i>
                         </div>
                         <h:outputLabel class="scritta" value="  #{userSessionBean.user.username}"/>
                     </button>
@@ -191,15 +191,11 @@
                         <h:commandButton class="w3-button w3-red w3-round-xxlarge bott" value="Logout" action="#{selectPubController.logOut}"/>
                     </div>
                 </div>
-                <!--<h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />-->
                 <div id="benvenuto">
                     <h1 class="titolo">Welcome #{userSessionBean.user.username}, Select the Pub</h1>
                 </div>
-                <!--<div id="benvenuto">
-
-                    <h:outputLabel class="scritta" value="Welcome #{userSessionBean.user.username}, Select the Pub"/>
-                </div>-->
-                <div id="tabella">
+          
+                <div id="tabella" >
                     <c:if test="#{selectPubController.isClient}">
 
                         <ui:repeat value="#{selectPubController.pubList}" var="pub" varStatus="status">

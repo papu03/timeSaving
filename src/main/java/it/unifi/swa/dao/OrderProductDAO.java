@@ -41,56 +41,12 @@ public class OrderProductDAO extends BaseDao<OPAssociation> {
 
 	}
 
-//	public Map<Product, Integer> getProdQntByOrder(Ordine order, int type) {
-//
-//		List<OPAssociation> prodAssociations = null;
-//		Map<Product, Integer> qntProductMap = new HashMap<Product, Integer>();
-//
-//		System.out.println("il tipo è "+type);
-//		try {
-//			prodAssociations = entityManager
-//					.createQuery("from OPAssociation opa where opa.idOrder= :idOrdine", OPAssociation.class)
-//					.setParameter("idOrdine", order.getIdOrder()).getResultList();
-//			if (type == 'b') {// barista
-//
-//				for (OPAssociation opAssoc : prodAssociations) {
-//
-//					if (opAssoc.getProduct().getTpProduct() == 'd') {
-//						qntProductMap.put(opAssoc.getProduct(), opAssoc.getQuantity());
-//					}
-//				}
-//			} else if (type == 'c') {// cuoco
-//
-//				for (OPAssociation opAssoc : prodAssociations) {
-//
-//					if (opAssoc.getProduct().getTpProduct() == 'f') {
-//						qntProductMap.put(opAssoc.getProduct(), opAssoc.getQuantity());
-//					}
-//				}
-//
-//			} else { // cliente
-//
-//				for (OPAssociation opAssoc : prodAssociations) {
-//
-//					qntProductMap.put(opAssoc.getProduct(), opAssoc.getQuantity());
-//
-//				}
-//
-//			}
-//
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//
-//		return qntProductMap;
-//
-//	}
+
 	public Map<Product, Integer> getProdQntByIdOrder(int idOrder, char type) {
 
 		List<OPAssociation> prodAssociations = null;
 		Map<Product, Integer> qntProductMap = new HashMap<Product, Integer>();
 		
-		//System.out.println("il tipo è "+type);
 		try {
 			prodAssociations = entityManager
 					.createQuery("from OPAssociation opa where opa.idOrder= :idOrdine", OPAssociation.class)

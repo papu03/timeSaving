@@ -16,14 +16,14 @@
 .scritta {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: x-large;
-	color: brown;
+	color: #365899;
 	width: 26%;
 }
 
 .scrittaPub {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: x-large;
-	color: gray;
+	color: #365899;
 }
 
 #userArea {
@@ -55,15 +55,15 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background-color: antiquewhite;
+	background-color: #f3f5f7;
 	background-image: none;
 	border: 5px solid;
-	border-top-color: lightgoldenrodyellow;
+	border-top-color: #e9ebee;
 	border-right-color: transparent;
 	border-bottom-color: transparent;
-	border-left-color: lightgoldenrodyellow;
+	border-left-color: #e9ebee;
 	border-radius: 4px;
-	box-shadow: 3px 3px brown;
+	box-shadow: 3px 3px #173d5d;
 }
 
 #pulsantiera_alta {
@@ -77,7 +77,7 @@
 .scrittaUserArea {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: x-large;
-	color: brown;
+	color: #365899;
 }
 
 #titolo {
@@ -91,14 +91,16 @@
 	width: 50%;
 	top: 12%;
 	border: 5px solid;
-	border-top-color: lightgoldenrodyellow;
-	border-left-color: lightgoldenrodyellow;
+	border-top-color: #e9ebee;
+	border-left-color: #e9ebee; border-right-color : transparent;
+	border-bottom-color : transparent; border-radius : 5px; box-shadow :
+	3px 3px #173d5d;
+	background-color: #f3f5f7;
+	left: 25%;
 	border-right-color: transparent;
 	border-bottom-color: transparent;
-	background-color: antiquewhite;
 	border-radius: 5px;
-	box-shadow: 3px 3px brown;
-	left: 25%;
+	box-shadow: 3px 3px #173d5d;
 }
 
 #pulsantiera {
@@ -117,12 +119,12 @@
 
 .titolo {
 	font-style: italic;
-	color: brown;
+	color: #365899;
 }
 
 .color {
-	background-color: lightgoldenrodyellow;
-	color: brown;
+	background-color: #e9ebee;
+	color: #365899;
 }
 </style>
 
@@ -171,7 +173,7 @@
 					onclick="javascript: portan();">
 					<div id="icona">
 						<i class="glyphicon glyphicon-user"
-							style="font-size: 36px; color: brown;"></i>
+							style="font-size: 36px; color: #365899;"></i>
 					</div>
 					<h:outputLabel class="scritta"
 						value="  #{userSessionBean.user.username}" />
@@ -185,22 +187,21 @@
 						value="Logout" action="#{selectPubController.logOut}" />
 				</div>
 			</div>
-			<h:graphicImage class="sfondo" value="/images/sfondo timesaving.png" />
 			<div id="benvenuto">
 				<h1 class="titolo">Info</h1>
 			</div>
 			<div id="info">
-				<div>
+				<div >
 					<h:outputLabel class="scritta" value="Info Locale "
-						style="color: brown" />
+						 />
 					<h:outputText class="scrittaPub"
 						value="#{pubInfoController.selectedPub.nome}" />
 				</div>
 				<div>
 					<h:outputLabel class="scritta" value="Description"
-						style="color: brown" />
+						 />
 				</div>
-				<div>
+				<div style="background-color: white;">
 					<c:if test="#{pubInfoController.isOperatore}">
 						<h:inputTextarea value="#{pubInfoController.description}"
 							id="textAreaDescrizione" disabled="false"

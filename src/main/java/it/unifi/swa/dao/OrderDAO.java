@@ -22,24 +22,7 @@ public class OrderDAO extends BaseDao<Ordine> {
         super(Ordine.class);
     }
 
-    // @Transactional
-    // public Ordine insertOrder(Pub pub,boolean isFood,boolean isDrink){
-    //
-    // Ordine ord= new Ordine();
-    // ord.setLocal(pub);
-    // ord.setStateOrder('a');
-    //
-    // if(isFood && isDrink){
-    // ord.setSizeOrder('b');
-    // }else{
-    // ord.setSizeOrder('a');
-    // }
-    //
-    // this.save(ord);
-    //
-    // return ord;
-    //
-    // }
+  
     public void insertOrder(Ordine ord, List<Operator> operators) {
 
         for (Operator op : operators) {
@@ -74,27 +57,7 @@ public class OrderDAO extends BaseDao<Ordine> {
 
     }
 
-//    public List<Ordine> getOrderByCook(User cook) {
-//
-//        List<Ordine> orderList = new ArrayList<Ordine>();
-//
-//        orderList = entityManager.createQuery("from Ordine o where o.cook.idUser = :cookId", Ordine.class)
-//                .setParameter("cookId", cook.getIdUser()).getResultList();
-//
-//        return orderList;
-//
-//    }
-//
-//    public List<Ordine> getOrderByBarman(User barman) {
-//
-//        List<Ordine> orderList = new ArrayList<Ordine>();
-//
-//        orderList = entityManager.createQuery("from Ordine o where o.barman.idUser = :barmanId", Ordine.class)
-//                .setParameter("barmanId", barman.getIdUser()).getResultList();
-//
-//        return orderList;
-//
-//    }
+
 
     public List<Ordine> getOrderByOperator(Operator operator) {
 
