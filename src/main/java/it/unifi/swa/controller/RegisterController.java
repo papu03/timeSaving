@@ -80,7 +80,8 @@ public class RegisterController implements Serializable {
              client.setPassword(password);
              client.setEmail(email);
              clientDao.saveClient(client);
-             return "success?&faces-redirect=true";
+             //return "success?&faces-redirect=true";
+             return "login?faces-redirect=true&registererror=n";
         }else{
         	 return "";
         }

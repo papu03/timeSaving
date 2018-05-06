@@ -42,15 +42,23 @@ public class StartupBean {
         
         Client papu = new Client();
         papu.setUsername("papu");
+        papu.setName("Riccardo");
+        papu.setSurname("Papucci");
         papu.setPassword("p");
+        papu.setAddress("Via Prulli di Sopra, Incisa (FI)");
+        papu.setBankData(987654321);
+        papu.setPhoneNumber(2080561);
         papu.setEmail("papu@gmail.com");
         
         Client ale= new Client();
-		ale.setName("Alessandro");
-		ale.setSurname("Baroni");
-		ale.setUsername("b4r0");
-		ale.setPassword("a");
-		ale.setEmail("ale@gmail.com");
+	ale.setName("Alessandro");
+	ale.setSurname("Baroni");
+	ale.setUsername("alex_baroni");
+	ale.setPassword("a");
+        ale.setAddress("Via Domenico Michellacci 69, Firenze (FI)");
+        ale.setBankData(1234567890);
+        ale.setPhoneNumber(9044180);
+	ale.setEmail("ale@gmail.com");
         
         clientDao.save(papu);
         clientDao.save(ale);
@@ -67,28 +75,31 @@ public class StartupBean {
         //Menu menu = menuDao.findById(1);
 
         Pub pub = new Pub();
-        pub.setIndirizzo("Via la polizia 69");
+        pub.setIndirizzo("Via Domenico Michelacci 69, Firenze (FI)");
         pub.setNome("Beautiful Pub");
+        pub.setDescrizione("Un locale nella piena tradizione dei pub all'inglese, anche dal punto di vista della bellezza delle donne");
         pub.setMenu(menu1);
         pubDao.save(pub);
         
         Pub pub2 = new Pub();
-        pub2.setIndirizzo("Via di qui 22");
+        pub2.setIndirizzo("Via Di Qui 22, Firenze (FI)");
         pub2.setNome("Pub Rivederci");
         pub2.setDescrizione("Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.");
         pub2.setMenu(menu1);
         pubDao.save(pub2);
         
         Pub pub3 = new Pub();
-        pub3.setIndirizzo("Via verdi 59");
+        pub3.setIndirizzo("Via Verdi 59, Calenzano (FI)");
         pub3.setNome("Pub Lo Picasso");
+        pub3.setDescrizione("Al centro della meravigliosa cornice di Calenzano, sorge questo gioiello della ristorazione");
         pub3.setMenu(menu2);
         pubDao.save(pub3);
 
         Pub pub4 = new Pub();
-        pub4.setIndirizzo("Via kal 124");
-        pub4.setNome("Pub E");
+        pub4.setIndirizzo("Via Karl Marx 124, Firenze (FI)");
+        pub4.setNome("Pub E!");
         pub4.setMenu(menu2);
+        pub4.setDescrizione("Un locale che fa della ricercatezza della materia prima e del servizio impeccabile la sua carta vincente");
         pubDao.save(pub4);
         
         

@@ -36,7 +36,7 @@
                 font-size: large;
                 color: #365899;
                 line-height: 32px;
-                margin-right: 89px;
+                margin-right: 112px;
             }
 
             .scrittaPub{
@@ -87,7 +87,7 @@
 
                 display: inline-flex;
                 height: 50px;
-                margin-left: 2%;
+                margin-left: 10px;
                 margin-top: 3%;
             }
 
@@ -140,7 +140,7 @@
             #userArea{
                 position: absolute;
                 padding: 15px;
-                right: 5%;
+                right: 7%;
                 width: 12%;
                 top: 12px;
 
@@ -330,6 +330,15 @@
                                             <h:inputText binding="#{img}" value="#{product.image}" />
 
                                         </div>
+                                        <div class="riquadrino">
+
+                                            <h:outputLabel class="scrittaInput" value="Type: " />
+                                            <h:selectOneMenu value = "#{product.tpProduct}"> 
+                                                <f:selectItem itemValue = "f" itemLabel = "Food" /> 
+                                                <f:selectItem itemValue = "d" itemLabel = "Drink" /> 
+                                            </h:selectOneMenu> 
+                                            
+                                        </div>
                                     </c:if>
                                     <c:if test="#{menuController.isClient}">
                                         <div class="quantita">
@@ -340,7 +349,7 @@
                                                 <h:outputText class="scrittaPub" id="qnt" value="#{menuController.basket[product]}" />
                                                 <div class="spazio"></div>
 
-                                              <p:commandButton value="+"
+                                                <p:commandButton value="+"
                                                                  actionListener="#{menuController.addToOrder(product)}"
                                                                  update="qnt" />
                                                 <div class="spazio"></div>

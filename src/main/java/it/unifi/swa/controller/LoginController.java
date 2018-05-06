@@ -67,7 +67,8 @@ public class LoginController implements Serializable{
             }
             
             if (loggedUser == null) {
-                throw new RuntimeException("Login Failed");
+                //throw new RuntimeException("Login Failed");
+                return "login?faces-redirect=true&loginerror=y";
             }
             
             userSession.setType(operatorDao.findByLoginInfo(userData).getoType());

@@ -34,30 +34,35 @@
             left: 41%;
             display: inline-flex;
         }
-        
+
         #pulsanteBack{
-            
+
             margin-right: 35px;
         }
-        
+
         #pulsanteConfirm{
-            
+
         }
 
         .scritta {
             font-family: Arial, Helvetica, sans-serif;
-            color: cadetblue;
+            color: #365899;
             line-height: 40px;
             width: 40%;
             font-size: x-large;
         }
 
         .scrittona {
-            color: cadetblue;
+            color: #365899;
         }
 
         .input{
-            border-color: cadetblue;
+            border-color: #365899;
+        }
+
+        .color {
+            background-color: #e9ebee;
+            color: #365899;
         }
 
     </style>
@@ -69,35 +74,35 @@
                     <h1 class="display-3 text-center font-italic scrittona">Register</h1>
                 </div>
                 <div id="divRegistra">
-                    
+
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Email*" />
                         <h:inputText class="input" value="#{registerController.email}"></h:inputText>
                     </div>
                     <h:outputScript rendered="#{registerController.emailFail}">
-   					 alert('Email errata');
-					</h:outputScript>
+                        alert('Email errata');
+                    </h:outputScript>
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Username*" />
                         <h:inputText class="input" value="#{registerController.username}"></h:inputText>
                     </div>
-                     <h:outputScript rendered="#{registerController.userNameFail}">
-   					 alert('Username troppo corto');
-					</h:outputScript>
+                    <h:outputScript rendered="#{registerController.userNameFail}">
+                        alert('Username troppo corto');
+                    </h:outputScript>
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Password*" />
                         <h:inputText class="input" value="#{registerController.password}"></h:inputText>
                     </div>
                     <h:outputScript rendered="#{registerController.passFail}">
-   					 alert('Password troppo corta');
-					</h:outputScript>
+                        alert('Password troppo corta');
+                    </h:outputScript>
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Confirm Password*" />
                         <h:inputText class="input" value="#{registerController.password_check}"></h:inputText>
                     </div>
                     <h:outputScript rendered="#{registerController.checkPassFail}">
-   					 alert('Inserite password differenti');
-					</h:outputScript>
+                        alert('Inserite password differenti');
+                    </h:outputScript>
                     <div class="campo">
                         <h:outputLabel class="scritta" value="Nome" />
                         <h:inputText class="input" value="#{registerController.name}"></h:inputText>
@@ -120,7 +125,7 @@
                         <h:commandButton class="w3-button w3-red w3-round-xxlarge" action="#{registerController.back}" value="Cancel" /> 
                     </div>
                     <div id="pulsanteConfirm">
-                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge" action="#{registerController.register}" value="Confirm" /> 
+                        <h:commandButton class="w3-button color w3-round-xxlarge" action="#{registerController.register}" value="Confirm" /> 
                     </div>
                 </div>
             </h:form>

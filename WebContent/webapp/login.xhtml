@@ -2,7 +2,8 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
@@ -14,52 +15,90 @@
 
                 font-family:  Arial, Helvetica, sans-serif;
                 font-size: large;
-                color: cadetblue;
+                color: #365899;
             }
             
+            .scrittaErrore{
+
+                font-family:  Arial, Helvetica, sans-serif;
+                font-size: large;
+                color: red;
+            }
+
             #logo{
                 position: absolute;
                 left: 35%;
             }
-            
+
             #div1{
                 position: absolute;
                 top: 41%;
-                left: 41%;
+                left: 34%;
                 right: 10%;
                 bottom: 10px;
-                    
+
             }
-            
+
             #divInput1{
                 position: absolute;
-                top: 7%;
+                top: 8%;
+                left: 12%;
             }
-            
+
             #div3{
                 position: absolute;
                 top: 16%;
+                left: 12%;
             }
             
+            #div2{
+                position: absolute;
+                left: 12%;
+            }
+
             #divInput2{
                 position: absolute;
                 top: 23%;
+                left: 12%;
             }
-            
+
             #div4{
                 position: absolute;
-                top: 35%;
-                left: 19%;
+                top: 40%;
+                left: 24%;
             }
             
+            #divError{
+                position: absolute;
+                top: 33%;
+            }
+            
+            #divRegister{
+                position: absolute;
+                top: 33%;
+                left: 77px;
+            }
+
             #div5{
                 position: absolute;
                 bottom: 4%;
                 right: 4%;
             }
-            
 
+            .color {
+                background-color: #e9ebee;
+                color: #365899;
+            }
+            
+            .colorerror{
+                border: 2px solid red;
+            }
+
+            .nascondi{
+                display: none;
+            }
         </style>
+        
     </h:head>
 
     <h:body>
@@ -72,17 +111,23 @@
                     <div id="div2">
                         <h:outputLabel class="scritta" value="Username" />
                     </div>
-                    <div id="divInput1">
+                    <div id="divInput1" class="${param.loginerror == 'y' ? 'colorerror' : ''}">
                         <h:inputText value="#{loginController.username}"/>
                     </div>
                     <div id="div3">
                         <h:outputLabel class="scritta" value="Password"/>
                     </div>
-                    <div id="divInput2">
+                    <div id="divInput2" class="${param.loginerror == 'y' ? 'colorerror' : ''}">
                         <h:inputSecret value="#{loginController.password}"/>
                     </div>
+                    <div id="divError" class="${param.loginerror != 'y' ? 'nascondi' : ''}">
+                        <h:outputLabel class="scrittaErrore" value="Username and/or password may be incorrect" />
+                    </div>
+                    <div id="divRegister" class="${param.registererror != 'n' ? 'nascondi' : ''}">
+                        <h:outputLabel style="color: #365899" value="Registration was successful!" />
+                    </div>
                     <div id="div4">
-                        <h:commandButton class="w3-button w3-teal w3-round-xxlarge" action="#{loginController.login}" value="Login" /> 
+                        <h:commandButton class="w3-button color w3-round-xxlarge" action="#{loginController.login}" value="Login" /> 
                     </div>
                     <div id="div5">
                         No account? <h:link value="Sign in" outcome="register" />
