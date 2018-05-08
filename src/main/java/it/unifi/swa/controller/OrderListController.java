@@ -53,19 +53,14 @@ public class OrderListController implements Serializable {
 
         if (userSessionBean.getType() == 'c' || userSessionBean.getType() == 'b') {
 
-            /*for (Ordine ord : orderDao.getOrderByOperator(userSession, userSessionBean.getType())) {
-                orderList.add(ord);
-            }*/
+
             setOrderList(orderDao.getOrderByOperator((Operator)userSession));
             isOperatore = true;
 
         } else {
 
-//            for (Ordine ord : orderDao.getOrderByClient(userSession)) {
-//                orderList.add(ord);
-//            }
+
             setOrderList(orderDao.getOrderByClient(userSession));
-            //setOrderList(orderDao.getOrderByOperator(userSession, userSessionBean.getType()));
             isClient = true;
         }
     }
@@ -81,11 +76,11 @@ public class OrderListController implements Serializable {
 
         Ordine order = orderDao.findById(idOrder);
 
-        //if (changeStateCount != 3) {
         if (order.getStateOrder() == 'a') {
 
             try {
                 if (userSessionBean.getType() == 'b') {
+                	//System.out.println(userSessionBean.getUser().getIdUser());
 
                     Operator barman = operatorDao.findById(userSessionBean.getUser().getIdUser());
                     order.setBarman(barman);
@@ -98,7 +93,6 @@ public class OrderListController implements Serializable {
                 }
 
                 orderDao.update(order);
-                //changeStateCount++;
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -154,30 +148,7 @@ public class OrderListController implements Serializable {
 
                 orderDao.update(order);
 
-                /*if (order.getBarman() != null && order.getCook() != null) {
-
-                        if (order.getStateOrder() == 'b') {
-
-                            if (userSessionBean.getType() == 'c') { // cuoco
-                                order.setStateOrder('c');
-                            } else if (userSessionBean.getType() == 'b') { // barista
-                                order.setStateOrder('d');
-                            }
-
-                        } else {
-
-
-                        }
-
-                    } else {
-
-                        if (order.getStateOrder() == 'a') {
-                            order.setStateOrder('b');
-                        } else {
-                            order.setStateOrder('e');
-                        }
-                    }*/
-                //changeStateCount++;
+            
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -185,7 +156,7 @@ public class OrderListController implements Serializable {
         }
 
         setOrderList(orderDao.getOrderByOperator((Operator)userSessionBean.getUser()));
-        //}
+        
     }
 
     public void refresh() {

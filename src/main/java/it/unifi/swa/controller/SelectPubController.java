@@ -25,8 +25,6 @@ import it.unifi.swa.domain.Product;
 import it.unifi.swa.domain.Pub;
 
 @Named
-//@ViewScoped
-//@Model
 @RequestScoped
 public class SelectPubController implements Serializable {
 
@@ -59,8 +57,6 @@ public class SelectPubController implements Serializable {
     public void init() {
         System.out.println("Select Pub Controller Init");
 
-    
-        
         isOperatore = false;
         isClient = false;
 
@@ -121,11 +117,6 @@ public class SelectPubController implements Serializable {
     }
 
     public List<Pub> getPubList() {
-
-//        List<Pub> lista = pubDao.getListOfPub();
-//        if (!lista.isEmpty()) {
-//            this.pubList = lista;
-//        }
 
         return pubList;
     }

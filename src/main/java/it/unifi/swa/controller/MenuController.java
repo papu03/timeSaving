@@ -20,6 +20,7 @@ import it.unifi.swa.bean.SelectPubBean;
 import it.unifi.swa.bean.UserSessionBean;
 import it.unifi.swa.dao.MenuDAO;
 import it.unifi.swa.dao.OrderDAO;
+import it.unifi.swa.dao.OrderProductDAO;
 import it.unifi.swa.dao.ProductDAO;
 import it.unifi.swa.domain.Menu;
 import it.unifi.swa.domain.OPAssociation;
@@ -47,6 +48,9 @@ public class MenuController implements Serializable {
 
     @Inject
     private ProductDAO productDao;
+    
+    @Inject
+    private OrderProductDAO orderProductDao;
 
     private List<Product> productList;
     private Map<Product, Integer> basket;
@@ -65,14 +69,11 @@ public class MenuController implements Serializable {
         System.out.println("name pub " + selectPubBean.getPub().getNome());
 
         basket = new HashMap<Product, Integer>();
-        //List<Product> list = new ArrayList<Product>();
         productList = new ArrayList<Product>();
         opaList = new ArrayList<OPAssociation>();
 
 
         try {
-            //list = menuDao.getListOfProduct(selectPubBean.getPub());
-            //productList = list;
         	productList = menuDao.getListOfProduct(selectPubBean.getPub());
 
         	myMenu = productList.get(0).getMenu();
@@ -81,16 +82,6 @@ public class MenuController implements Serializable {
             productList = null;
             System.out.println("There is no Products in this pub menu");
         }
-
-//        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
-//
-//        for (Product element : productList) {
-//            listWithQnt.put(element, 0);
-//        }
-//
-//        if (!listWithQnt.isEmpty()) {
-//            basket = listWithQnt;
-//        }
         
 
         for (Product element : productList) {
@@ -103,23 +94,13 @@ public class MenuController implements Serializable {
             isClient = true;
         }
 
-//        Ordine ord = new Ordine();
-//        
-//        ord.setLocal(selectPubBean.getPub());
-//        ord.setStateOrder('a');
-//        ord.setClient(userSessionBean.getUser());
-//        this.order = ord;
-        
+
         this.order= new Ordine();
         
         this.order.setLocal(selectPubBean.getPub());
         this.order.setStateOrder('a');
         this.order.setClient(userSessionBean.getUser());
-        // setOrder(ord);
-
-        // vopa = new Vector<OPAssociation>();
-        // setVopa(vopa);
-
+     
     }
 
     @PreDestroy
@@ -203,7 +184,6 @@ public class MenuController implements Serializable {
         selectedProduct.setPrice(Double.parseDouble(price.getValue().toString()));
         selectedProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
-        //productDao.updateProduct(selectedProduct);
         productDao.update(selectedProduct);
 
         return "menu?faces-redirect=true";
@@ -213,7 +193,8 @@ public class MenuController implements Serializable {
     public String removeProduct() {
 
         if (productList.size() > 1) {
-            //productDao.removeProduct(selectedProduct);
+        	//System.out.println(selectedProduct.getProdName()+" con id " +selectedProduct.getIdProduct()+" eliminato");
+        	orderProductDao.removeFromProduct(selectedProduct);
         	productDao.delete(selectedProduct);
             productList.remove(selectedProduct);
         } else {
@@ -235,7 +216,6 @@ public class MenuController implements Serializable {
             newProduct.setPrice(Double.parseDouble(price.getValue().toString()));
             newProduct.setTmpExe(Integer.parseInt(tmpExe.getValue().toString()));
 
-            //productDao.addProduct(newProduct);
             productDao.save(newProduct);
             productList.add(newProduct);
             
@@ -257,7 +237,6 @@ public class MenuController implements Serializable {
 
     public String goToHomePage() {
 
-        //svuotaBasket();
         this.endConversation();
 
         return "selectPub?&faces-redirect=true";
@@ -267,27 +246,12 @@ public class MenuController implements Serializable {
     public String logOut() {
 
         userSessionBean = null;
-        //svuotaBasket();
         this.endConversation();
 
         return "login?&faces-redirect=true";
 
     }
     
-//    private void svuotaBasket(){
-//        
-//        Map<Product, Integer> listWithQnt = new HashMap<Product, Integer>();
-//        for (Product element : productList) {
-//            listWithQnt.put(element, 0);
-//        }
-//
-//        if (!listWithQnt.isEmpty()) {
-//            basket = listWithQnt;
-//        }
-//        
-//        opaList = new ArrayList<OPAssociation>();
-//        
-//    }
 
     public Map<Product, Integer> getBasket() {
         return basket;

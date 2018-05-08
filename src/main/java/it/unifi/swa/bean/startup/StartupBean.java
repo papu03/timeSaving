@@ -71,6 +71,14 @@ public class StartupBean {
         Menu menu2 = new Menu();
         menu2.setDescr("Drinks & foods");
         menuDao.save(menu2);
+        
+        Menu menu3 = new Menu();
+        menu2.setDescr("Menu buono");
+        menuDao.save(menu3);
+        
+        Menu menu4 = new Menu();
+        menu2.setDescr("Menu ottimo");
+        menuDao.save(menu4);
       
         //Menu menu = menuDao.findById(1);
 
@@ -85,20 +93,20 @@ public class StartupBean {
         pub2.setIndirizzo("Via Di Qui 22, Firenze (FI)");
         pub2.setNome("Pub Rivederci");
         pub2.setDescrizione("Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.");
-        pub2.setMenu(menu1);
+        pub2.setMenu(menu2);
         pubDao.save(pub2);
         
         Pub pub3 = new Pub();
         pub3.setIndirizzo("Via Verdi 59, Calenzano (FI)");
         pub3.setNome("Pub Lo Picasso");
         pub3.setDescrizione("Al centro della meravigliosa cornice di Calenzano, sorge questo gioiello della ristorazione");
-        pub3.setMenu(menu2);
+        pub3.setMenu(menu3);
         pubDao.save(pub3);
 
         Pub pub4 = new Pub();
         pub4.setIndirizzo("Via Karl Marx 124, Firenze (FI)");
         pub4.setNome("Pub E!");
-        pub4.setMenu(menu2);
+        pub4.setMenu(menu4);
         pub4.setDescrizione("Un locale che fa della ricercatezza della materia prima e del servizio impeccabile la sua carta vincente");
         pubDao.save(pub4);
         
@@ -116,6 +124,13 @@ public class StartupBean {
         cuoco2.setLocal(pub2);
         cuoco2.setoType('c');
         cuoco2.setEmail("cuoco2@gmail.com");
+        
+        Operator cuoco4 = new Operator();
+        cuoco4.setUsername("cuoco4");
+        cuoco4.setPassword("c");
+        cuoco4.setLocal(pub4);
+        cuoco4.setoType('c');
+        cuoco4.setEmail("cuoco4@gmail.com");
         
         Operator barista = new Operator();
         barista.setUsername("barista1");
@@ -145,11 +160,29 @@ public class StartupBean {
         barista4.setoType('b');
         barista4.setEmail("barista4@gmail.com");
         
+        Product moretti2 = new Product();
+        moretti2.setProdName("Moretti");
+        moretti2.setPrice(3.0);
+        moretti2.setTpProduct('d');
+        moretti2.setMenu(menu3);
+        moretti2.setImage("http://www.unmondodisapori.it/wp-content/uploads/2017/10/moretti.jpg");
+        moretti2.setTmpExe(3);
+        productDao.save(moretti2);
+        
+        Product tennets2 = new Product();
+        tennets2.setProdName("tennets");
+        tennets2.setPrice(4.5);
+        tennets2.setTpProduct('d');
+        tennets2.setMenu(menu3);
+        tennets2.setImage("http://www.imolabevande.it/wp-content/uploads/2015/03/536birra-tennents-super-bottiglia.jpg");
+        tennets2.setTmpExe(3);
+        productDao.save(tennets2);
+        
         Product moretti = new Product();
         moretti.setProdName("Moretti");
         moretti.setPrice(3.0);
         moretti.setTpProduct('d');
-        moretti.setMenu(menu2);
+        moretti.setMenu(menu1);
         moretti.setImage("http://www.unmondodisapori.it/wp-content/uploads/2017/10/moretti.jpg");
         moretti.setTmpExe(3);
         productDao.save(moretti);
@@ -158,7 +191,7 @@ public class StartupBean {
         tennets.setProdName("tennets");
         tennets.setPrice(4.5);
         tennets.setTpProduct('d');
-        tennets.setMenu(menu2);
+        tennets.setMenu(menu1);
         tennets.setImage("http://www.imolabevande.it/wp-content/uploads/2015/03/536birra-tennents-super-bottiglia.jpg");
         tennets.setTmpExe(3);
         productDao.save(tennets);
@@ -221,10 +254,28 @@ public class StartupBean {
         schiacciata.setProdName("Schiacciata");
         schiacciata.setPrice(6.0);
         schiacciata.setTpProduct('f');
-        schiacciata.setMenu(menu1);
+        schiacciata.setMenu(menu2);
         schiacciata.setImage("https://www.biancolievito.it/wp-content/uploads/2016/05/shutterstock_138483227.jpg");
         schiacciata.setTmpExe(9);
         productDao.save(schiacciata);
+        
+        Product schiacciata2 = new Product();
+        schiacciata2.setProdName("Schiacciata");
+        schiacciata2.setPrice(6.0);
+        schiacciata2.setTpProduct('f');
+        schiacciata2.setMenu(menu4);
+        schiacciata2.setImage("https://www.biancolievito.it/wp-content/uploads/2016/05/shutterstock_138483227.jpg");
+        schiacciata2.setTmpExe(9);
+        productDao.save(schiacciata2);
+        
+        Product pizza2 = new Product();
+        pizza2.setProdName("pizza");
+        pizza2.setPrice(7.0);
+        pizza2.setTpProduct('f');
+        pizza2.setMenu(menu4);
+        pizza2.setImage("http://www.teleischia.com/wp-content/uploads/2017/08/pizza-napoletana.jpg");
+        pizza2.setTmpExe(13);
+        productDao.save(pizza2);
         
         operatorDao.save(barista);
         operatorDao.save(cuoco);
@@ -232,6 +283,7 @@ public class StartupBean {
         operatorDao.save(cuoco2);
         operatorDao.save(barista3);
         operatorDao.save(barista4);
+        operatorDao.save(cuoco4);
 
 
 

@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runners.model.InitializationError;
 
 import it.unifi.swa.domain.Client;
+import it.unifi.swa.domain.OPAssociation;
 import it.unifi.swa.domain.Operator;
 import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
@@ -94,29 +95,6 @@ public class OrderDaoTest extends DaoTest {
 		
 	}
 	
-//	@Test
-//	public void insertOrderTest(){
-//		
-//		Ordine order=orderDao.insertOrder(pub,true,false);
-//		assertEquals(order,orderDao.findById(order.getIdOrder()));
-//		
-//	}
-	
-//	@Test
-//	public void getOrderByClientTest(){
-//		
-//
-//		List<Ordine> orderList = orderDao.getOrderByClient(client);
-//		
-//		for (Ordine ord : orderList) {
-//			
-//			assertEquals(order,ord);
-//		}
-//		
-//		//assertEquals(order,orderDao.findById(order.getIdOrder()));
-//		
-//	}
-//	
 
 	@Test
 	public void getOrderByBarmanTest() {
@@ -143,6 +121,43 @@ public class OrderDaoTest extends DaoTest {
 		assertEquals(orderDao.getOrderByOperator(barman), orderList);
 		assertFalse(orderDao.getOrderByOperator(barman2).isEmpty());
 
+	}
+	
+	@Test
+	public void getOrderByCookTest() {
+
+		order.setTipoOrdine('f');
+		order2.setTipoOrdine('f');
+
+		orderDao.update(order);
+		orderDao.update(order2);
+
+		orderList.add(order);
+		orderList.add(order2);
+
+		assertEquals(orderDao.getOrderByOperator(cook), orderList);
+		assertTrue(orderDao.getOrderByOperator(barman).isEmpty());
+		assertTrue(orderDao.getOrderByOperator(barman2).isEmpty());
+
+	}
+	
+	@Test
+	public void saveFoodOrder() {
+		
+		boolean isFood= true;
+		boolean isDrink= false;
+		
+		Ordine order3= new Ordine();
+
+		order3.setTipoOrdine('f');
+		
+		orderDao.saveOrdine(order3, isFood, isDrink);
+		
+		Ordine ordine3=  entityManager.createQuery("from Ordine o where o.idOrder= :orderId", Ordine.class)
+                .setParameter("orderId", order3.getIdOrder()).getSingleResult();
+		
+		assertEquals(order3,ordine3);
+		
 	}
 	
 

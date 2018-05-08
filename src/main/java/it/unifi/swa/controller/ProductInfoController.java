@@ -62,7 +62,6 @@ public class ProductInfoController implements Serializable {
 
     @PreDestroy
     public void end() {
-        //productId=null;
         System.out.println("End Product Controller");
     }
     
@@ -93,7 +92,6 @@ public class ProductInfoController implements Serializable {
 
     public String toMenu() {
 
-        //menuCtrl.initConversation();
         return "menu?&faces-redirect=true";
 
     }

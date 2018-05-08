@@ -221,53 +221,7 @@ public class MenuControllerTest {
 		
 	}
 	
-//	@Test
-//	public void addProductTest() {
-//		
-//		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
-//		menuController.init();
-//
-//		HtmlInputText name= new HtmlInputText();
-//		HtmlInputText price= new HtmlInputText();
-//		HtmlInputText tmpExe= new HtmlInputText();
-//		HtmlInputText image= new HtmlInputText();
-//		
-////		name.setValue(String.valueOf("prodotto4"));
-////		price.setValue(String.valueOf("4,0"));
-////		tmpExe.setValue(String.valueOf("5"));
-////		image.setValue(String.valueOf("image.jpg"));
-//		
-//		name.setValue("prodotto4");
-//		price.setValue(4.0);
-//		tmpExe.setValue(5);
-//		image.setValue("image.jpg");
-//		
-//		Product p4=new Product();
-//		p4.setProdName("prodotto4");
-//		p4.setPrice(4.0);
-//		p4.setTmpExe(5);
-//		p4.setImage("image.jpg");
-//		
-//		//list.add(p4);
-//		
-//		assertThatExceptionOfType(IndexOutOfBoundsException.class).isThrownBy(() -> {
-//        	System.out.println(menuController.getProductList().get(3).getProdName());
-//        });	   
-//		
-//		
-//        
-//		menuController.addProduct(name, price, tmpExe, image);
-//		
-//
-//		for (Product element : menuController.getProductList()) {
-//			System.out.println(element.getProdName());
-//		}
-//		//assertEquals(menuController.getProductList().get(4),p4);
-//
-//		
-//		
-//	}
-	
+
 	@Test
 	public void removeProductTest() {
 		when(menuDao.getListOfProduct(selectPubBean.getPub())).thenReturn(list);
@@ -278,11 +232,6 @@ public class MenuControllerTest {
 
 		menuController.removeProduct();
 		
-		//assertEquals(productDao.getProductById(selectedProduct.getIdProduct()),selectedProduct.)
-		
-//		System.out.println(productDao.getProductById(selectedProduct.getIdProduct()).getIdProduct());
-//		System.out.println(selectedProduct.getIdProduct());
-
 	}
 
 

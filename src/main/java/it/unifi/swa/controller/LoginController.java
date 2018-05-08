@@ -13,8 +13,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 @Named
-//@ViewScoped
-//@Model
 @RequestScoped
 public class LoginController implements Serializable{
 
@@ -27,8 +25,6 @@ public class LoginController implements Serializable{
     private ClientDAO clientDao;
     @Inject
     private OperatorDAO operatorDao;
-//    @Inject
-//    private PubDAO pubDao;
 
     private String username;
     private String password;
@@ -67,7 +63,6 @@ public class LoginController implements Serializable{
             }
             
             if (loggedUser == null) {
-                //throw new RuntimeException("Login Failed");
                 return "login?faces-redirect=true&loginerror=y";
             }
             
@@ -80,11 +75,7 @@ public class LoginController implements Serializable{
         userSession.setUser(loggedUser);
         System.out.println(loggedUser.getUsername() + " loggato");
         
-       // if(userSession.getType() == 0){
-            return "selectPub?&faces-redirect=true";
-//        }else{
-//            return "orderList?&faces-redirect=true";
-//        }
+        return "selectPub?&faces-redirect=true";
     }
     
     public String logOut() {

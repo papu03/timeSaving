@@ -94,10 +94,10 @@ public class LoginControllerTest {
         when(clientDao.findByLoginInfo(any(Client.class))).thenReturn(null);
         when(operatorDao.findByLoginInfo(any(Operator.class))).thenReturn(null);
 
-        /*assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> {
-            loginController.login();
-        });
-       */
+//        assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> {
+//            loginController.login();
+//        });
+        
         assertFalse(userSession.isLogged());
         assertNull(userSession.getUser());
     }

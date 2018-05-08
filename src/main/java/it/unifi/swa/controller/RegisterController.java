@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-//@Model
 public class RegisterController implements Serializable {
 
     
@@ -55,9 +54,7 @@ public class RegisterController implements Serializable {
     public String register() {
         
         if(!password.equals(password_check)){
-            //return "register?pwd_diff=y&faces-redirect=true";
         	checkPassFail=true;
-        	//return "register?pwd_diff=y&faces-redirect=true";
         }
         if(username.isEmpty()){
         	userNameFail=true;
@@ -80,23 +77,12 @@ public class RegisterController implements Serializable {
              client.setPassword(password);
              client.setEmail(email);
              clientDao.saveClient(client);
-             //return "success?&faces-redirect=true";
              return "login?faces-redirect=true&registererror=n";
         }else{
         	 return "";
         }
         
-       
 
-        // System.out.println("il nome è "+client.getName()+" il cognome
-        // "+cognome );
-//        if(!username.equals(null) && !password.equals(null) && !email.equals(null)){
-//       	 clientDao.saveClient(client);
-//            return "success?&faces-redirect=true";
-//       }else{
-//       	return "register?&faces-redirect=true";
-//       }
-      
        
     }
 

@@ -19,7 +19,6 @@ import it.unifi.swa.domain.Ordine;
 import it.unifi.swa.domain.Product;
 
 @Named
-//@ViewScoped
 @RequestScoped
 public class DetailOrderController implements Serializable {
 

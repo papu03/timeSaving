@@ -20,25 +20,34 @@ public class OrderProductDAO extends BaseDao<OPAssociation> {
 		super(OPAssociation.class);
 	}
 
-//	public void insertProdAssociation(Ordine ord, Map<Product, Integer> basket) {
-//
-//		for (Map.Entry<Product, Integer> entry : basket.entrySet()) {
-//			OPAssociation association = ord.addProduct(entry.getKey(), entry.getValue());
-//			this.save(association);
-//		}
-//
-//	}
 	
 	@Transactional
 	public void insertProdAssociation(Ordine ord, List<OPAssociation> opaList) {
 
 		for (OPAssociation opa : opaList) {
 			opa.setIdOrder(ord.getIdOrder());
-    		//System.out.println("id order: "+opa.getIdOrder()+" id product "+opa.getIdProduct());
 			ord.getProducts().add(opa);
 			this.save(opa);
 		}
 
+	}
+	
+	public void removeFromProduct(Product prod){
+		List<OPAssociation> prodAssociations = null;
+		
+		try {
+			prodAssociations = entityManager
+					.createQuery("from OPAssociation opa where opa.product= :product", OPAssociation.class)
+					.setParameter("product", prod).getResultList();
+			
+			for (OPAssociation opa : prodAssociations) {
+				//System.out.println(opa.getProduct().getProdName());
+				this.delete(opa);
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 

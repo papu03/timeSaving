@@ -107,32 +107,7 @@ public class Ordine {
         return association;
     }
 
-    // @OneToMany(mappedBy="ordine")
-    // @OneToMany(targetEntity = UserAssociation.class, mappedBy = "ordine",
-    // cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    // public List<UserAssociation> getUsers() {
-    // return users;
-    // }
-    //
-    // public void setUsers(List<UserAssociation> users) {
-    // this.users = users;
-    // }
-    //
-    // public UserAssociation addUser(User user) {
-    // UserAssociation association = new UserAssociation();
-    // association.setUtente(user);
-    // association.setOrdine(this);
-    // association.setUtenteId(user.getIdUser());
-    // association.setOrdineId(this.getIdOrder());
-    // if (this.users == null) {
-    // this.users = new ArrayList<>();
-    // }
-    //
-    // this.users.add(association);
-    // user.getOrders().add(association);
-    //
-    // return association;
-    // }
+
     public String ottieniDescState() {
 
         String state = "";
@@ -157,17 +132,7 @@ public class Ordine {
                 state = "Ordine concluso";
             }
 
-            // } else if (this.sizeOrder == 'a') { //food o drink
-            //
-            // if (orderState == 'c') {
-            // state = "Eseguito";
-            // }
-            // } else if (this.sizeOrder == 'b') {//food e drink
-            //
-            // if (orderState == 'd'){
-            // state = "Eseguito";
-            // }
-            // }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

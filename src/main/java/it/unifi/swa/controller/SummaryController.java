@@ -56,7 +56,6 @@ public class SummaryController implements Serializable {
 	private boolean isFood;
 	private boolean isDrink;
 	private Ordine ord;
-	// private Vector<OPAssociation> vopa;
 	private List<OPAssociation> opaList;
 
 	@PostConstruct
@@ -107,15 +106,8 @@ public class SummaryController implements Serializable {
 			}
 		}
 
-		//List<Operator> operators = operatorDao.getOperators(ord, isFood, isDrink);
-
-		// orderDao.insertOrder(ord,operators);
-
 		orderDao.saveOrdine(ord, isFood, isDrink);
-		// orderDao.save(ord);
-
 		orderProductDao.insertProdAssociation(ord, opaList);
-
 		menuCtrl.endConversation();
 
 		return "orderList?&faces-redirect=true";
@@ -201,14 +193,6 @@ public class SummaryController implements Serializable {
 	public void setOrd(Ordine ord) {
 		this.ord = ord;
 	}
-
-	// public Map<Product, Integer> getBasketNotNull() {
-	// return basketNotNull;
-	// }
-	//
-	// public void setBasketNotNull(Map<Product, Integer> basketNotNull) {
-	// this.basketNotNull = basketNotNull;
-	// }
 
 	public List<OPAssociation> getOpaList() {
 		return opaList;

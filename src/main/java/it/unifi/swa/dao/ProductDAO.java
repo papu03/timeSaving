@@ -17,30 +17,10 @@ public class ProductDAO extends BaseDao<Product> {
 		super(Product.class);
 	}
 
-//	@Transactional
-//	public void updateProduct(Product product) {
-//
-//		this.update(product);
-//
-//	}
-//	
-//	@Transactional
-//	public void removeProduct(Product product) {
-//
-//		this.delete(product);
-//
-//	}
-//	
-//	@Transactional
-//	public void addProduct(Product product) {
-//
-//		this.save(product);
-//
-//	}
+
 	
 	public Product getProductById(int idProduct){
   	  
-//  	int productId= Integer.parseInt(idProduct);
   	
   	Product result = entityManager
 	                .createQuery("FROM Product p WHERE p.idProduct = :productId", Product.class)
